@@ -1,0 +1,132 @@
+[21:43:30] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[21:43:32] [ServerMain/INFO]: Loaded 1174 recipes
+[21:43:32] [ServerMain/INFO]: Loaded 1271 advancements
+[21:43:32] [Server thread/INFO]: Starting minecraft server version 1.20.4
+[21:43:32] [Server thread/INFO]: Loading properties
+[21:43:32] [Server thread/INFO]: This server is running Paper version git-Paper-496 (MC: 1.20.4) (Implementing API version 1.20.4-R0.1-SNAPSHOT) (Git: 7ac24a1 on ver/1.20.4)
+[21:43:33] [Server thread/INFO]: Using 4 threads for Netty based IO
+[21:43:33] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[21:43:33] [Server thread/WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+    We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
+    For more information please visit: https://github.com/PaperMC/Paper/issues/8948
+[21:43:33] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 3 worker threads, and gen parallelism of 3 threads
+[21:43:34] [Server thread/INFO]: Default game type: SURVIVAL
+[21:43:34] [Server thread/INFO]: Generating keypair
+[21:43:34] [Server thread/INFO]: Starting Minecraft server on *:25565
+[21:43:34] [Server thread/INFO]: Using default channel type
+[21:43:34] [Server thread/INFO]: Paper: Using Java compression from Velocity.
+[21:43:34] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loading 5 libraries... please wait
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\openjdk\nashorn\nashorn-core\15.4\nashorn-core-15.4.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\ow2\asm\asm\7.3.1\asm-7.3.1.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\ow2\asm\asm-commons\7.3.1\asm-commons-7.3.1.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\ow2\asm\asm-analysis\7.3.1\asm-analysis-7.3.1.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\ow2\asm\asm-tree\7.3.1\asm-tree-7.3.1.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\ow2\asm\asm-util\7.3.1\asm-util-7.3.1.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\jsoup\jsoup\1.14.3\jsoup-1.14.3.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\zaxxer\HikariCP\5.1.0\HikariCP-5.1.0.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\slf4j\slf4j-api\1.7.36\slf4j-api-1.7.36.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\mariadb\jdbc\mariadb-java-client\3.3.3\mariadb-java-client-3.3.3.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\github\waffle\waffle-jna\3.3.0\waffle-jna-3.3.0.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\net\java\dev\jna\jna\5.13.0\jna-5.13.0.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\net\java\dev\jna\jna-platform\5.13.0\jna-platform-5.13.0.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\slf4j\jcl-over-slf4j\2.0.7\jcl-over-slf4j-2.0.7.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\github\ben-manes\caffeine\caffeine\2.9.3\caffeine-2.9.3.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\google\errorprone\error_prone_annotations\2.10.0\error_prone_annotations-2.10.0.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\checkerframework\checker-qual\3.32.0\checker-qual-3.32.0.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar
+[21:43:34] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar
+[21:43:34] [Server thread/INFO]: [Core] Loading server plugin Core v0.0.1
+[21:43:34] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[21:43:34] [Server thread/INFO]: Preparing level "world"
+[21:43:35] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[21:43:35] [Server thread/INFO]: Time elapsed: 193 ms
+[21:43:35] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[21:43:36] [Server thread/INFO]: Time elapsed: 1075 ms
+[21:43:36] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[21:43:36] [Server thread/INFO]: Time elapsed: 55 ms
+[21:43:36] [Server thread/INFO]: [Core] Enabling Core v0.0.1
+[21:43:37] [Server thread/INFO]: Enabling the Nations Core plugin
+[21:43:37] [Server thread/INFO]: Running delayed init tasks
+[21:43:37] [Server thread/INFO]: Done (4.576s)! For help, type "help"
+[21:43:37] [Server thread/INFO]: Timings Reset
+[21:43:37] [Server thread/INFO]: pi16 (/127.0.0.1:60714) lost connection: Disconnected
+[21:43:38] [User Authenticator #0/INFO]: UUID of player pi16 is 29490773-9700-4b31-a14e-5599137e0af3
+[21:43:39] [Server thread/INFO]: pi16 joined the game
+[21:43:39] [Server thread/INFO]: pi16[/127.0.0.1:60717] logged in with entity id 150 at ([world]-238.69999998807907, 63.0, -75.4175607901766)
+[21:43:49] [Server thread/INFO]: pi16 issued server command: /nation create myfabolousnation
+[21:43:49] [Server thread/INFO]: Nation created: myfabolousnation by pi16 with ID: 1.
+[21:43:58] [Server thread/INFO]: pi16 issued server command: /nation create myfabolousnation
+[21:43:58] [Server thread/INFO]: Nation created: myfabolousnation by pi16 with ID: 1.
+[21:44:01] [Server thread/INFO]: pi16 issued server command: /nation create myfabolousnat1
+[21:44:01] [Server thread/INFO]: Nation created: myfabolousnat1 by pi16 with ID: 2.
+[21:44:05] [Server thread/INFO]: pi16 issued server command: /nation create myfabolousnat1212
+[21:44:05] [Server thread/INFO]: Nation created: myfabolousnat1212 by pi16 with ID: 3.
+[21:47:26] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:47:26] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:47:34] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:47:34] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:47:58] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:47:58] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:49:04] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:49:04] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:49:34] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:49:34] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:49:46] [Server thread/INFO]: pi16 has made the advancement [Stone Age]
+[21:49:55] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:49:55] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:50:10] [Server thread/INFO]: pi16 has made the advancement [Spooky Scary Skeleton]
+[21:52:10] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:52:10] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:52:28] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:52:28] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:55:15] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:55:15] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:55:17] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:55:17] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:55:26] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:55:26] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:55:29] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:55:29] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:56:01] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:56:01] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:56:51] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[21:56:51] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[21:57:03] [Server thread/INFO]: pi16 issued server command: /gamemode survival
+[21:57:03] [Server thread/INFO]: [pi16: Set own game mode to Survival Mode]
+[21:57:11] [Server thread/INFO]: pi16 issued server command: /gamemode creative
+[21:57:11] [Server thread/INFO]: [pi16: Set own game mode to Creative Mode]
+[21:57:18] [Server thread/INFO]: pi16 issued server command: /weather thunder
+[21:57:18] [Server thread/INFO]: [pi16: Set the weather to rain & thunder]
+[22:07:29] [Server thread/INFO]: pi16 issued server command: /summon minecraft:lightning_bolt
+[22:07:29] [Server thread/INFO]: [pi16: Summoned new Lightning Bolt]
+[22:08:47] [Server thread/INFO]: pi16 issued server command: /weather thunder
+[22:08:47] [Server thread/INFO]: [pi16: Set the weather to rain & thunder]
+[22:21:26] [Server thread/INFO]: Stopping server
+[22:21:26] [Server thread/INFO]: [Core] Disabling Core v0.0.1
+[22:21:26] [Server thread/INFO]: Saving players
+[22:21:26] [Server thread/INFO]: pi16 lost connection: Server closed
+[22:21:26] [Server thread/INFO]: pi16 left the game
+[22:21:26] [Server thread/INFO]: Saving worlds
+[22:21:26] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Saved 361 block chunks, 255 entity chunks, 0 poi chunks in world 'world' in 0,30s
+[22:21:26] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[22:21:26] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Saved 0 block chunks, 15 entity chunks, 0 poi chunks in world 'world_nether' in 0,00s
+[22:21:26] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[22:21:26] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_the_end'
+[22:21:26] [Server thread/INFO]: [ChunkHolderManager] Saved 0 block chunks, 10 entity chunks, 0 poi chunks in world 'world_the_end' in 0,00s
+[22:21:26] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[22:21:26] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+[22:21:26] [Server thread/INFO]: Flushing Chunk IO
+[22:21:26] [Server thread/INFO]: Closing Thread Pool
+[22:21:26] [Server thread/INFO]: Closing Server

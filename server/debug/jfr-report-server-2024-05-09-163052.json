@@ -1,0 +1,516 @@
+{
+  "startedEpoch": 1715265052561,
+  "endedEpoch": 1715265058542,
+  "durationMs": 5981,
+  "heap": {
+    "allocationRateBytesPerSecond": 7.9691776E7,
+    "gcCount": 2,
+    "gcOverHeadPercent": 0.13175054,
+    "gcTotalDurationMs": 788
+  },
+  "cpuPercent": {
+    "jvm": {
+      "min": 0.0,
+      "average": 0.009628250706009566,
+      "max": 0.03936081379652023
+    },
+    "userJvm": {
+      "min": 0.0,
+      "average": 0.038441187143325804,
+      "max": 0.07383107393980026
+    },
+    "system": {
+      "min": 0.07262898981571198,
+      "average": 0.12441708445549012,
+      "max": 0.15082868933677673
+    }
+  },
+  "network": {
+    "sent": {
+      "totalBytes": 875387,
+      "count": 819,
+      "bytesPerSecond": 175077.4,
+      "countPerSecond": 163.8,
+      "topContributors": [
+        {
+          "protocolId": "play",
+          "packetId": 37,
+          "packetName": "ClientboundLevelChunkWithLightPacket",
+          "totalBytes": 835833,
+          "count": 23
+        },
+        {
+          "protocolId": "play",
+          "packetId": 40,
+          "packetName": "PacketPlayOutLightUpdate",
+          "totalBytes": 30870,
+          "count": 6
+        },
+        {
+          "protocolId": "play",
+          "packetId": 71,
+          "packetName": "PacketPlayOutMultiBlockChange",
+          "totalBytes": 2179,
+          "count": 70
+        },
+        {
+          "protocolId": "play",
+          "packetId": 44,
+          "packetName": "PacketPlayOutRelEntityMove",
+          "totalBytes": 1404,
+          "count": 156
+        },
+        {
+          "protocolId": "play",
+          "packetId": 45,
+          "packetName": "PacketPlayOutRelEntityMoveLook",
+          "totalBytes": 1199,
+          "count": 109
+        },
+        {
+          "protocolId": "play",
+          "packetId": 113,
+          "packetName": "PacketPlayOutUpdateAttributes",
+          "totalBytes": 1032,
+          "count": 17
+        },
+        {
+          "protocolId": "play",
+          "packetId": 70,
+          "packetName": "PacketPlayOutEntityHeadRotation",
+          "totalBytes": 711,
+          "count": 237
+        },
+        {
+          "protocolId": "play",
+          "packetId": 88,
+          "packetName": "PacketPlayOutEntityVelocity",
+          "totalBytes": 544,
+          "count": 68
+        },
+        {
+          "protocolId": "play",
+          "packetId": 1,
+          "packetName": "PacketPlayOutSpawnEntity",
+          "totalBytes": 530,
+          "count": 10
+        },
+        {
+          "protocolId": "play",
+          "packetId": 9,
+          "packetName": "PacketPlayOutBlockChange",
+          "totalBytes": 411,
+          "count": 43
+        }
+      ]
+    },
+    "received": {
+      "totalBytes": 1523,
+      "count": 60,
+      "bytesPerSecond": 304.6,
+      "countPerSecond": 12.0,
+      "topContributors": [
+        {
+          "protocolId": "play",
+          "packetId": 23,
+          "packetName": "PacketPlayInPosition",
+          "totalBytes": 1378,
+          "count": 53
+        },
+        {
+          "protocolId": "play",
+          "packetId": 24,
+          "packetName": "PacketPlayInPositionLook",
+          "totalBytes": 102,
+          "count": 3
+        },
+        {
+          "protocolId": "play",
+          "packetId": 4,
+          "packetName": "ServerboundChatCommandPacket",
+          "totalBytes": 31,
+          "count": 1
+        },
+        {
+          "protocolId": "play",
+          "packetId": 34,
+          "packetName": "PacketPlayInEntityAction",
+          "totalBytes": 10,
+          "count": 2
+        },
+        {
+          "protocolId": "play",
+          "packetId": 51,
+          "packetName": "PacketPlayInArmAnimation",
+          "totalBytes": 2,
+          "count": 1
+        }
+      ]
+    }
+  },
+  "fileIO": {
+    "write": {
+      "totalBytes": 484,
+      "count": 4,
+      "bytesPerSecond": 96.8,
+      "countPerSecond": 0.8,
+      "topContributors": [
+        {
+          "path": "logs\\latest.log",
+          "totalBytes": 258
+        }
+      ]
+    },
+    "read": {
+      "totalBytes": 4040,
+      "count": 6,
+      "bytesPerSecond": 808.0,
+      "countPerSecond": 1.2,
+      "topContributors": [
+        {
+          "path": "C:\\Users\\lukas\\Documents\\a. JAVA\\Origin Zero Core\\server\\versions\\1.20.4\\paper-1.20.4.jar",
+          "totalBytes": 4040
+        }
+      ]
+    }
+  },
+  "serverTick": {
+    "minMs": 3.574887,
+    "averageMs": 5.5300624,
+    "maxMs": 10.0704,
+    "p99": 9.88804536,
+    "p90": 8.2468536,
+    "p75": 5.511534,
+    "p50": 4.703596
+  },
+  "threadAllocation": [],
+  "chunkGen": {
+    "durationNanosTotal": 1.54275E9,
+    "status": [
+      {
+        "state": "minecraft:noise",
+        "count": 29,
+        "durationNanosTotal": 826768000,
+        "durationNanosAvg": 28509241,
+        "durationNanosPercentiles": {
+          "p99": 3.4495304E7,
+          "p90": 3.349314E7,
+          "p75": 3.1797E7,
+          "p50": 2.94414E7
+        },
+        "fastest": {
+          "durationNanos": 20490600,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 21,
+          "chunkPosZ": 21,
+          "worldPosX": 336,
+          "worldPosZ": 224
+        },
+        "slowest": {
+          "durationNanos": 34558500,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 21,
+          "chunkPosZ": 21,
+          "worldPosX": 336,
+          "worldPosZ": -176
+        },
+        "secondSlowest": {
+          "durationNanos": 34332800,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 21,
+          "chunkPosZ": 21,
+          "worldPosX": 336,
+          "worldPosZ": 80
+        }
+      },
+      {
+        "state": "minecraft:features",
+        "count": 27,
+        "durationNanosTotal": 271586400,
+        "durationNanosAvg": 10058755,
+        "durationNanosPercentiles": {
+          "p99": 2.0979698E7,
+          "p90": 1.166484E7,
+          "p75": 1.03511E7,
+          "p50": 9423700.0
+        },
+        "fastest": {
+          "durationNanos": 7155800,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 20,
+          "chunkPosZ": 20,
+          "worldPosX": 320,
+          "worldPosZ": -96
+        },
+        "slowest": {
+          "durationNanos": 24131600,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 20,
+          "chunkPosZ": 20,
+          "worldPosX": 320,
+          "worldPosZ": 0
+        },
+        "secondSlowest": {
+          "durationNanos": 12008900,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 20,
+          "chunkPosZ": 20,
+          "worldPosX": 320,
+          "worldPosZ": -48
+        }
+      },
+      {
+        "state": "minecraft:surface",
+        "count": 29,
+        "durationNanosTotal": 224169900,
+        "durationNanosAvg": 7729996,
+        "durationNanosPercentiles": {
+          "p99": 1.1877328E7,
+          "p90": 9539000.0,
+          "p75": 8480600.0,
+          "p50": 7260600.0
+        },
+        "fastest": {
+          "durationNanos": 4941300,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 21,
+          "chunkPosZ": 21,
+          "worldPosX": 336,
+          "worldPosZ": 16
+        },
+        "slowest": {
+          "durationNanos": 12277700,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 21,
+          "chunkPosZ": 21,
+          "worldPosX": 336,
+          "worldPosZ": 256
+        },
+        "secondSlowest": {
+          "durationNanos": 10847800,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 21,
+          "chunkPosZ": 21,
+          "worldPosX": 336,
+          "worldPosZ": 224
+        }
+      },
+      {
+        "state": "minecraft:biomes",
+        "count": 31,
+        "durationNanosTotal": 176701100,
+        "durationNanosAvg": 5700035,
+        "durationNanosPercentiles": {
+          "p99": 7467120.0,
+          "p90": 6789100.0,
+          "p75": 6262800.0,
+          "p50": 5907400.0
+        },
+        "fastest": {
+          "durationNanos": 3867300,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 22,
+          "chunkPosZ": 22,
+          "worldPosX": 352,
+          "worldPosZ": 0
+        },
+        "slowest": {
+          "durationNanos": 7747200,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 22,
+          "chunkPosZ": 22,
+          "worldPosX": 352,
+          "worldPosZ": 128
+        },
+        "secondSlowest": {
+          "durationNanos": 6813600,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 22,
+          "chunkPosZ": 22,
+          "worldPosX": 352,
+          "worldPosZ": -64
+        }
+      },
+      {
+        "state": "minecraft:carvers",
+        "count": 29,
+        "durationNanosTotal": 33887900,
+        "durationNanosAvg": 1168548,
+        "durationNanosPercentiles": {
+          "p99": 2562220.0,
+          "p90": 1805840.0,
+          "p75": 1449800.0,
+          "p50": 1024900.0
+        },
+        "fastest": {
+          "durationNanos": 353200,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 21,
+          "chunkPosZ": 21,
+          "worldPosX": 336,
+          "worldPosZ": 192
+        },
+        "slowest": {
+          "durationNanos": 2849500,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 21,
+          "chunkPosZ": 21,
+          "worldPosX": 336,
+          "worldPosZ": -128
+        },
+        "secondSlowest": {
+          "durationNanos": 1823500,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 21,
+          "chunkPosZ": 21,
+          "worldPosX": 336,
+          "worldPosZ": -112
+        }
+      },
+      {
+        "state": "minecraft:spawn",
+        "count": 25,
+        "durationNanosTotal": 4005500,
+        "durationNanosAvg": 160220,
+        "durationNanosPercentiles": {
+          "p99": 1065144.0,
+          "p90": 215260.0,
+          "p75": 115400.0,
+          "p50": 88400.0
+        },
+        "fastest": {
+          "durationNanos": 19800,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 19,
+          "chunkPosZ": 19,
+          "worldPosX": 304,
+          "worldPosZ": 224
+        },
+        "slowest": {
+          "durationNanos": 1141800,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 19,
+          "chunkPosZ": 19,
+          "worldPosX": 304,
+          "worldPosZ": -112
+        },
+        "secondSlowest": {
+          "durationNanos": 822400,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 19,
+          "chunkPosZ": 19,
+          "worldPosX": 304,
+          "worldPosZ": -128
+        }
+      },
+      {
+        "state": "minecraft:structure_references",
+        "count": 31,
+        "durationNanosTotal": 3062300,
+        "durationNanosAvg": 98783,
+        "durationNanosPercentiles": {
+          "p99": 251770.0,
+          "p90": 119100.0,
+          "p75": 93500.0,
+          "p50": 85200.0
+        },
+        "fastest": {
+          "durationNanos": 62100,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 22,
+          "chunkPosZ": 22,
+          "worldPosX": 352,
+          "worldPosZ": -128
+        },
+        "slowest": {
+          "durationNanos": 268300,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 22,
+          "chunkPosZ": 22,
+          "worldPosX": 352,
+          "worldPosZ": -32
+        },
+        "secondSlowest": {
+          "durationNanos": 213200,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 22,
+          "chunkPosZ": 22,
+          "worldPosX": 352,
+          "worldPosZ": -48
+        }
+      },
+      {
+        "state": "minecraft:structure_starts",
+        "count": 47,
+        "durationNanosTotal": 2227000,
+        "durationNanosAvg": 47382,
+        "durationNanosPercentiles": {
+          "p99": 642478.0,
+          "p90": 32720.0,
+          "p75": 26900.0,
+          "p50": 20900.0
+        },
+        "fastest": {
+          "durationNanos": 8600,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 30,
+          "chunkPosZ": 30,
+          "worldPosX": 480,
+          "worldPosZ": 176
+        },
+        "slowest": {
+          "durationNanos": 642800,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 30,
+          "chunkPosZ": 30,
+          "worldPosX": 480,
+          "worldPosZ": 96
+        },
+        "secondSlowest": {
+          "durationNanos": 642100,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 30,
+          "chunkPosZ": 30,
+          "worldPosX": 480,
+          "worldPosZ": -144
+        }
+      },
+      {
+        "state": "minecraft:initialize_light",
+        "count": 27,
+        "durationNanosTotal": 341900,
+        "durationNanosAvg": 12662,
+        "durationNanosPercentiles": {
+          "p99": 27262.0,
+          "p90": 15400.0,
+          "p75": 13650.0,
+          "p50": 11500.0
+        },
+        "fastest": {
+          "durationNanos": 7100,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 20,
+          "chunkPosZ": 20,
+          "worldPosX": 320,
+          "worldPosZ": -80
+        },
+        "slowest": {
+          "durationNanos": 30200,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 20,
+          "chunkPosZ": 20,
+          "worldPosX": 320,
+          "worldPosZ": 224
+        },
+        "secondSlowest": {
+          "durationNanos": 18900,
+          "level": "ResourceKey[minecraft:dimension / minecraft:overworld]",
+          "chunkPosX": 20,
+          "chunkPosZ": 20,
+          "worldPosX": 320,
+          "worldPosZ": 192
+        }
+      }
+    ]
+  }
+}

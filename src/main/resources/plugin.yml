@@ -1,0 +1,41 @@
+#
+# This is the file your server opens to find the main class of your 
+# plugin and its information. We automatically replace variables here 
+# from your pom.xml file. YOU GENERALLY DO NOT NEED TO EDIT THIS.
+#
+# See https://www.spigotmc.org/wiki/plugin-yml/ for more information.
+# 
+name: ${project.name} 
+version: ${project.version}
+main: ${main.class}
+author: ${author}
+
+# DO NOT EDIT. This api-version is used for maximum backward compatibility.
+api-version: 1.13
+
+# Load the following libraries
+libraries: 
+  # DO NOT EDIT THE FIRST LIBRARY, required to make your plugin work under Java 15+
+  - org.openjdk.nashorn:nashorn-core:15.4
+  - org.jsoup:jsoup:1.14.3
+  - com.zaxxer:HikariCP:5.1.0
+  - org.mariadb.jdbc:mariadb-java-client:3.3.3
+  - mysql:mysql-connector-java:8.0.33
+
+# Same as libraries, but only works on Minecraft <1.16 using our own special method.
+# DO NOT CHANGE THE VERSION LABELS PLEEEASSE !!! DO NOT !!! DO NOT !!! I REPEAT DO NOT DO THE SAME THING I DID NOOOOOO!!!!!!!!!
+legacy-libraries:
+  - org.slf4j:slf4j-simple:1.7.36
+  - org.slf4j:slf4j-api:1.7.36
+  - com.zaxxer:HikariCP:4.0.3
+  - org.mariadb.jdbc:mariadb-java-client:3.0.3
+  - mysql:mysql-connector-java:8.0.28
+
+# Plugins that we support so that we are loaded after them for your convenience.
+softdepend: [AuthMe, BanManager, BungeeChatAPI, CMI, DiscordSRV, Factions, Feudal, ItemsAdder, Essentials, LegacyFactions, Lands, LuckPerms, Multiverse-Core, MVdWPlaceholderAPI, MythicMobs, mcMMO, Nicky, PlaceholderAPI, ProtocolLib, SimpleClans, Towny, TownyChat, Vault, WorldEdit]
+
+#
+# The commands are built at runtime so you can change them easily within the settings.
+# Do not change anything in here, you will break the plugin and get no support.
+#
+commands:  
