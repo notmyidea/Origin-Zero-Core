@@ -1,14 +1,19 @@
 package net.bytebond.core;
 
 import net.bytebond.core.commands.NationCommand;
+import net.bytebond.core.settings.Config;
 import net.bytebond.core.settings.Data;
+import net.bytebond.core.settings.Drills;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.mineacademy.fo.Common;
+import org.mineacademy.fo.Messenger;
 import org.mineacademy.fo.plugin.SimplePlugin;
+
+import java.util.List;
 
 /**
  * PluginTemplate is a simple template you can use every time you make
@@ -35,7 +40,8 @@ public final class Core extends SimplePlugin {
 	 */
 	@Override
 	protected void onReloadablesStart() {
-
+		Common.setLogPrefix("Nations");
+		Common.setTellPrefix("Nations");
 		// You can check for necessary plugins and disable loading if they are missing
 		//Valid.checkBoolean(HookManager.isVaultLoaded(), "You need to install Vault so that we can work with packets, offline player data, prefixes and groups.");
 
@@ -47,19 +53,68 @@ public final class Core extends SimplePlugin {
 		// Please see @AutoRegister for parts you do not have to register manually
 		//
 
+		//Messenger.
+
 		//NationsDB.getInstance().connect(Data.storage.mysql.hostname, Integer.parseInt(Data.storage.mysql.port), Data.storage.mysql.database, Data.storage.mysql.username, Data.storage.mysql.password);
 
 		// managed by @AutoRegister in the class
 		//registerCommands(new NationCommand());
 
-		Bukkit.getLogger().info("Enabling the Nations Core plugin");
+		Common.logFramed("Loading Nations " + getDescription().getVersion() + "\n https://github.com/notmyidea/nations");
 		// Connect to DB
 		// load all data from the database into the cache
 		// check all Nations
 		// check all Players
 		// Run
 
+		if (Config.General.debugging) {
+			Common.log("Debugging is enabled");
+			Common.log("loading configuration files . . .");
+			Common.log("Economy provider is set to " + Config.Economy.provider);
+			Common.log("Current prices are set to: ");
+			Common.log("Nation-Creation: " + Config.Nations.Creation.cost);
+			Common.log("International-Market prices: ");
+
+
+			Common.log("All current Nations and their leaders are: ");
+			//for (Nation nation : Nations.getNations()) {
+			//	Common.log(nation.getName() + " - " + nation.getOwner().getName());
+			//}
+
+
+			//if (Drills.Drill.enabled) {
+				Common.log("Drills are enabled");
+				Common.log("Wood-Drill rate per hour: " + Drills.Drill.Wood.rate_per_hour);
+				Common.log("Stone-Drill rate per hour: " + Drills.Drill.Stone.rate_per_hour);
+				Common.log("Brick-Drill rate per hour: " + Drills.Drill.Brick.rate_per_hour);
+				Common.log("Darkstone-Drill rate per hour: " + Drills.Drill.Darkstone.rate_per_hour);
+				Common.log("Obsidian-Drill rate per hour: " + Drills.Drill.Obsidian.rate_per_hour);
+			//} else {
+				//Common.log("Drills are disabled");
+			//}
+
+		}
+
+
+
 	}
+
+
+	private String getHousingStatus(int bedCount) {
+		if (bedCount == 0) {
+			return "Empty";
+		} else if (bedCount <= 4) {
+			return "Sparse";
+		} else if (bedCount <= 6) {
+			return "Moderate";
+		} else if (bedCount <= 8) {
+			return "Crowded";
+		} else {
+			return "Cramped";
+		}
+	}
+
+
 
 	@Override
 	protected void onPluginPreReload() {

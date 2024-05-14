@@ -1,6 +1,30 @@
+# Nation Data
+# 
+# This file stores all the data about a nation.
+# 
+# Do not modify this file manually, use /nation commands instead.
+# 
 # Nation
-# Data
 
-nationName: myfabolousnat1212
-nationID: 4
-nationOwner: 29490773-9700-4b31-a14e-5599137e0af3
+nationName: test
+owner: 29490773-9700-4b31-a14e-5599137e0af3
+nationDescription: '&7THIS IS YOUR NATION DESCRIPTION.'
+TAG: TEST
+vaultBalance: 0.0
+UEConWood: 0.0
+UEConStone: 0.0
+UEConBrick: 0.0
+UEConDarkstone: 0.0
+UEConObsidian: 0.0
+taxRate: 0.0
+population: 0
+drills: None
+allyBuilding: false
+max_territory: 100
+min_territory: 9
+territory:
+- world,-20,-7
+- world,-21,-7
+- world,-17,-7
+- world,-16,-6
+- world,-16,-7

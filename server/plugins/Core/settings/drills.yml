@@ -1,0 +1,51 @@
+# ********************************************
+# ** For more options check Settings folder **
+# ********************************************
+#
+# You will be able to modify the behavior of the plugin by changing the values in this file.
+# All placeholders: {nation}, {player}
+# ColorCodes: §(1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,x(magic))
+#
+#
+# This config will be used to configure the behavior of Drills.
+Drill:
+  Messages:
+    positions: |
+      You cannot place the {drill} here, it must be placed on a specific block:
+      {for_each_blocks}
+  Wood:
+    # The rate at which the Drill will produce Wood
+    rate_per_hour: 1
+    positions: |
+      - 0,0,0
+      - 100,100,100
+    # Set to "null" to disable
+    permission: "nations.drills.wood"
+  Stone:
+    rate_per_hour: 1
+    positions: |
+      - 0,0,0
+      - 100,100,100
+    # Set to "null" to disable
+    permission: "nations.drills.stone"
+  Brick:
+    rate_per_hour: 1
+    positions: |
+      - 0,0,0
+      - 100,100,100
+    # Set to "null" to disable
+    permission: "nations.drills.brick"
+  Darkstone:
+    rate_per_hour: 1
+    positions: |
+      - 0,0,0
+      - 100,100,100
+    # Set to "null" to disable
+    permission: "nations.drills.darkstone"
+  Obsidian:
+    rate_per_hour: 1
+    positions: |
+      - 0,0,0
+      - 100,100,100
+    # Set to "null" to disable
+    permission: "nations.drills.obsidian"

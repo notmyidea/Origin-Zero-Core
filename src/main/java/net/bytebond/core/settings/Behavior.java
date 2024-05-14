@@ -12,7 +12,7 @@ public class Behavior extends YamlStaticConfig {
 
     @Override
     protected void onLoad(){
-        this.loadConfiguration("behavior.yml");
+        this.loadConfiguration("settings/behavior.yml");
     }
 
     public static class Nation {

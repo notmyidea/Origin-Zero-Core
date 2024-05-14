@@ -1,0 +1,45 @@
+# ********************************************
+# ** For more options check Settings folder **
+# ********************************************
+#
+Nation:
+  # THIS IS NOT BEING FORMATTED CORRECTLY, THE NATION PART DOES NOT WORK, GO DOWN TO CREATION !!
+  Static:
+    # DOES NOT WORK AS OF NOW
+    not_in_nation: |
+         &fYou are not currently part of a Nation.
+         &fYou can create one with &f/nation create &7<name>
+    in_nation: |
+         &fSince you have a Nation you can access many subcommands \n  &flike: &7info&f, &7diplo&f,
+    Notify_description:
+      # DOES NOT WORK AS OF NOW
+      # If true it will send the player a notification that they forgot to set their description.
+      enabled: true
+      messages: |
+           &fBTW: You have not added a description to your Nation yet.
+           &7/nation info &fdescription &7<description>
+  Creation:
+    nation_creation_disabled: "&fNation creation is disabled."
+    need_name_for_creation: "&fYou must provide a name for your Nation. &7/nation create <name>"
+    only_letters: "&fYour Nation name must only contain letters."
+    max_characters: "&fYour Nation name must be shorter than &7 {max} &fcharacters."
+    min_characters: "&fYour Nation name must be longer than &7 {min} &fcharacters."
+    already_in_nation: "&fYou are already part of a Nation."
+    success: "&fYou have created a Nation named &7 {name} &f."
+    not_in_nation: "&fYou are not currently part of a Nation."
+  Set:
+    # {setting} will be replaced with the /nation set <setting> : This is simplifying the messages you need to configure
+    missing_arg: "&fYou must provide a value to change the setting to."
+    set_setting_success: "&fSuccessfully changed the value of &7{setting} &fto &7{value} &f."
+    max_characters: "&fYour Nation &7{setting} &fmust be shorter than &7{max} &fcharacters."
+    min_characters: "&fYour Nation &7{setting} &fmust be longer than &7{min} &fcharacters."
+    blacklisted: "&fYour Nation &7{setting} &fcannot include a blacklisted word."
+    color_coding: "&fYou do not have permission to use color codes in your Nation {setting}."
+  Claim:
+    under_limit: "&fUnclaiming this chunk would bring your Nation under the minimum chunk limit of &7{min}&f."
+    over_limit: "&fClaiming this chunk would bring your Nation over the maximum chunk limit of &7{max}&f."
+    already_claimed: "&fThis chunk is already claimed by &7{nation}&f."
+    not_enough_muney: "&fYou do not have enough money to claim this chunk. Claiming a chunk costs &7{cost}&f."
+    disabled: "&fClaiming territory is disabled."
+    success: "&fYou have claimed this chunk for your Nation."
+    unclaim_success: "&fYou have unclaimed this chunk for your Nation."

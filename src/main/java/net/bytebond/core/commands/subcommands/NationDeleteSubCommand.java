@@ -1,14 +1,11 @@
 package net.bytebond.core.commands.subcommands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.bytebond.core.data.NationYML;
+import org.bukkit.entity.Player;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
 
-import java.util.List;
+import java.util.UUID;
 
 public class NationDeleteSubCommand extends SimpleSubCommand {
 
@@ -26,8 +23,31 @@ public class NationDeleteSubCommand extends SimpleSubCommand {
 
     @Override
     protected void onCommand() {
-        tellInfo("Deleted your Nation");
-    }
+        Player player = (Player) sender;
+        UUID UUID = player.getUniqueId();
+        NationYML nation = new NationYML(UUID);
 
+        if(!(nation.isSet("nationName"))) {
+            tellWarn("You are not currently part of a Nation.");
+            return;
+        }
+
+
+        if(args.length != 1) {
+            tellWarn("&fYou must confirm the deletion of your Nation. &7/nation delete confirm");
+            return;
+        }
+        String firstArg = args[0];
+
+        if(!(firstArg.equalsIgnoreCase("confirm"))) {
+            tellWarn("&fYou must confirm the deletion of your Nation. &7/nation delete confirm");
+            return;
+        }
+
+        nation.deleteFile();
+        tellSuccess("&fYou have successfully deleted your Nation.");
+
+
+    }
 
 }

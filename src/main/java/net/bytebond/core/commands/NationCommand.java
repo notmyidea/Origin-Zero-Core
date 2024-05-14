@@ -1,8 +1,9 @@
 package net.bytebond.core.commands;
 
-import net.bytebond.core.commands.subcommands.NationCreateSubCommand;
-import net.bytebond.core.commands.subcommands.NationDeleteSubCommand;
-import org.bukkit.ChatColor;
+import net.bytebond.core.commands.subcommands.*;
+import net.bytebond.core.data.NationYML;
+import net.bytebond.core.settings.Messages;
+import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
 import org.mineacademy.fo.command.SimpleCommandGroup;
@@ -11,6 +12,7 @@ import org.mineacademy.fo.plugin.SimplePlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @AutoRegister
 public final class NationCommand extends SimpleCommandGroup {
@@ -23,24 +25,58 @@ public final class NationCommand extends SimpleCommandGroup {
     protected void registerSubcommands() {
         registerSubcommand(new NationCreateSubCommand(this));
         registerSubcommand(new NationDeleteSubCommand(this));
+        registerSubcommand(new NationInfoSubCommand(this));
+        registerSubcommand(new NationSetSubCommand(this));
+        registerSubcommand(new NationClaimSubCommand(this));
     }
+
 
     @Override
     protected List<SimpleComponent> getNoParamsHeader() {
+        Player player = (Player) sender;
+        UUID UUID = player.getUniqueId();
         int foundedYear = SimplePlugin.getInstance().getFoundedYear();
-        List<String> messages = new ArrayList();
-        messages.add("&7" + Common.chatLineSmooth());
-       // messages.add(this.getHeaderPrefix() + "  " + SimplePlugin.getNamed() + " &7" + SimplePlugin.getVersion());
-        messages.add("   &7You are not currently part of a Nation.");
-        messages.add("   &7You can create one with &f/nation create &7<name>");
-        messages.add(" ");
-        //String credits = String.join(", ", SimplePlugin.getInstance().getDescription().getAuthors());
+        List<String> messages = new ArrayList<>();
+        messages.add("&f" + Common.chatLineSmooth());
+        NationYML nation = new NationYML(UUID);
 
+        // ******************************
+        //
+        // THIS FUNCTION IS **STATIC** IT CAN ONLY BE LOADED **ONCE** !!!
+        // THAT MEANS THAT DYNAMIC MESSAGES WILL NOT WORK IF CHANGED RECENTLY !
+        // THIS AFFECTS ALMOST EVERYTHING, INCLUDING THE NATION DESCRIPTION REMINDER, THE __NATION NAME__ ITSELF ... etc ...
+        //
+        // ******************************
 
+        //if player in Nation
+        if (nation.isSet("nationName")) {
+            //for (String line : Messages.Nation.Static.not_in_nation) {
+               // messages.addAll(Arrays.asList(line.split("\n")));
+            messages.add("     &fYou are in a Nation.");
+            messages.add("     &fYou can access many subcommands like &f/nation <");
+            messages.add("     &7info&f, &7diplo&f, &7more&f.. &f>");
+            //}
+        } //else {
+          //  for (String line : Messages.Nation.Static.in_nation) {
+          //      messages.addAll(Arrays.asList(line.split("\n")));
+          //  }
+       // }
+        else {
+            messages.add("     &fYou are not currently part of a Nation.");
+            messages.add("     &fYou can create one with &f/nation create &7<name>");
+        }
+        //if (Messages.Nation.Static.Notify_description.enabled && nation.isSet("nationDescription") || !(nation.getString("nationDescription").equals("&7THIS IS YOUR NATION DESCRIPTION."))) {
+            //for (String line : Messages.Nation.Static.Notify_description.messages) {
+            //    messages.addAll(Arrays.asList(line.split("\n")));
+           // }
+            //messages.add("     &7BTW: You have not added a description to your Nation yet.");
+            //messages.add("     &7/nation setdescription <description>");
+        //}
 
-        messages.add("   &f/nation help/info &7[nation] for more information");
-        messages.add("&7" + Common.chatLineSmooth());
+        messages.add("&f" + Common.chatLineSmooth());
         return Common.convert(messages, SimpleComponent::of);
+    }
+
     }
 
 
@@ -75,4 +111,4 @@ public final class NationCommand extends SimpleCommandGroup {
 
 
 
-}
+

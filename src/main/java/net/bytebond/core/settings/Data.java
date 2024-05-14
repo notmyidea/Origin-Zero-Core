@@ -10,7 +10,7 @@ public class Data extends YamlStaticConfig {
 
     @Override
     protected void onLoad() {
-        this.loadConfiguration("data.yml");
+        this.loadConfiguration("settings/databases/storage.yml");
     }
 
     public static class storage {
