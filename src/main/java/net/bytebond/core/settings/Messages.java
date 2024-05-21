@@ -89,6 +89,7 @@ public class Messages extends YamlStaticConfig {
             public static String disabled;
             public static String success;
             public static String unclaim_success;
+            public static String you_are_not_allowed_to_do_x_here;
 
             private static void init() {
                 pathPrefix("Nation.Claim");
@@ -99,6 +100,7 @@ public class Messages extends YamlStaticConfig {
                 disabled = getString("disabled");
                 success = getString("success");
                 unclaim_success = getString("unclaim_success");
+                you_are_not_allowed_to_do_x_here = getString("you_are_not_allowed_to_do_x_here");
             }
 
         }

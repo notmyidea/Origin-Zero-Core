@@ -6,25 +6,29 @@
 # 
 # Nation
 
-nationName: test
-owner: 29490773-9700-4b31-a14e-5599137e0af3
+nationName: Nation
+owner: 4294c6e3-68c4-39d6-9bb2-8ddb81e83692
 nationDescription: '&7THIS IS YOUR NATION DESCRIPTION.'
-TAG: TEST
+TAG: NATI
 vaultBalance: 0.0
 UEConWood: 0.0
 UEConStone: 0.0
 UEConBrick: 0.0
 UEConDarkstone: 0.0
 UEConObsidian: 0.0
-taxRate: 0.0
+taxRate: 10
 population: 0
 drills: None
 allyBuilding: false
 max_territory: 100
 min_territory: 9
-territory:
-- world,-20,-7
-- world,-21,-7
-- world,-17,-7
-- world,-16,-6
-- world,-16,-7
+allyPermissions: false
+archive_messages:
+- Creation on 05/21/2024 by §7pi16 §fwith the name of §7Nation§f.
+allied_nations: []
+pending_allied_nations: []
+enemy_nations: []
+warscore: 0
+warswon: 0
+warslost: 0
+troops: 0

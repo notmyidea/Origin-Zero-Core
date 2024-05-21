@@ -49,14 +49,32 @@ public final class NationYML extends YamlConfig {
     // *************
     // * Allies
     // *************
-    private Boolean allyBuilding;
+    private Boolean allyPermissions;
+    private List<String> allied_nations;
+    private List<String> pending_allied_nations;
+    private List<String> enemy_nations;
+
+
+    //*************
+    // * War
+    // *************
+    private Integer warscore;
+    private Integer warswon;
+    private Integer warslost;
+    private Integer troops;
+
+
+    // *************
+    // * Archive
+    // *************
+    private List<String> archive_messages;
 
 
     // *************
     // * Economy
     // *************
     // Taxation (boo)
-    private final Double taxRate; // 0.0 - 10.0
+    private final Integer taxRate; // 0.0 - 10.0
     // Population
     private final Integer population;
 
@@ -84,10 +102,13 @@ public final class NationYML extends YamlConfig {
                     .filter(p -> p.toString().endsWith(".yml"))
                     .forEach(p -> {
                         String fileName = p.getFileName().toString();
-                        UUID uuid = UUID.fromString(fileName.substring(0, fileName.length() - 4)); // remove .yml
-                        NationYML nation = new NationYML(uuid);
-                        nation.loadConfiguration(NO_DEFAULT, "data/" + uuid + ".yml");
-                        nations.put(uuid, nation);
+                        String uuidStr = fileName.substring(0, fileName.length() - 4); // remove .yml
+                        if (uuidStr.matches("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")) {
+                            UUID uuid = UUID.fromString(uuidStr);
+                            NationYML nation = new NationYML(uuid);
+                            nation.loadConfiguration(NO_DEFAULT, "data/" + uuid + ".yml");
+                            nations.put(uuid, nation);
+                        }
                     });
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,7 +126,7 @@ public final class NationYML extends YamlConfig {
         this.nationDescription = this.getString("nationDescription");
         this.tag = this.getString("tag");
         this.territory = this.getStringList("territory");
-
+        this.allyPermissions = this.getBoolean("allyPermissions", false);
 
 
 
@@ -116,9 +137,19 @@ public final class NationYML extends YamlConfig {
         this.UEConBrick = this.getDouble("UEConBrick", 0.0);
         this.UEConDarkstone = this.getDouble("UEConDarkstone", 0.0);
         this.UEConObsidian = this.getDouble("UEConObsidian", 0.0);
-        this.taxRate = this.getDouble("taxRate", 0.0);
+        this.taxRate = this.getInteger("taxRate", 10);
         this.population = this.getInteger("population", 0);
-        this.allyBuilding = this.getBoolean(("allyBuilding"), false);
+        this.archive_messages = this.getStringList("archive_messages");
+
+
+        this.allied_nations = this.getStringList("allied_nations");
+        this.pending_allied_nations = this.getStringList("pending_allied_nations");
+        this.enemy_nations = this.getStringList("enemy_nations");
+        this.warscore = this.getInteger("warscore", 0);
+        this.warswon = this.getInteger("warswon", 0);
+        this.warslost = this.getInteger("warslost", 0);
+        this.troops = this.getInteger("troops", 0);
+        
 
         this.drills = this.getStringList("drills");
         // Load the configuration from the YAML file

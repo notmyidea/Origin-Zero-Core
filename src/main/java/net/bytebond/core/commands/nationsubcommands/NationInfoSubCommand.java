@@ -1,7 +1,7 @@
-package net.bytebond.core.commands.subcommands;
+package net.bytebond.core.commands.nationsubcommands;
 
+import net.bytebond.core.data.ClaimRegistry;
 import net.bytebond.core.data.NationYML;
-import net.bytebond.core.settings.Messages;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.command.SimpleCommandGroup;
@@ -36,7 +36,16 @@ public class NationInfoSubCommand extends SimpleSubCommand {
             amountOfDrills = nation.getDrills().size();
         }
 
-
+        // check if the player is in a Nation
+        if(!(nation.isSet("nationName"))) {
+            messages.add("&f" + Common.chatLineSmooth());
+            messages.add("&fYou are not currently part of a Nation.");
+            messages.add("&fYou can create one with &7/nation create <name>");
+            messages.add("&f/nation help/info &7for more information");
+            messages.add("&f" + Common.chatLineSmooth());
+            tellNoPrefix(messages);
+            return;
+        }
 
 
 
@@ -58,7 +67,7 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                         messages.add("   &fYou are the owner of &7" + nation.getString("nationName") + " &7(&f" + nation.getString("TAG") + "&7)&f");
                     }
                     messages.add("   &fWarscore: &a★&f" + nation.getVaultBalance());
-                    messages.add("   &fEconomic Information: ");
+                    messages.add("   &fEconomic Information:       Tax: &c" + nation.getInteger("taxRate")+ "&f%, Happiness: " + "&aCalc.%");
                     messages.add("");
                     messages.add("   &fWood: &7" + nation.getUEConWood().intValue());
                     messages.add("   &fStone: &7" + nation.getUEConStone().intValue());
@@ -88,9 +97,6 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                 case "economy":
                     tellInfo("building");
                     break;
-                case "demographics":
-                    tellInfo("demographics");
-                    break;
                 case "infrastructure":
                     tellInfo("infrastructure");
                     break;
@@ -101,34 +107,73 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                     tellInfo("territory");
                     break;
                 case "diplomacy":
-                    tellInfo("diplomacy");
+                    List<String> diplomacyMessage = new ArrayList<>();
+                    diplomacyMessage.add("&f" + Common.chatLineSmooth());
+                    diplomacyMessage.add("   &fDiplomatic Information &7(&f" + nation.getString("nationName") + "&7)");
+                    diplomacyMessage.add("   &fAllied Nations: ");
+                    // get all allied nations
+                    if(nation.getStringList("allied_nations") != null) {
+                        for(String alliedNation : nation.getStringList("allied_nations")) {
+                            diplomacyMessage.add("   &f- &7" + alliedNation);
+                        }
+                    } else {
+                        diplomacyMessage.add("   &fNone.");
+                    }
+                    diplomacyMessage.add("   &fPending Allied Nations: ");
+                    // get all pending allied nations
+                    if(nation.getStringList("pending_allied_nations") != null) {
+                        for(String pendingAlliedNation : nation.getStringList("pending_allied_nations")) {
+                            diplomacyMessage.add("   &f- &7" + pendingAlliedNation);
+                        }
+                    } else {
+                        diplomacyMessage.add("   &fNone.");
+                    }
+                    diplomacyMessage.add("   &fWars: &a" + nation.getInteger("warswon") + "&f/&c" + nation.getInteger("warslost"));
+                    diplomacyMessage.add("   &fTroops: &7" + nation.getInteger("troops"));
+                    diplomacyMessage.add("&f" + Common.chatLineSmooth());
+                    tellNoPrefix(diplomacyMessage);
                     break;
                 case "chunk":
                     List<String> chunkMessage = new ArrayList();
                     chunkMessage.add("&f" + Common.chatLineSmooth());
                     chunkMessage.add("   &fChunk Information &7(&f" + player.getLocation().getChunk().getX() + "&7, &f" + player.getLocation().getChunk().getZ() + "&7)");
-                    Map<UUID, NationYML> nationsMap = NationYML.getNations(); String chunkStr = player.getLocation().getWorld().getName() + "," + player.getLocation().getChunk().getX() + "," + player.getLocation().getChunk().getZ();
+                    Map<UUID, NationYML> nationsMap = NationYML.getNations();
+                    String chunkStr = player.getLocation().getWorld().getName() + "," + player.getLocation().getChunk().getX() + "," + player.getLocation().getChunk().getZ();
+                    ClaimRegistry claim = new ClaimRegistry(player.getLocation().getChunk(), null, null, player.getName());
                     for(NationYML nations : nationsMap.values()) {
                         if(nations.isSet("territory")) {
-                            if(nations.getStringList("territory").contains(chunkStr)) { // use chunkStr instead of chunk.toString()
-                                chunkMessage.add("   &fClaimed by: &7" + nations.getString("nationName"));
+                            if(nations.getStringList("territory").contains(chunkStr)) {
+                                if(nations.getString("nationName").equals(nation.getString("nationName"))) {
+                                    chunkMessage.add("   &fClaimed by: &7" + nations.getString("nationName") + " &f(you)");
+                                } else {
+                                    chunkMessage.add("   &fClaimed by: &7" + nations.getString("nationName"));
+                                }
+
                                 chunkMessage.add("   &fInfrastructure: &70");
                                 chunkMessage.add("   &fHousing: &7(&a0&7/0&7)");
                                 chunkMessage.add("   &fDrills: &70");
+                                chunkMessage.add("   &fHistory: ");
+                                if(claim.getStringList("history") != null) {
+                                    for(String history : claim.getStringList("history")) {
+                                        chunkMessage.add("   &f- " + history);
+                                    }
+                                }
                             } else {
-                                chunkMessage.add("   &fUnclaimed.");
+                                if(claim.getStringList("history") != null) {
+                                    for(String history : claim.getStringList("history")) {
+                                        chunkMessage.add("   &f- " + history);
+                                    }
+                                } else {
+                                    chunkMessage.add("   &fUnclaimed.");
+                                }
                             }
+                        } else if(claim.getString("ownerUUID") != null && !claim.getString("ownerNationName").isEmpty()) {
+                            //chunkMessage.add("   &fThis chunk was claimed by &7" + claim.getString("ownerNationName") + "&f but has since been deleted.");
                         }
                     }
 
-
-
-                    //chunkMessage.add("   &fRessource availability:  &7" + resourceStr.toString().replace(",", "&f,&7"));
-                    //chunkMessage.add("   &f->   " + valueStr.toString());
-
                     chunkMessage.add("&f" + Common.chatLineSmooth());
                     tellNoPrefix(chunkMessage);
-
                     break;
 
             }
@@ -147,7 +192,7 @@ public class NationInfoSubCommand extends SimpleSubCommand {
 
             switch (args.length) {
                 case 1:
-                    return completeLastWord("economy", "demographics", "infrastructure", "trade", "territory", "diplomacy", "chunk");
+                    return completeLastWord("chunk", "economy", "diplomacy", "infrastructure", "trade", "territory");
                 case 2:
                     return completeLastWord("");
 

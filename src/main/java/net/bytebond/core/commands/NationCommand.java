@@ -1,8 +1,12 @@
 package net.bytebond.core.commands;
 
-import net.bytebond.core.commands.subcommands.*;
+import net.bytebond.core.commands.adminsubcommands.AdminNationManager;
+import net.bytebond.core.commands.diplomaticsubcommands.NationAnnounceSubCommand;
+import net.bytebond.core.commands.diplomaticsubcommands.NationArchiveSubCommand;
+import net.bytebond.core.commands.diplomaticsubcommands.NationDiplomacySubCommand;
+import net.bytebond.core.commands.economicsubcommands.NationTaxSubCommand;
+import net.bytebond.core.commands.nationsubcommands.*;
 import net.bytebond.core.data.NationYML;
-import net.bytebond.core.settings.Messages;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
@@ -27,9 +31,15 @@ public final class NationCommand extends SimpleCommandGroup {
         registerSubcommand(new NationDeleteSubCommand(this));
         registerSubcommand(new NationInfoSubCommand(this));
         registerSubcommand(new NationSetSubCommand(this));
-        registerSubcommand(new NationClaimSubCommand(this));
+        registerSubcommand(new NationsClaimManagerSubCommand(this));
+        registerSubcommand(new NationAlliedClaimsSubCommand(this));
+        registerSubcommand(new NationTaxSubCommand(this));
+        registerSubcommand(new NationAnnounceSubCommand(this));
+        registerSubcommand(new NationArchiveSubCommand(this));
+        registerSubcommand(new NationDiplomacySubCommand(this));
+        registerSubcommand(new AdminNationManager(this));
     }
-
+    
 
     @Override
     protected List<SimpleComponent> getNoParamsHeader() {

@@ -1,19 +1,27 @@
 package net.bytebond.core;
 
-import net.bytebond.core.commands.NationCommand;
+import net.bytebond.core.data.ClaimRegistry;
+import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
-import net.bytebond.core.settings.Data;
 import net.bytebond.core.settings.Drills;
+import net.bytebond.core.util.Placeholders;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.EntityType;
+import org.bukkit.Chunk;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.Inventory;
+import org.jetbrains.annotations.NotNull;
 import org.mineacademy.fo.Common;
-import org.mineacademy.fo.Messenger;
 import org.mineacademy.fo.plugin.SimplePlugin;
 
-import java.util.List;
+import java.io.File;
+import java.util.stream.Collectors;
+
+import static net.md_5.bungee.api.ChatMessageType.ACTION_BAR;
 
 /**
  * PluginTemplate is a simple template you can use every time you make
@@ -25,12 +33,13 @@ import java.util.List;
 
 public final class Core extends SimplePlugin {
 
+	protected Integer papi = 0;
+
 	/**
 	* Automatically perform login ONCE when the plugin starts.
 	*/
 	@Override
 	protected void onPluginStart() {
-
 	}
 
 
@@ -56,16 +65,23 @@ public final class Core extends SimplePlugin {
 		//Messenger.
 
 		//NationsDB.getInstance().connect(Data.storage.mysql.hostname, Integer.parseInt(Data.storage.mysql.port), Data.storage.mysql.database, Data.storage.mysql.username, Data.storage.mysql.password);
-
+		this.registerEvents(this);
 		// managed by @AutoRegister in the class
 		//registerCommands(new NationCommand());
 
-		Common.logFramed("Loading Nations " + getDescription().getVersion() + "\n https://github.com/notmyidea/nations");
+		Common.logFramed("Loading Nations " + this.getDescription().getVersion() + "\n https://github.com/notmyidea/nations");
 		// Connect to DB
 		// load all data from the database into the cache
 		// check all Nations
 		// check all Players
 		// Run
+
+		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+			papi = 1;
+			Common.log("PlaceholderAPI found, enabling placeholders");
+			new Placeholders(this).register();
+		}
+
 
 		if (Config.General.debugging) {
 			Common.log("Debugging is enabled");
@@ -100,21 +116,6 @@ public final class Core extends SimplePlugin {
 	}
 
 
-	private String getHousingStatus(int bedCount) {
-		if (bedCount == 0) {
-			return "Empty";
-		} else if (bedCount <= 4) {
-			return "Sparse";
-		} else if (bedCount <= 6) {
-			return "Moderate";
-		} else if (bedCount <= 8) {
-			return "Crowded";
-		} else {
-			return "Cramped";
-		}
-	}
-
-
 
 	@Override
 	protected void onPluginPreReload() {
@@ -133,11 +134,17 @@ public final class Core extends SimplePlugin {
 	 *
 	 * @param event
 	 */
-	@EventHandler
-	public void onRightClick(final PlayerInteractEntityEvent event) {
-		if (event.getRightClicked().getType() == EntityType.COW)
-			event.getRightClicked().getWorld().createExplosion(event.getRightClicked().getLocation(), 5);
-	}
+	//@EventHandler
+	//public void onRightClick(final PlayerInteractEntityEvent event) {
+	//	if (event.getRightClicked().getType() == EntityType.COW)
+	//		event.getRightClicked().getWorld().createExplosion(event.getRightClicked().getLocation(), 5);
+	//}
+
+	/*
+	 * THIS HAS BROKEN MEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+	 */
+
+
 
 	/* ------------------------------------------------------------------------------- */
 	/* Static */

@@ -48,7 +48,8 @@ Nations:
         # Maximum amount of characters for Nation names
         max_characters: 20
         # Minimum amount of characters for a Nation names
-        min_characters: 3
+        # Minimum amount is 4 to prevent empty tags
+        min_characters: 4
         # Blacklisted names for Nations, can be multiple separated by commas
         blacklist: "admin,moderator,owner,staff,helper,dev,developer,admin,mod,moderator,owner,staff,helper,dev,developer,"
     Tags:
@@ -80,6 +81,24 @@ Nations:
       max: 100
       # Minimum amount of Chunks a Nation can claim, will prevent the Nation from claiming 0
       min: 9
+    Building:
+      # Allow fighting on Nation territory
+      allow_fighting: true
+      # Allow alliances to do x on each other's territory
+      Alliances:
+        allow_building: true
+        allow_usage: true
+        allow_destroy: true
+      # Allow neutral nations to do x on each other's territory
+      Neutral:
+        allow_building: false
+        allow_usage: false
+        allow_destroy: false
+        # Allow nations to do x on each other's territory
+      War:
+        allow_building: false
+        allow_usage: false
+        allow_destroy: false
 
   #
   #

@@ -1,10 +1,12 @@
-package net.bytebond.core.commands.subcommands;
+package net.bytebond.core.commands.nationsubcommands;
 
 import net.bytebond.core.data.NationYML;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class NationDeleteSubCommand extends SimpleSubCommand {
@@ -46,8 +48,24 @@ public class NationDeleteSubCommand extends SimpleSubCommand {
 
         nation.deleteFile();
         tellSuccess("&fYou have successfully deleted your Nation.");
-
-
     }
+
+    @Override
+    protected List<String> tabComplete() {
+
+        if (!isPlayer())
+            return new ArrayList<>();
+
+        final Player player = (Player) sender;
+
+        switch (args.length) {
+            case 1:
+                return completeLastWord("confirm");
+            default:
+                return NO_COMPLETE;
+
+        }
+    }
+
 
 }

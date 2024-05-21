@@ -147,6 +147,59 @@ public class Config extends YamlStaticConfig {
                 min = getInteger("min");
             }
         } // Claiming
+
+        public static class Building {
+            public static Boolean allow_fighting;
+
+
+            public static class Alliances {
+                public static Boolean allow_building;
+                public static Boolean allow_usage;
+                public static Boolean allow_destroy;
+
+                private static void init() {
+                    pathPrefix("Nations.Territory.Building.Alliances");
+                    allow_building = getBoolean("allow_building");
+                    allow_usage = getBoolean("allow_usage");
+                    allow_destroy = getBoolean("allow_destroy");
+                }
+            }
+            public static class Neutral {
+                public static Boolean allow_building;
+                public static Boolean allow_usage;
+                public static Boolean allow_destroy;
+
+                private static void init() {
+                    pathPrefix("Nations.Territory.Building.Neutral");
+                    allow_building = getBoolean("allow_building");
+                    allow_usage = getBoolean("allow_usage");
+                    allow_destroy = getBoolean("allow_destroy");
+                }
+            }
+            public static class War {
+                public static Boolean allow_building;
+                public static Boolean allow_usage;
+                public static Boolean allow_destroy;
+
+                private static void init() {
+                    pathPrefix("Nations.Territory.Building.War");
+                    allow_building = getBoolean("allow_building");
+                    allow_usage = getBoolean("allow_usage");
+                    allow_destroy = getBoolean("allow_destroy");
+                }
+            }
+
+
+
+            private static void init() {
+                pathPrefix("Nations.Territory.Building");
+                allow_fighting = getBoolean("allow_fighting");
+            }
+
+
+        }
+
+
     } // Territory
 
 }

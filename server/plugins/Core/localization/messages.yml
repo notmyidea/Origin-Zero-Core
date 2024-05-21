@@ -43,3 +43,5 @@ Nation:
     disabled: "&fClaiming territory is disabled."
     success: "&fYou have claimed this chunk for your Nation."
     unclaim_success: "&fYou have unclaimed this chunk for your Nation."
+    you_are_not_allowed_to_do_x_here: "&fYou are not allowed to do that here."
+

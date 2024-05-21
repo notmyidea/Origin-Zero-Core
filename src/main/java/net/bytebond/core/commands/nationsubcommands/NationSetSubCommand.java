@@ -1,4 +1,4 @@
-package net.bytebond.core.commands.subcommands;
+package net.bytebond.core.commands.nationsubcommands;
 
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;

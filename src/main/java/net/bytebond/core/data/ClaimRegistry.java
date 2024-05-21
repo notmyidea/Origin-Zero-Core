@@ -1,25 +1,107 @@
 package net.bytebond.core.data;
 
+import net.bytebond.core.settings.Config;
 import org.bukkit.Chunk;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.mineacademy.fo.settings.YamlConfig;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public final class ClaimRegistry extends YamlConfig {
 
-    private static final Map<Chunk, ClaimRegistry> claims = new HashMap<>();
+    private static Integer debugging = 1;
 
-    private String chunk;
-    private String owner;
+    private static final String CLAIMS_DIRECTORY = "data/claims/";
 
-    public ClaimRegistry(Chunk chunk, UUID owner) {
+    private final String chunk;
+    private String latestClaimant;
+    private String ownerUUID;
+    private String ownerNationName;
+    private List<String> history;
 
+    public ClaimRegistry(Chunk chunk, UUID owner, String ownerNationName, String playerName) {
+        this.chunk = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ();
+        if(latestClaimant == null) {
+            latestClaimant = "None";
+        } else {
+            this.latestClaimant = playerName.toString();
+        }
+        this.ownerUUID = owner != null ? owner.toString() : null;
+        this.ownerNationName = ownerNationName;
+        this.history = new ArrayList<>();
 
-        this.chunk = this.getString("chunk");
-        this.owner = this.getString("owner");
-        
+        this.loadConfiguration(NO_DEFAULT, CLAIMS_DIRECTORY + this.chunk + ".yml");
     }
+
+    public static boolean doesClaimExist(Chunk chunk) {
+        String chunkStr = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ();
+        File claimFile = new File("plugins/Core/data/claims/" + chunkStr + ".yml");
+        if (Config.General.debugging) {
+            Integer debugging = 1;
+            System.out.println("ClaimRegistry: Received Order, doesClaimExist");
+            System.out.println("ClaimRegistry: Checking if [" + claimFile + "] exists.");
+        }
+        if(claimFile.exists()) {
+            if(debugging == 1) {
+                System.out.println("ClaimRegistry: " + chunkStr + " exists.");
+            }
+            return true;
+        }
+        if(debugging == 1) {
+            System.out.println("ClaimRegistry: " + chunkStr + " doesnt exist.");
+        }
+        return false;
+    }
+
+    public void setOwner(UUID owner, String nationName) {
+        this.ownerUUID = owner != null ? owner.toString() : null;
+        this.ownerNationName = nationName;
+        this.save();
+    }
+
+    public void setLatestClaimant(String playerName) {
+        this.latestClaimant = playerName;
+        this.save();
+    }
+
+    public void addHistory(String historyEntry) {
+        this.history.add(historyEntry);
+        this.save();
+    }
+
+    public void saveData() {
+        this.set("chunk", this.chunk);
+        this.set("latestClaimant", this.latestClaimant);
+        this.set("ownerUUID", this.ownerUUID);
+        this.set("ownerNationName", this.ownerNationName);
+        this.set("history", this.history);
+
+        super.save();
+    }
+
+    public static File getClaimFile(Chunk chunk) {
+        if(doesClaimExist(chunk)) {
+            String chunkStr = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ();
+            return new File("plugins/Core/data/claims/" + chunkStr + ".yml");
+        }
+        return null;
+    }
+
+    public static NationYML getNation(Chunk chunk) {
+        String chunkStr = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ();
+        for (NationYML nation : NationYML.getNations().values()) {
+            if (nation.isSet("territory")) {
+                if (nation.getStringList("territory").contains(chunkStr)) {
+                    return nation;
+                }
+            }
+        }
+        return null;
+    }
+
+
 
 }

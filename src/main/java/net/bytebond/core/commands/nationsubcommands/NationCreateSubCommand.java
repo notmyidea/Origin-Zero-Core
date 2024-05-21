@@ -1,5 +1,6 @@
-package net.bytebond.core.commands.subcommands;
+package net.bytebond.core.commands.nationsubcommands;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
 import org.bukkit.entity.Player;
@@ -8,19 +9,22 @@ import org.mineacademy.fo.command.SimpleSubCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 public class NationCreateSubCommand extends SimpleSubCommand {
     private static final Logger log = LoggerFactory.getLogger(NationCreateSubCommand.class);
-
     /* Parent: ../$NationCommand.class
      * /nation create <name>
      */
 
     public NationCreateSubCommand(SimpleCommandGroup parent) {
         super(parent, "create");
-
         setDescription("Create a new Nation.");
         setUsage("<name>");
 
@@ -31,9 +35,22 @@ public class NationCreateSubCommand extends SimpleSubCommand {
     }
 
 
+
+    public void fixTellWarn(String message, Player player) {
+        tellWarn(message);
+    }
+    public void fixTellInfo(String messsage, Player player) {
+        tellInfo(messsage);
+    }
+
+
+
     @Override
     protected void onCommand() {
         checkConsole(); // Console cannot create a nation
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String formatDateTime = now.format(formatter);
         Player player = (Player) sender;
         UUID UUID = player.getUniqueId();
         NationYML nation = new NationYML(UUID);
@@ -98,6 +115,35 @@ public class NationCreateSubCommand extends SimpleSubCommand {
              // }
        }
 
+       // check if any of the nation files have the same nationName as firstArg in a for each loop
+        // Get the name the user wants to use
+        String desiredName = args[0];
+
+        // Get all nations
+        Map<UUID, NationYML> nations = NationYML.getNations();
+
+        // Iterate over all nations
+        for (NationYML nation1 : nations.values()) {
+            // Get the name of the current nation
+            String nationName = nation1.getString("nationName");
+
+            if(nationName == null) {
+                continue;
+            }
+
+            // Check if the name is already taken
+            if (nationName.equals(desiredName)) {
+                // Inform the user that the name is already taken
+                tellWarn("&fA Nation with that name already exists.");
+                return;
+            }
+        }
+
+
+       //if(NationYML.getNations().containsKey(firstArg)) {
+       //    tellWarn("A Nation with that name already exists.");
+       //    return;
+       //}
        nation.set("nationName", firstArg);
        nation.set("owner", UUID.toString());
        nation.set("nationDescription", "&7THIS IS YOUR NATION DESCRIPTION.");
@@ -108,25 +154,51 @@ public class NationCreateSubCommand extends SimpleSubCommand {
        nation.set("UEConBrick", 0.0);
        nation.set("UEConDarkstone", 0.0);
        nation.set("UEConObsidian", 0.0);
-       nation.set("taxRate", 0.0);
+       nation.set("taxRate", 10);
        nation.set("population", 0);
        nation.set("drills", "None");
        nation.set("allyBuilding", false);
        nation.set("max_territory", Config.Territory.Claiming.max);
        nation.set("min_territory", Config.Territory.Claiming.min);
-       //nation.set("territory", );
+       nation.set("allyPermissions", false);
+       nation.set("archive_messages", new ArrayList<String>());
+            List<String> archive_messages = nation.getStringList("archive_messages");
+            archive_messages.add("Creation on " + formatDateTime + " by §7" + player.getName() + " §fwith the name of §7" + firstArg + "§f.");
+            nation.set("archive_messages", archive_messages);
+
+
+       nation.set("allied_nations", new ArrayList<String>());
+       nation.set("pending_allied_nations", new ArrayList<String>());
+       nation.set("enemy_nations", new ArrayList<String>());
+
+       nation.set("warscore", 0);
+       nation.set("warswon", 0);
+       nation.set("warslost", 0);
+       nation.set("troops", 0);
 
        nation.save();
 
-       tellSuccess("&fYou have created a Nation named &7" + firstArg + "&f.");
+       String joinText = "&fYou have created a Nation named &7" + firstArg + "&f. PAPI: %core_nation_name%";
+       joinText = PlaceholderAPI.setPlaceholders(player, joinText);
+       tellSuccess(joinText);
 
+    }
 
+    @Override
+    protected List<String> tabComplete() {
 
+        if (!isPlayer())
+            return new ArrayList<>();
 
+        final Player player = (Player) sender;
 
+        switch (args.length) {
+            case 1:
+                return completeLastWord("Nation name");
+            default:
+                return NO_COMPLETE;
 
-
-
+        }
     }
 
 
