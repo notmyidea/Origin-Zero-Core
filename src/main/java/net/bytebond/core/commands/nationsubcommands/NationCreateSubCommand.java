@@ -1,9 +1,11 @@
 package net.bytebond.core.commands.nationsubcommands;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.bytebond.core.data.HashManager;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
 import org.bukkit.entity.Player;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
 import org.slf4j.Logger;
@@ -144,7 +146,11 @@ public class NationCreateSubCommand extends SimpleSubCommand {
        //    tellWarn("A Nation with that name already exists.");
        //    return;
        //}
+
+       String nationHash = HashManager.generateHash(firstArg, UUID);
+
        nation.set("nationName", firstArg);
+       nation.set("nationHash", nationHash);
        nation.set("owner", UUID.toString());
        nation.set("nationDescription", "&7THIS IS YOUR NATION DESCRIPTION.");
        nation.set("TAG", firstArg.substring(0, Config.Nations.Creation.Tags.max_characters).toUpperCase());
@@ -178,7 +184,12 @@ public class NationCreateSubCommand extends SimpleSubCommand {
 
        nation.save();
 
-       String joinText = "&fYou have created a Nation named &7" + firstArg + "&f. PAPI: %core_nation_name%";
+       // CREATE A ULCON ACCOUNT FOR THE NATION
+       //EconomyHandler economyHandler = new EconomyHandler();
+       //economyHandler.generateNationBankAccount(UUID);
+       Common.log("Nation Bank Account created for " + firstArg + " with the owner of " + UUID.toString() + ".");
+
+       String joinText = "&fYou have created a Nation named &7" + firstArg + "&f.";
        joinText = PlaceholderAPI.setPlaceholders(player, joinText);
        tellSuccess(joinText);
 

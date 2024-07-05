@@ -1,0 +1,58 @@
+------------------------------------[ 25.05.2024 02:26:35 ]-----------------------------------
+Core 0.3.5 encountered a NoSuchMethodError
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: PlaceholderAPI v2.11.6, UltraEconomy v2.8.0, Vault v1.7.3-b131, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Failed to execute command /nation create NeNation
+NoSuchMethodError 'me.TechsCode.UltraEconomyAPI.base.TechPlugin me.TechsCode.UltraEconomy.UltraEconomy.getInstance()'
+	 at Core.jar//net.bytebond.core.util.EconomyHandler.generateNationBankAccount(EconomyHandler.java:62)
+	 at Core.jar//net.bytebond.core.commands.nationsubcommands.NationCreateSubCommand.onCommand(NationCreateSubCommand.java:190)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.command.BukkitCommandWrapper.run(BukkitCommandWrapper.java:64)
+	 at com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.a(ExecuteCommand.java:31)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:19)
+	 at net.minecraft.commands.execution.UnboundEntryAction.a(UnboundEntryAction.java:8)
+	 at net.minecraft.commands.execution.CommandQueueEntry.a(CommandQueueEntry.java:5)
+	 at net.minecraft.commands.execution.ExecutionContext.a(ExecutionContext.java:103)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:434)
+	 at net.minecraft.commands.CommandDispatcher.performCommand(CommandDispatcher.java:336)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:323)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 25.05.2024 20:05:34 ]-----------------------------------
+Core 0.3.5 encountered a ClassCastException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: PlaceholderAPI v2.11.6, UltraEconomy v2.8.0, Vault v1.7.3-b131, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Failed to execute command /nation create newNattt
+ClassCastException class me.TechsCode.UltraEconomy.base.loader.SpigotLoader cannot be cast to class me.TechsCode.UltraEconomy.UltraEconomy (me.TechsCode.UltraEconomy.base.loader.SpigotLoader and me.TechsCode.UltraEconomy.UltraEconomy are in unnamed module of loader 'UltraEconomy-2.8.0.jar' @b748744)
+	 at Core.jar//net.bytebond.core.util.EconomyHandler.generateNationBankAccount(EconomyHandler.java:69)
+	 at Core.jar//net.bytebond.core.commands.nationsubcommands.NationCreateSubCommand.onCommand(NationCreateSubCommand.java:191)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.command.BukkitCommandWrapper.run(BukkitCommandWrapper.java:64)
+	 at com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.a(ExecuteCommand.java:31)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:19)
+	 at net.minecraft.commands.execution.UnboundEntryAction.a(UnboundEntryAction.java:8)
+	 at net.minecraft.commands.execution.CommandQueueEntry.a(CommandQueueEntry.java:5)
+	 at net.minecraft.commands.execution.ExecutionContext.a(ExecutionContext.java:103)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:434)
+	 at net.minecraft.commands.CommandDispatcher.performCommand(CommandDispatcher.java:336)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:323)
+----------------------------------------------------------------------------------------------
+
+

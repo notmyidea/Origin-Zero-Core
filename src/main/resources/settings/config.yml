@@ -16,11 +16,14 @@ General:
 
 # -----------------------------------------------------------
 #                          Economy
+#       It is highly advised to not change these values.
 # -----------------------------------------------------------
 Economy:
   # The Economy provider, set to "null" to disable any economic behavior
-  provider: "uecon" # "vault" or "essentialsx", "cmi" or "uecon" 
-
+  provider: "uecon"
+  vault_currency: "dollars, dollar, $"
+  # UltraEconomy currencies
+  currencies: "Wood, Stone, Brick, Darkstone, Obsidian"
 
 
 # -----------------------------------------------------------

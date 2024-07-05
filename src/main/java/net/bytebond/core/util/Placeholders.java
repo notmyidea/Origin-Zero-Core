@@ -47,7 +47,6 @@ public class Placeholders extends PlaceholderExpansion {
             return "";
         }
         // please wrk
-        System.out.println("point 1");
         // If the placeholder is "nation_name", return the nation name of the player
         if ("nation_name".equals(identifier)) {
             UUID playerUUID = player.getUniqueId();
@@ -55,11 +54,10 @@ public class Placeholders extends PlaceholderExpansion {
 
             String nationName = nationsMap.values().stream()
                     .filter(nation -> playerUUID.equals(nation.getString("owner")))
-                    .map(NationYML::getNationName)
+                    .map(nation -> nation.getString("nationName"))
                     .findFirst()
                     .orElse("");
             // please work
-            System.out.println("point 2 -> " + nationName);
             return nationName;
         }
 

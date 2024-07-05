@@ -32,10 +32,12 @@ public class Config extends YamlStaticConfig {
         // Economy.
 
         public static String provider;
+        public static String[] currencies;
 
         private static void init() {
             pathPrefix("Economy");
             provider = getString("provider");
+            currencies = getString("currencies").split(", ");
         }
     }
 

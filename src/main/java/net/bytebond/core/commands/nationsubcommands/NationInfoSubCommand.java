@@ -66,14 +66,14 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                     } else {
                         messages.add("   &fYou are the owner of &7" + nation.getString("nationName") + " &7(&f" + nation.getString("TAG") + "&7)&f");
                     }
-                    messages.add("   &fWarscore: &a★&f" + nation.getVaultBalance());
+                    messages.add("   &fWarscore: &a★&f" + nation.getInteger("warscore"));
                     messages.add("   &fEconomic Information:       Tax: &c" + nation.getInteger("taxRate")+ "&f%, Happiness: " + "&aCalc.%");
                     messages.add("");
-                    messages.add("   &fWood: &7" + nation.getUEConWood().intValue());
-                    messages.add("   &fStone: &7" + nation.getUEConStone().intValue());
-                    messages.add("   &fBrick: &7" + nation.getUEConBrick().intValue());
-                    messages.add("   &fDarkstone: &7" + nation.getUEConDarkstone().intValue());
-                    messages.add("   &fObsidian: &7" + nation.getUEConObsidian().intValue() + "&f. You have &7" + amountOfDrills + " &fdrills.");
+                    messages.add("   &fWood: &7" + nation.getString("wood"));
+                    messages.add("   &fStone: &7" + nation.getString("stone"));
+                    messages.add("   &fBrick: &7" + nation.getString("brick"));
+                    messages.add("   &fDarkstone: &7" + nation.getString("darkstone"));
+                    messages.add("   &fObsidian: &7" + nation.getString("obsidian") + "&f. You have &7" + amountOfDrills + " &fdrills.");
                     messages.add(" ");
                     messages.add("   &fCategories: &7economy&f, &7demographics&f, &7infrastructure&f,");
                     messages.add("   &7trade&f, &7territory&f, &7diplomacy&f");
@@ -95,16 +95,24 @@ public class NationInfoSubCommand extends SimpleSubCommand {
 
             switch (firstArg) {
                 case "economy":
-                    tellInfo("building");
+                    List<String> economyMessage = new ArrayList<>();
+                    economyMessage.add("&f" + Common.chatLineSmooth());
+                    economyMessage.add("   &fEconomic Information &7(&f" + nation.getString("nationName") + "&7)");
+                    economyMessage.add("   &fTax Rate: &c" + nation.getInteger("taxRate") + "&f%");
+                    economyMessage.add("   &fTreasury: &7" + nation.getString("treasury"));
+                    economyMessage.add("   &fWood: &7" + nation.getString("wood"));
+                    economyMessage.add("   &fStone: &7" + nation.getString("stone"));
+                    economyMessage.add("   &fBrick: &7" + nation.getString("brick"));
+                    economyMessage.add("   &fDarkstone: &7" + nation.getString("darkstone"));
+                    economyMessage.add("   &fObsidian: &7" + nation.getString("obsidian"));
+                    economyMessage.add("&f" + Common.chatLineSmooth());
+                    tellNoPrefix(economyMessage);
                     break;
                 case "infrastructure":
-                    tellInfo("infrastructure");
+                    tellInfo("Command is currently disabled.");
                     break;
                 case "trade":
-                    tellInfo("trade");
-                    break;
-                case "territory":
-                    tellInfo("territory");
+                    tellInfo("Command is currently disabled.");
                     break;
                 case "diplomacy":
                     List<String> diplomacyMessage = new ArrayList<>();
@@ -192,7 +200,7 @@ public class NationInfoSubCommand extends SimpleSubCommand {
 
             switch (args.length) {
                 case 1:
-                    return completeLastWord("chunk", "economy", "diplomacy", "infrastructure", "trade", "territory");
+                    return completeLastWord("chunk", "economy", "diplomacy"); // "trade" , "infrastructure"
                 case 2:
                     return completeLastWord("");
 

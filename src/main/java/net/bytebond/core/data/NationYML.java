@@ -19,6 +19,8 @@ public final class NationYML extends YamlConfig {
 
     // Name, Owner and Description
     private String nationName;
+    private String nationHash;
+
     private String owner;
     private String nationDescription;
     private String tag;
@@ -78,20 +80,33 @@ public final class NationYML extends YamlConfig {
     // Population
     private final Integer population;
 
-    private final Double vaultBalance;
+    private final Integer treasury;
     // Wood
-    private final Double UEConWood;
+    private final Integer wood;
     // Stone
-    private final Double UEConStone;
+    private final Integer stone;
     // Brick
-    private final Double UEConBrick;
+    private final Integer brick;
     // Darkstone
-    private final Double UEConDarkstone;
+    private final Integer darkstone;
     // Obsidian
-    private final Double UEConObsidian;
+    private final Integer obsidian;
 
     // Claimed territories in a List
     private List<Chunk> claimedTerritories;
+
+    public void checkDataFolder() {
+    // 24/05, getting tired from the errors
+    // check the data folder exists
+        Path dataFolder = Paths.get("plugins/Core/data");
+        if (Files.notExists(dataFolder)) {
+            try {
+                Files.createDirectory(dataFolder);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     // get all .yml files in the nations folder
     public static Map<UUID, NationYML> getNations() {
@@ -111,7 +126,7 @@ public final class NationYML extends YamlConfig {
                         }
                     });
         } catch (IOException e) {
-            e.printStackTrace();
+            // Spam on server start
         }
         return nations;
     }
@@ -119,9 +134,13 @@ public final class NationYML extends YamlConfig {
 
 
     public NationYML(UUID owner) {
+
+
+
         this.setHeader("Nation Data\n\nThis file stores all the data about a nation.\n\nDo not modify this file manually, use /nation commands instead.\n\nNation");
 
         this.nationName = this.getString("nationName");
+        this.nationHash = this.getString("nationHash");
         this.owner = owner.toString();
         this.nationDescription = this.getString("nationDescription");
         this.tag = this.getString("tag");
@@ -131,12 +150,12 @@ public final class NationYML extends YamlConfig {
 
 
         // If the YAML file doesn't contain the data, set default values
-        this.vaultBalance = this.getDouble("vaultBalance", 0.0);
-        this.UEConWood = this.getDouble("UEConWood", 0.0);
-        this.UEConStone = this.getDouble("UEConStone", 0.0);
-        this.UEConBrick = this.getDouble("UEConBrick", 0.0);
-        this.UEConDarkstone = this.getDouble("UEConDarkstone", 0.0);
-        this.UEConObsidian = this.getDouble("UEConObsidian", 0.0);
+        this.treasury = this.getInteger("treasury", 1000);
+        this.wood = this.getInteger("wood", 1000);
+        this.stone = this.getInteger("stone", 1000);
+        this.brick = this.getInteger("brick", 1000);
+        this.darkstone = this.getInteger("darkstone", 1000);
+        this.obsidian = this.getInteger("obsidian", 1000);
         this.taxRate = this.getInteger("taxRate", 10);
         this.population = this.getInteger("population", 0);
         this.archive_messages = this.getStringList("archive_messages");

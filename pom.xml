@@ -57,6 +57,11 @@
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
+        <!-- UltraEconomyAPI -->
+        <repository>
+            <id>techscode</id>
+            <url>https://repo.techscode.com/repository/techscode-apis/</url>
+        </repository>
         <!-- CodeMC -->
         <repository>
             <id>codemc-repo</id>
@@ -113,6 +118,28 @@
             <version>2.11.5</version>
             <scope>provided</scope>
         </dependency>
+        <!-- There was an issue with UltraEconomy, see a dm from one of their maintainers:
+        "It seems that whoever built (or i guess manually copied classes together for) the api put the XMaterial class into the wrong package.
+         I guess the only solution for now would be if you tried to compile (and code) against the actual plugin jar insted of the api"
+        <dependency>
+            <groupId>me.TechsCode</groupId>
+            <artifactId>UltraEconomyAPI</artifactId>
+            <version>1.0.0_build-7</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>me.TechsCode</groupId>
+            <artifactId>UltraEconomy</artifactId>
+            <version>2.8.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/UltraEconomy-2.8.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <!-- DO NOT EDIT unless instructed to do so or you know what you're doing. -->
@@ -142,9 +169,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-
-                <!-- Change version to the latest one from
-                     https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin -->
                 <version>3.5.1</version>
                 <executions>
                     <execution>
@@ -158,16 +182,30 @@
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <artifactSet>
                         <includes>
-                            <!-- Important: This will ensure only Foundation is shaded to your jar. If you have
-                                 other dependencies that should be compiled, duplicate this line for each. -->
                             <include>${foundation.path}:Foundation*</include>
+                            <!-- Include UltraEconomyAPI in the shaded JAR -->
+                            <!-- <include>me.TechsCode:UltraEconomyAPI</include> -->
+                            <!-- Include item-nbt-api-plugin in the shaded JAR -->
+                            <include>de.tr7zw:item-nbt-api-plugin</include>
                         </includes>
                     </artifactSet>
                     <relocations>
-                        <!-- This moves Foundation into your own package in "lib" subpackage to prevent interference. -->
                         <relocation>
                             <pattern>org.mineacademy.fo</pattern>
                             <shadedPattern>${project.groupId}.${project.artifactId}.lib</shadedPattern>
+                        </relocation>
+                        <!-- Relocate UltraEconomyAPI to prevent potential conflicts -->
+                        <!-- UltraEconomyAPI is currently reworking.
+                         The API is not supposed to be shaded into the plugin,
+                         doing so will result in countless null pointers -->
+                        <!--<relocation>
+                            <pattern>me.TechsCode.UltraEconomyAPI</pattern>
+                            <shadedPattern>${project.groupId}.${project.artifactId}.lib</shadedPattern>
+                        </relocation> -->
+                        <!-- Relocate item-nbt-api-plugin to prevent potential conflicts -->
+                        <relocation>
+                            <pattern>de.tr7zw.itemnbtapi</pattern>
+                            <shadedPattern>${project.groupId}.${project.artifactId}.lib.itemnbtapi</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

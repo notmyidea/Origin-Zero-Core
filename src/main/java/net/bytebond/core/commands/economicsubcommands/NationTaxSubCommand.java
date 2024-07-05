@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class NationTaxSubCommand extends SimpleSubCommand {
@@ -37,7 +39,7 @@ public class NationTaxSubCommand extends SimpleSubCommand {
         }
 
         if(args.length != 1) {
-            tellWarn("&fYou must specify a Nation to ally with. &7/nation ally <name>");
+            tellWarn("&fYou must specify a valid argument. &7/nation tax <increase/decrease>");
             return;
         }
 
@@ -65,8 +67,20 @@ public class NationTaxSubCommand extends SimpleSubCommand {
                 tellWarn("&fYou must specify a valid argument. &7/nation tax <increase/decrease>");
                 break;
         }
+    }
 
+    @Override
+    protected List<String> tabComplete() {
+        if(!isPlayer())
+            return new ArrayList<>();
 
+        final Player player = (Player) sender;
 
+        switch (args.length) {
+            case 1:
+                return completeLastWord("increase", "decrease");
+            default:
+                return NO_COMPLETE;
+        }
     }
 }

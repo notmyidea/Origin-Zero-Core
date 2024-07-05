@@ -6,6 +6,7 @@ import net.bytebond.core.settings.Messages;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
+import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
 
@@ -35,7 +36,7 @@ public class AdminNationManager extends SimpleSubCommand {
         Player player = (Player) sender;
         UUID UUID = player.getUniqueId();
         NationYML nation = new NationYML(UUID);
-        checkPerm("bytebond.command.admin");
+        checkPerm("nations.command.adminsubcommands.adminnationmanager");
 
         if(args.length < 1) {
             tellWarn("&fYou must specify a subcommand. &7/nation admin <delete/rename/list/removechunk/endwar/givetroop/give> <nation/mob/block>");
@@ -109,10 +110,37 @@ public class AdminNationManager extends SimpleSubCommand {
                 tellSuccess("&rSuccessfully removed the chunk from the ClaimRegistry");
                 break;
             case "endwar":
+                tellWarn("unimplemented");
                 break;
             case "givetroop":
+                tellWarn("unimplemented");
                 break;
             case "give":
+
+                if(args.length != 2) {
+                    tellInfo("Usage: /nation admin give <drill/**/***> <resource> <amount>");
+                }
+
+                switch (args[1]) {
+                    case "drill":
+                        tellWarn("unimplemented");
+                        break;
+                    case "wood":
+                        tellWarn("unimplemented");
+                        break;
+                    case "stone":
+                        tellWarn("unimplemented");
+                        break;
+                    case "brick":
+                        tellWarn("unimplemented");
+                        break;
+                    case "darkstone":
+                        tellWarn("unimplemented");
+                        break;
+                    default:
+                        tellWarn("Invalid resource type");
+                        break;
+                }
                 break;
             case "list":
                 // List all nations
