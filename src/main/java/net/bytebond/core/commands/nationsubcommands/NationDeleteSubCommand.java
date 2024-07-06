@@ -1,13 +1,21 @@
 package net.bytebond.core.commands.nationsubcommands;
 
+import net.bytebond.core.Core;
 import net.bytebond.core.data.NationYML;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
+import org.mineacademy.fo.settings.YamlConfig;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class NationDeleteSubCommand extends SimpleSubCommand {
 
@@ -45,9 +53,31 @@ public class NationDeleteSubCommand extends SimpleSubCommand {
             tellWarn("&fYou must confirm the deletion of your Nation. &7/nation delete confirm");
             return;
         }
+        // cleanup-process
+        try {
+            String nationName = nation.getString("nationName");
+            AtomicInteger deletedFilesCount = new AtomicInteger();
 
-        nation.deleteFile();
+            Files.walk(Paths.get("plugins/Core/data/claims"))
+                    .forEach(path -> {
+                        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(path.toFile());
+                        if (Objects.equals(yaml.getString("ownerNationName"), nation.getString("nationName")) || yaml.get("ownerUUID") == nation.getString("owner")) {
+                            try {
+                                Files.delete(path);
+                                deletedFilesCount.getAndIncrement();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+            Core.getInstance().debugLog("DELETE ACTION: Deleted " + deletedFilesCount + " claim registrants for nation " + nationName );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         tellSuccess("&fYou have successfully deleted your Nation.");
+        nation.deleteFile();
+
     }
 
     @Override

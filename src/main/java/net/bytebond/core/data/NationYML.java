@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.mineacademy.fo.settings.YamlConfig;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -78,6 +79,8 @@ public final class NationYML extends YamlConfig {
     // Taxation (boo)
     private final Integer taxRate; // 0.0 - 10.0
     // Population
+    private final List<String> housing;
+
     private final Integer population;
 
     private final Integer treasury;
@@ -157,6 +160,7 @@ public final class NationYML extends YamlConfig {
         this.darkstone = this.getInteger("darkstone", 1000);
         this.obsidian = this.getInteger("obsidian", 1000);
         this.taxRate = this.getInteger("taxRate", 10);
+        this.housing = this.getStringList("housing");
         this.population = this.getInteger("population", 0);
         this.archive_messages = this.getStringList("archive_messages");
 
@@ -168,7 +172,6 @@ public final class NationYML extends YamlConfig {
         this.warswon = this.getInteger("warswon", 0);
         this.warslost = this.getInteger("warslost", 0);
         this.troops = this.getInteger("troops", 0);
-        
 
         this.drills = this.getStringList("drills");
         // Load the configuration from the YAML file
@@ -176,7 +179,6 @@ public final class NationYML extends YamlConfig {
 
         this.save();
     }
-
 
     public List<Chunk> getTerritoryChunks() {
         List<Chunk> chunks = new ArrayList<>();
@@ -203,6 +205,36 @@ public final class NationYML extends YamlConfig {
         this.save();
     }
 
+    public static Boolean doesNationExist(String nationName) {
+        for (NationYML nation : NationYML.getNations().values()) {
+            if (nation.getString("nationName").equals(nationName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public static Boolean doesPlayerHaveANation(UUID playerUUID) {
+        for (NationYML nation : NationYML.getNations().values()) {
+            if (nation.getString("owner").equals(playerUUID.toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Nullable
+    public static List<NationYML> getNationsByName(String nationName) {
+        List<NationYML> matchingNations = new ArrayList<>();
+        for (NationYML nation : NationYML.getNations().values()) {
+            if (nation.getString("nationName").equals(nationName)) {
+                matchingNations.add(nation);
+            }
+        }
+        if (matchingNations.isEmpty()) {
+            return null;
+        }
+        return matchingNations;
+    }
 
 }

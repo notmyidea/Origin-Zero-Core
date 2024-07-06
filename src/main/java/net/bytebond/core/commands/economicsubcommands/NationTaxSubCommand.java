@@ -52,6 +52,7 @@ public class NationTaxSubCommand extends SimpleSubCommand {
                 old = nation.getInteger("taxRate");
                 now = old + 1;
                 nation.set("taxRate", nation.getInteger("taxRate") + 1);
+                nation.save();
                 tellSuccess("&fYou have increased the tax rate of your nation from &7" + old + "&f to &7" + now);
                 break;
             case "decrease":
@@ -61,6 +62,8 @@ public class NationTaxSubCommand extends SimpleSubCommand {
                 }
                 old = nation.getInteger("taxRate");
                 now = old - 1;
+                nation.set("taxRate", nation.getInteger("taxRate") - 1);
+                nation.save();
                 tellSuccess("&fYou have decreased the tax rate of your nation from &7" + old + "&f to &7" + now);
                 break;
             default:

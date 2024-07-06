@@ -2,6 +2,11 @@
 # ** For more options check Settings folder **
 # ********************************************
 
+
+# DO NOT EDIT ANYTHING IN THIS FILE YET#
+# DO NOT EDIT ANYTHING IN THIS FILE YET#
+# DO NOT EDIT ANYTHING IN THIS FILE YET
+# DO NOT EDIT ANYTHING IN THIS FILE YET #  _____ _           _   _  __ _           _   _
 storage:
   # Storage type: ~~file~~, mysql, ~~mongodb~~, ~postgresql~~
   method: mysql

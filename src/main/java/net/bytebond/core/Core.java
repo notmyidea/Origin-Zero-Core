@@ -1,5 +1,6 @@
 package net.bytebond.core;
 
+import net.bytebond.core.commands.EconomyCommand;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
 import net.bytebond.core.util.Placeholders;
@@ -20,8 +21,9 @@ public final class Core extends SimplePlugin {
 
 	@Override
 	protected void onPluginStart() {
+		registerCommands(new EconomyCommand());
 		Common.logFramed("Nations plugin has been enabled!", "Loading Nations and Claims from files.", "Nations plugin version: 1.0.0 (WIP)");
-		checkAndCreateDirectoris();
+		//checkAndCreateDirectoris();
 		//Thread t1 = new Thread(new LoadItemsImpl());
 		//t1.start();
 	}
@@ -31,11 +33,6 @@ public final class Core extends SimplePlugin {
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
 			new Placeholders(this).register();
 		} else {
-			Bukkit.getPluginManager().disablePlugin(this);
-			System.exit(1);
-		}
-
-		if (Bukkit.getPluginManager().getPlugin("UltraEconomy") == null || Bukkit.getPluginManager().getPlugin("Vault") == null) {
 			Bukkit.getPluginManager().disablePlugin(this);
 			System.exit(1);
 		}

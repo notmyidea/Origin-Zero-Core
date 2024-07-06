@@ -1,6 +1,5 @@
 package net.bytebond.core.data;
 
-import net.bytebond.core.settings.Config;
 import org.bukkit.Chunk;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.mineacademy.fo.settings.YamlConfig;
@@ -39,20 +38,8 @@ public final class ClaimRegistry extends YamlConfig {
     public static boolean doesClaimExist(Chunk chunk) {
         String chunkStr = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ();
         File claimFile = new File("plugins/Core/data/claims/" + chunkStr + ".yml");
-        if (Config.General.debugging) {
-            Integer debugging = 1;
-            System.out.println("ClaimRegistry: Received Order, doesClaimExist");
-            System.out.println("ClaimRegistry: Checking if [" + claimFile + "] exists.");
-        }
-        if(claimFile.exists()) {
-            if(debugging == 1) {
-                System.out.println("ClaimRegistry: " + chunkStr + " exists.");
-            }
-            return true;
-        }
-        if(debugging == 1) {
-            System.out.println("ClaimRegistry: " + chunkStr + " doesnt exist.");
-        }
+        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(claimFile);
+        if (yaml.isSet("chunk")) return true;
         return false;
     }
 
@@ -97,6 +84,17 @@ public final class ClaimRegistry extends YamlConfig {
                 if (nation.getStringList("territory").contains(chunkStr)) {
                     return nation;
                 }
+            }
+        }
+        return null;
+    }
+
+    public static String getOwnerOfChunk(Chunk chunk) {
+        if (doesClaimExist(chunk)) {
+            File claimFile = getClaimFile(chunk);
+            YamlConfiguration yaml = YamlConfiguration.loadConfiguration(claimFile);
+            if (yaml.isSet("ownerUUID")) {
+                return yaml.getString("ownerUUID");
             }
         }
         return null;

@@ -4,14 +4,21 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.bytebond.core.data.ClaimRegistry;
+import net.bytebond.core.data.NationPlayer;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
+
+import java.util.*;
 
 @AutoRegister
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -47,12 +54,12 @@ public final class EnterChunkTerritoryEvent implements Listener {
                 return;
             }
 
-            if(newNation == null) {
+            if (newNation == null) {
                 player.sendTitle("Welcome to Wilderness", "", 10, 20, 20);
                 return;
             }
 
-            if(newNation.getFileName().equals("null")) {
+            if (newNation.getFileName().equals("null")) {
                 player.sendTitle("Welcome to Wilderness", "", 10, 20, 20);
                 return;
             }
@@ -71,6 +78,8 @@ public final class EnterChunkTerritoryEvent implements Listener {
             }
         }
     }
+
+
 
 
 }

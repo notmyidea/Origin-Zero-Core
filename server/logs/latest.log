@@ -1,0 +1,138 @@
+[01:24:46] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[01:24:48] [ServerMain/INFO]: Loaded 1174 recipes
+[01:24:48] [ServerMain/INFO]: Loaded 1271 advancements
+[01:24:48] [Server thread/INFO]: Starting minecraft server version 1.20.4
+[01:24:48] [Server thread/INFO]: Loading properties
+[01:24:48] [Server thread/INFO]: This server is running Paper version git-Paper-496 (MC: 1.20.4) (Implementing API version 1.20.4-R0.1-SNAPSHOT) (Git: 7ac24a1 on ver/1.20.4)
+[01:24:49] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[01:24:49] [Server thread/INFO]: Using 4 threads for Netty based IO
+[01:24:49] [Server thread/WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+    We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
+    For more information please visit: https://github.com/PaperMC/Paper/issues/8948
+[01:24:49] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 3 worker threads, and gen parallelism of 3 threads
+[01:24:49] [Server thread/INFO]: Default game type: SURVIVAL
+[01:24:49] [Server thread/INFO]: Generating keypair
+[01:24:49] [Server thread/INFO]: Starting Minecraft server on *:25565
+[01:24:49] [Server thread/INFO]: Using default channel type
+[01:24:49] [Server thread/INFO]: Paper: Using Java compression from Velocity.
+[01:24:49] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loading 5 libraries... please wait
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\openjdk\nashorn\nashorn-core\15.4\nashorn-core-15.4.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\ow2\asm\asm\7.3.1\asm-7.3.1.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\ow2\asm\asm-commons\7.3.1\asm-commons-7.3.1.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\ow2\asm\asm-analysis\7.3.1\asm-analysis-7.3.1.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\ow2\asm\asm-tree\7.3.1\asm-tree-7.3.1.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\ow2\asm\asm-util\7.3.1\asm-util-7.3.1.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\jsoup\jsoup\1.14.3\jsoup-1.14.3.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\zaxxer\HikariCP\5.1.0\HikariCP-5.1.0.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\slf4j\slf4j-api\1.7.36\slf4j-api-1.7.36.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\mariadb\jdbc\mariadb-java-client\3.3.3\mariadb-java-client-3.3.3.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\github\waffle\waffle-jna\3.3.0\waffle-jna-3.3.0.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\net\java\dev\jna\jna\5.13.0\jna-5.13.0.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\net\java\dev\jna\jna-platform\5.13.0\jna-platform-5.13.0.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\slf4j\jcl-over-slf4j\2.0.7\jcl-over-slf4j-2.0.7.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\github\ben-manes\caffeine\caffeine\2.9.3\caffeine-2.9.3.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\google\errorprone\error_prone_annotations\2.10.0\error_prone_annotations-2.10.0.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\org\checkerframework\checker-qual\3.32.0\checker-qual-3.32.0.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar
+[01:24:50] [Server thread/INFO]: [SpigotLibraryLoader] [Core] Loaded library C:\Users\lukas\Documents\a. JAVA\Origin Zero Core\server\libraries\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar
+[01:24:50] [Server thread/INFO]: [PlaceholderAPI] Loading server plugin PlaceholderAPI v2.11.6
+[01:24:50] [Server thread/INFO]: [UltraEconomy] Loading server plugin UltraEconomy v2.8.0
+[01:24:50] [Server thread/INFO]: [Vault] Loading server plugin Vault v1.7.3-b131
+[01:24:50] [Server thread/INFO]: [NBTAPI] Loading server plugin NBTAPI v2.12.4
+[01:24:50] [Server thread/INFO]: [NBTAPI] [NBTAPI] Found Minecraft: v1_20_R3! Trying to find NMS support
+[01:24:50] [Server thread/INFO]: [NBTAPI] [NBTAPI] NMS support 'MC1_20_R3' loaded!
+[01:24:50] [Server thread/INFO]: [NBTAPI] [NBTAPI] Using the plugin 'NBTAPI' to create a bStats instance!
+[01:24:50] [Server thread/INFO]: [Core] Loading server plugin Core v0.3.5
+[01:24:50] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[01:24:50] [Server thread/INFO]: [UltraEconomy] Enabling UltraEconomy v2.8.0
+[01:24:51] [Thread-6/WARN]: [NBTAPI] [NBTAPI] The NBT-API in 'NBTAPI' seems to be outdated!
+[01:24:51] [Thread-6/WARN]: [NBTAPI] [NBTAPI] Current Version: '2.12.4' Newest Version: 2.13.1'
+[01:24:51] [Thread-6/WARN]: [NBTAPI] [NBTAPI] Please update the NBTAPI or the plugin that contains the api(nag the mod author when the newest release has an old version, not the NBTAPI dev)!
+[01:24:51] [Server thread/INFO]: [UltraEconomy] Loading Plugin...
+[01:24:52] [Server thread/INFO]: [UltraEconomy] Successfully loaded in 673 ms
+[01:24:52] [Server thread/INFO]: [Vault] Enabling Vault v1.7.3-b131
+[01:24:52] [Server thread/INFO]: [Vault] [Permission] SuperPermissions loaded as backup permission system.
+[01:24:52] [Server thread/INFO]: [Vault] Enabled Version 1.7.3-b131
+[01:24:52] [Server thread/INFO]: [UltraEconomy] Hooked into Vault
+[01:24:52] [Server thread/INFO]: Preparing level "world"
+[01:24:52] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[01:24:53] [Server thread/INFO]: Time elapsed: 1204 ms
+[01:24:53] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[01:24:54] [Server thread/INFO]: Time elapsed: 68 ms
+[01:24:54] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[01:24:54] [Server thread/INFO]: Time elapsed: 29 ms
+[01:24:54] [Server thread/INFO]: [PlaceholderAPI] Enabling PlaceholderAPI v2.11.6
+[01:24:54] [Server thread/INFO]: [PlaceholderAPI] Fetching available expansion information...
+[01:24:54] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: uecon [1.0.0]
+[01:24:54] [Server thread/INFO]: [UltraEconomy] Hooked into PlaceholderAPI
+[01:24:55] [Server thread/INFO]: [Core] Enabling Core v0.3.5
+[01:24:55] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: core [0.3.5]
+[01:24:55] [Server thread/INFO]: [PlaceholderAPI] Successfully registered internal expansion: Nations [0.3.5]
+[01:24:55] [Server thread/INFO]: !-----------------------------------------------------!
+[01:24:55] [Server thread/INFO]: Nations plugin has been enabled!
+[01:24:55] [Server thread/INFO]: Loading Nations and Claims from files.
+[01:24:55] [Server thread/INFO]: Nations plugin version: 1.0.0 (WIP)
+[01:24:55] [Server thread/INFO]: !-----------------------------------------------------!
+[01:24:55] [Server thread/INFO]: [PlaceholderAPI] Placeholder expansion registration initializing...
+[01:24:55] [Server thread/INFO]: 0 placeholder hook(s) registered!
+[01:24:55] [Server thread/INFO]: Running delayed init tasks
+[01:24:55] [Server thread/INFO]: Done (7.148s)! For help, type "help"
+[01:24:55] [Server thread/INFO]: Timings Reset
+[01:24:55] [Craft Scheduler Thread - 0 - Vault/INFO]: [Vault] Checking for Updates ... 
+[01:24:56] [Craft Scheduler Thread - 0 - Vault/INFO]: [Vault] No new version available
+[01:24:58] [Craft Scheduler Thread - 2 - UltraEconomy/INFO]: [UltraEconomy] Translations successfully loaded & applied (34 UltraEconomy and Base Translation files found)
+[01:25:04] [User Authenticator #0/INFO]: UUID of player pi16 is 29490773-9700-4b31-a14e-5599137e0af3
+[01:25:04] [Server thread/INFO]: pi16 joined the game
+[01:25:04] [Server thread/INFO]: pi16[/127.0.0.1:52364] logged in with entity id 131 at ([world]-254.86742897326087, 64.0, -72.88108657847884)
+[01:25:12] [Server thread/INFO]: pi16 issued server command: /n admin give drill
+[01:25:16] [Server thread/INFO]: pi16 issued server command: /n admin give drill brick pi16
+[01:25:16] [Server thread/INFO]: pi16 has made the advancement [Ice Bucket Challenge]
+[01:25:49] [Server thread/INFO]: Villager EntityVillager['Louis'/166, uuid='6b8c9ff4-a1b8-4851-ac93-fad56ff09139', l='ServerLevel[world]', x=-357.98, y=77.00, z=-35.00, cpos=[-23, -3], tl=6339, v=true] died, message: 'Louis was slain by Zombie'
+[01:25:49] [Server thread/INFO]: Named entity EntityVillager['Louis'/166, uuid='6b8c9ff4-a1b8-4851-ac93-fad56ff09139', l='ServerLevel[world]', x=-357.98, y=77.00, z=-35.00, cpos=[-23, -3], tl=6339, v=true] died: Louis was slain by Zombie
+[01:26:19] [Server thread/INFO]: !!!Player moved a chunk
+[01:26:22] [Server thread/INFO]: !!!Player moved a chunk
+[01:26:22] [Server thread/INFO]: Player is in a claimed chunk
+[01:26:25] [Server thread/INFO]: !!!Player moved a chunk
+[01:26:25] [Server thread/INFO]: Player is in a claimed chunk
+[01:26:28] [Server thread/INFO]: !!!Player moved a chunk
+[01:26:32] [Server thread/INFO]: pi16 issued server command: /n territory claim
+[01:26:32] [Server thread/INFO]: Nation [myNation] has claimed chunk CraftChunk{x=-13z=-6}
+[01:26:32] [Server thread/INFO]: Nations current list of claimed territory: [world,-17,-5, world,-16,-5, world,-13,-6]
+[01:26:32] [Server thread/INFO]: Chunk has been saved to world,-13,-6.yml
+[01:26:32] [Server thread/INFO]: [Core 0.3.5] Command /nation territory claim took 19.7 ms
+[01:26:33] [Server thread/INFO]: [Core] DEBUG: Started the process of spawning a villager in 4 minutes in:
+[01:26:33] [Server thread/INFO]: [Core] DEBUG: World: world, X: -13, Z: -6
+[01:26:33] [Server thread/INFO]: [Core] DEBUG: Location: -202, 63, -86
+[01:26:33] [Server thread/INFO]: [Core] DEBUG: Nation: myNation
+[01:27:25] [Server thread/INFO]: Stopping server
+[01:27:25] [Server thread/INFO]: [Core] Disabling Core v0.3.5
+[01:27:25] [Server thread/INFO]: [Vault] Disabling Vault v1.7.3-b131
+[01:27:25] [Server thread/INFO]: [UltraEconomy] Disabling UltraEconomy v2.8.0
+[01:27:25] [Server thread/INFO]: [PlaceholderAPI] Disabling PlaceholderAPI v2.11.6
+[01:27:25] [Server thread/INFO]: Saving players
+[01:27:25] [Server thread/INFO]: pi16 lost connection: Server closed
+[01:27:26] [Server thread/INFO]: pi16 left the game
+[01:27:26] [Server thread/INFO]: Saving worlds
+[01:27:26] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[01:27:26] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+[01:27:26] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+[01:27:26] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+[01:27:28] [Server thread/INFO]: [ChunkHolderManager] Saved 1056 block chunks, 1056 entity chunks, 0 poi chunks in world 'world' in 2,11s
+[01:27:28] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[01:27:28] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+[01:27:28] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+[01:27:28] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+[01:27:28] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+[01:27:28] [Server thread/INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world_nether' in 0,56s
+[01:27:28] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[01:27:28] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end
+[01:27:28] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'
+[01:27:28] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'
+[01:27:28] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_the_end'
+[01:27:29] [Server thread/INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world_the_end' in 0,17s
+[01:27:29] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[01:27:29] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+[01:27:29] [Server thread/INFO]: Flushing Chunk IO
+[01:27:29] [Server thread/INFO]: Closing Thread Pool
+[01:27:29] [Server thread/INFO]: Closing Server

@@ -20,7 +20,7 @@ General:
 # -----------------------------------------------------------
 Economy:
   # The Economy provider, set to "null" to disable any economic behavior
-  provider: "uecon"
+  provider: "internal"
   vault_currency: "dollars, dollar, $"
   # UltraEconomy currencies
   currencies: "Wood, Stone, Brick, Darkstone, Obsidian"
@@ -102,7 +102,10 @@ Nations:
         allow_building: false
         allow_usage: false
         allow_destroy: false
-
+Housing:
+  allow_housing: true
+  max_houses: 100
+  max_housing_per_chunk: 1
   #
   #
   #

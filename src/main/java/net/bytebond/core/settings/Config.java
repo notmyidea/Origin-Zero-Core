@@ -204,6 +204,21 @@ public class Config extends YamlStaticConfig {
 
     } // Territory
 
+    public static class Housing {
+
+        public static Boolean allow_housing;
+        public static Integer max_houses;
+        public static Integer max_housing_per_chunk;
+
+        private static void init() {
+            pathPrefix("Housing");
+            allow_housing = getBoolean("allow_housing");
+            max_houses = getInteger("max_houses");
+            max_housing_per_chunk = getInteger("max_housing_per_chunk");
+        }
+
+    }
+
 }
 
 

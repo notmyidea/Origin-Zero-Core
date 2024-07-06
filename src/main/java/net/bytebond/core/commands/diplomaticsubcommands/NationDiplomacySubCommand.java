@@ -19,7 +19,7 @@ public class NationDiplomacySubCommand extends SimpleSubCommand {
      */
 
     public NationDiplomacySubCommand(SimpleCommandGroup parent) {
-        super(parent, "diplomacy");
+        super(parent, "diplomacy||d");
 
         setDescription("Manage your nations diplomacy");
         setUsage("/nation diplomacy <ally/unally/declare/surrender>");
@@ -125,8 +125,6 @@ public class NationDiplomacySubCommand extends SimpleSubCommand {
                                 tellInfo("&fYou are now allied with the nation: " + secondArg);
                                 owner.sendMessage("§7§l[§1!§7] §rYou are now allied with §7" + senderNation.getString("nationName"));
 
-
-                                // You can add your code here
                             } else {
                                 // Request an alliance in pending_allied_nations
                                 List<String> receiverPendingAlliances1 = nation.getStringList("pending_allied_nations");
@@ -192,10 +190,10 @@ public class NationDiplomacySubCommand extends SimpleSubCommand {
                 tellWarn("&fNo nation found with the name: " + secondArg);
                 break;
             case "declare":
-                // declare war and launch the war event, requires the user to be online
+                tellWarn("&fThis feature is currently disabled.");
                 break;
             case "surrender":
-                // surrender in a war and unclaim lost land + pay 10% of all resources to the victor
+                tellWarn("&fThis feature is currently disabled.");
                 break;
         }
     }

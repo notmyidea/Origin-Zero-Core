@@ -14,6 +14,7 @@ import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.model.SimpleComponent;
 import org.mineacademy.fo.plugin.SimplePlugin;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +23,7 @@ import java.util.UUID;
 public final class NationCommand extends SimpleCommandGroup {
 
     public NationCommand() {
-        super("nation");
+        super("nation||n");
     }
 
     @Override
@@ -39,10 +40,13 @@ public final class NationCommand extends SimpleCommandGroup {
         registerSubcommand(new NationDiplomacySubCommand(this));
         registerSubcommand(new AdminNationManager(this));
     }
-    
+
 
     @Override
     protected List<SimpleComponent> getNoParamsHeader() {
+        if(!(sender instanceof Player)) {
+            System.out.println("You must be a player to use this command.");
+        }
         Player player = (Player) sender;
         UUID UUID = player.getUniqueId();
         int foundedYear = SimplePlugin.getInstance().getFoundedYear();
@@ -61,34 +65,37 @@ public final class NationCommand extends SimpleCommandGroup {
         //if player in Nation
         if (nation.isSet("nationName")) {
             //for (String line : Messages.Nation.Static.not_in_nation) {
-               // messages.addAll(Arrays.asList(line.split("\n")));
+            // messages.addAll(Arrays.asList(line.split("\n")));
             messages.add("     &fYou are in a Nation.");
-            messages.add("     &fYou can access many subcommands like &f/nation <");
+            messages.add("     &fYou can access nation related commands: &f/nation <");
             messages.add("     &7info&f, &7diplo&f, &7more&f.. &f>");
             //}
         } //else {
-          //  for (String line : Messages.Nation.Static.in_nation) {
-          //      messages.addAll(Arrays.asList(line.split("\n")));
-          //  }
-       // }
+        //  for (String line : Messages.Nation.Static.in_nation) {
+        //      messages.addAll(Arrays.asList(line.split("\n")));
+        //  }
+        // }
         else {
             messages.add("     &fYou are not currently part of a Nation.");
             messages.add("     &fYou can create one with &f/nation create &7<name>");
         }
         //if (Messages.Nation.Static.Notify_description.enabled && nation.isSet("nationDescription") || !(nation.getString("nationDescription").equals("&7THIS IS YOUR NATION DESCRIPTION."))) {
-            //for (String line : Messages.Nation.Static.Notify_description.messages) {
-            //    messages.addAll(Arrays.asList(line.split("\n")));
-           // }
-            //messages.add("     &7BTW: You have not added a description to your Nation yet.");
-            //messages.add("     &7/nation setdescription <description>");
+        //for (String line : Messages.Nation.Static.Notify_description.messages) {
+        //    messages.addAll(Arrays.asList(line.split("\n")));
+        // }
+        //messages.add("     &7BTW: You have not added a description to your Nation yet.");
+        //messages.add("     &7/nation setdescription <description>");
         //}
 
         messages.add("&f" + Common.chatLineSmooth());
         return Common.convert(messages, SimpleComponent::of);
     }
 
+    public SimplePlugin getPlugin() {
+        return SimplePlugin.getInstance();
     }
 
+}
 
 
     // absolutely broken

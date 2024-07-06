@@ -54,6 +54,10 @@
             <url>https://jitpack.io</url>
         </repository>
         <repository>
+            <id>MG-Dev Jenkins CI Maven Repository</id>
+            <url>https://ci.mg-dev.eu/plugin/repository/everything</url>
+        </repository>
+        <repository>
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
@@ -105,6 +109,12 @@
             <groupId>${foundation.path}</groupId>
             <artifactId>Foundation</artifactId>
             <version>${foundation.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bergerkiller.bukkit</groupId>
+            <artifactId>BKCommonLib</artifactId>
+            <version>1.20.4-v1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.tr7zw</groupId>
@@ -183,6 +193,7 @@
                     <artifactSet>
                         <includes>
                             <include>${foundation.path}:Foundation*</include>
+                            <include>com.bergerkiller.bukkit:BKCommonLib*</include>
                             <!-- Include UltraEconomyAPI in the shaded JAR -->
                             <!-- <include>me.TechsCode:UltraEconomyAPI</include> -->
                             <!-- Include item-nbt-api-plugin in the shaded JAR -->

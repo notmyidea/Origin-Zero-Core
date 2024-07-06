@@ -1,7 +1,11 @@
 package net.bytebond.core.commands.nationsubcommands;
 
+import com.comphenix.net.bytebuddy.asm.Advice;
 import net.bytebond.core.data.ClaimRegistry;
 import net.bytebond.core.data.NationYML;
+import net.bytebond.core.settings.Config;
+import net.bytebond.core.util.EnterChunkTerritoryEvent;
+import net.bytebond.core.util.TerritoryInteractionEvent;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.command.SimpleCommandGroup;
@@ -21,6 +25,7 @@ public class NationInfoSubCommand extends SimpleSubCommand {
         setDescription("Get information about your Nation.");
     }
 
+    private Integer chunk_housing;
 
     @Override
     protected void onCommand() {
@@ -69,16 +74,14 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                     messages.add("   &fWarscore: &a★&f" + nation.getInteger("warscore"));
                     messages.add("   &fEconomic Information:       Tax: &c" + nation.getInteger("taxRate")+ "&f%, Happiness: " + "&aCalc.%");
                     messages.add("");
-                    messages.add("   &fWood: &7" + nation.getString("wood"));
-                    messages.add("   &fStone: &7" + nation.getString("stone"));
-                    messages.add("   &fBrick: &7" + nation.getString("brick"));
-                    messages.add("   &fDarkstone: &7" + nation.getString("darkstone"));
-                    messages.add("   &fObsidian: &7" + nation.getString("obsidian") + "&f. You have &7" + amountOfDrills + " &fdrills.");
+                    messages.add("   &fWood: &7" + nation.getInteger("wood"));
+                    messages.add("   &fStone: &7" + nation.getInteger("stone"));
+                    messages.add("   &fBrick: &7" + nation.getInteger("brick"));
+                    messages.add("   &fDarkstone: &7" + nation.getInteger("darkstone"));
+                    messages.add("   &fObsidian: &7" + nation.getInteger("obsidian") + "&f. You have &7" + amountOfDrills + " &fdrills and &7" + nation.getInteger("population") + " &fpopulation.");
                     messages.add(" ");
-                    messages.add("   &fCategories: &7economy&f, &7demographics&f, &7infrastructure&f,");
-                    messages.add("   &7trade&f, &7territory&f, &7diplomacy&f");
+                    messages.add("   &fCategories: &7chunk&f, &7diplomacy&f, &7economy&f, &7population&f, &c&mtrade&f");
                     messages.add("   &fMore: &7/nation info chunk &f - Chunk information");
-                    messages.add("   &f- ");
                 }
                 messages.add("&f" + Common.chatLineSmooth());
                 tell(messages);
@@ -99,12 +102,12 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                     economyMessage.add("&f" + Common.chatLineSmooth());
                     economyMessage.add("   &fEconomic Information &7(&f" + nation.getString("nationName") + "&7)");
                     economyMessage.add("   &fTax Rate: &c" + nation.getInteger("taxRate") + "&f%");
-                    economyMessage.add("   &fTreasury: &7" + nation.getString("treasury"));
-                    economyMessage.add("   &fWood: &7" + nation.getString("wood"));
-                    economyMessage.add("   &fStone: &7" + nation.getString("stone"));
-                    economyMessage.add("   &fBrick: &7" + nation.getString("brick"));
-                    economyMessage.add("   &fDarkstone: &7" + nation.getString("darkstone"));
-                    economyMessage.add("   &fObsidian: &7" + nation.getString("obsidian"));
+                    economyMessage.add("   &fTreasury: &7" + nation.getInteger("treasury"));
+                    economyMessage.add("   &fWood: &7" + nation.getInteger("wood"));
+                    economyMessage.add("   &fStone: &7" + nation.getInteger("stone"));
+                    economyMessage.add("   &fBrick: &7" + nation.getInteger("brick"));
+                    economyMessage.add("   &fDarkstone: &7" + nation.getInteger("darkstone"));
+                    economyMessage.add("   &fObsidian: &7" + nation.getInteger("obsidian"));
                     economyMessage.add("&f" + Common.chatLineSmooth());
                     tellNoPrefix(economyMessage);
                     break;
@@ -125,6 +128,9 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                             diplomacyMessage.add("   &f- &7" + alliedNation);
                         }
                     } else {
+                        diplomacyMessage.add("   &fNone.");
+                    }
+                    if(diplomacyMessage.size() == 4) {
                         diplomacyMessage.add("   &fNone.");
                     }
                     diplomacyMessage.add("   &fPending Allied Nations: ");
@@ -158,7 +164,7 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                                 }
 
                                 chunkMessage.add("   &fInfrastructure: &70");
-                                chunkMessage.add("   &fHousing: &7(&a0&7/0&7)");
+                                chunkMessage.add("   &fHousing: &7(&a" + TerritoryInteractionEvent.getInstance().getHousingBlocksInChunk(player.getLocation().getChunk(), nation)  + "&7/" + Config.Housing.max_housing_per_chunk + ")");
                                 chunkMessage.add("   &fDrills: &70");
                                 chunkMessage.add("   &fHistory: ");
                                 if(claim.getStringList("history") != null) {
