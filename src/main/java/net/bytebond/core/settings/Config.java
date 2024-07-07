@@ -62,13 +62,13 @@ public class Config extends YamlStaticConfig {
             public static Boolean enabled;
             public static String requiredPermission;
 
-            public static Double cost;
+            public static Integer cost;
 
             private static void init() {
                 pathPrefix("Nations.Creation");
                 enabled = getBoolean("enabled");
                 requiredPermission = getString("required_permissions");
-                cost = getDouble("cost");
+                cost = getInteger("cost");
             }
 
             public static class Naming {
@@ -137,14 +137,14 @@ public class Config extends YamlStaticConfig {
             // Nations Territory Claiming Configuration
             // Nations.Territory.Claiming.
             public static Boolean enabled;
-            public static Double cost;
+            public static Integer cost;
             public static Integer max;
             public static Integer min;
 
             private static void init() {
                 pathPrefix("Nations.Territory.Claiming");
                 enabled = getBoolean("enabled");
-                cost = getDouble("cost");
+                cost = getInteger("cost");
                 max = getInteger("max");
                 min = getInteger("min");
             }
@@ -217,6 +217,19 @@ public class Config extends YamlStaticConfig {
             max_housing_per_chunk = getInteger("max_housing_per_chunk");
         }
 
+    } // Housing
+
+    public static class Tax {
+        public static Boolean enabled;
+        public static Integer max_tax_rate;
+        public static String tax_collection_system;
+
+        private static void init() {
+            pathPrefix("Tax");
+            enabled = getBoolean("enabled");
+            max_tax_rate = getInteger("max_tax_rate");
+            tax_collection_system = getString("tax_collection_system");
+        }
     }
 
 }

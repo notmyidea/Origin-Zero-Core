@@ -10,7 +10,7 @@ public class EconomyHandler {
         BRICK,
         DARKSTONE,
         OBSIDIAN,
-        TREASURY
+        //TREASURY
     }
 
     public static void SetEconomy(NationYML nation, Currency currency, int newAmount) {
@@ -35,10 +35,10 @@ public class EconomyHandler {
                 nation.set("obsidian", newAmount);
                 nation.save();
                 break;
-            case TREASURY:
-                nation.set("treasury", newAmount);
-                nation.save();
-                break;
+            //case TREASURY:
+            //    nation.set("treasury", newAmount);
+            //    nation.save();
+            //    break;
         }
     }
 
@@ -54,8 +54,8 @@ public class EconomyHandler {
                 return nation.getInteger("darkstone");
             case OBSIDIAN:
                 return nation.getInteger("obsidian");
-            case TREASURY:
-                return nation.getInteger("treasury");
+            //case TREASURY:
+            //    return nation.getInteger("treasury");
         }
         return 0;
     }

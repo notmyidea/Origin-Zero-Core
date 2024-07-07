@@ -1,10 +1,12 @@
 package net.bytebond.core.commands.nationsubcommands;
 
 import com.comphenix.net.bytebuddy.asm.Advice;
+import net.bytebond.core.Core;
 import net.bytebond.core.data.ClaimRegistry;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
 import net.bytebond.core.util.EnterChunkTerritoryEvent;
+import net.bytebond.core.util.NationTaxCollection;
 import net.bytebond.core.util.TerritoryInteractionEvent;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
@@ -22,6 +24,7 @@ public class NationInfoSubCommand extends SimpleSubCommand {
     public NationInfoSubCommand(SimpleCommandGroup parent) {
         super(parent, "info");
 
+        setPermission("nation.player");
         setDescription("Get information about your Nation.");
     }
 
@@ -74,11 +77,12 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                     messages.add("   &fWarscore: &a★&f" + nation.getInteger("warscore"));
                     messages.add("   &fEconomic Information:       Tax: &c" + nation.getInteger("taxRate")+ "&f%, Happiness: " + "&aCalc.%");
                     messages.add("");
+                    messages.add("   &fMoney: &7" + Core.getEconomy().getBalance(player));
                     messages.add("   &fWood: &7" + nation.getInteger("wood"));
                     messages.add("   &fStone: &7" + nation.getInteger("stone"));
                     messages.add("   &fBrick: &7" + nation.getInteger("brick"));
                     messages.add("   &fDarkstone: &7" + nation.getInteger("darkstone"));
-                    messages.add("   &fObsidian: &7" + nation.getInteger("obsidian") + "&f. You have &7" + amountOfDrills + " &fdrills and &7" + nation.getInteger("population") + " &fpopulation.");
+                    messages.add("   &fObsidian: &7" + nation.getInteger("obsidian") + "&f. You have &7" + amountOfDrills + " &fdrills and &7" + nation.getStringList("villagers").size() + " &fpopulation.");
                     messages.add(" ");
                     messages.add("   &fCategories: &7chunk&f, &7diplomacy&f, &7economy&f, &7population&f, &c&mtrade&f");
                     messages.add("   &fMore: &7/nation info chunk &f - Chunk information");
@@ -101,13 +105,26 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                     List<String> economyMessage = new ArrayList<>();
                     economyMessage.add("&f" + Common.chatLineSmooth());
                     economyMessage.add("   &fEconomic Information &7(&f" + nation.getString("nationName") + "&7)");
-                    economyMessage.add("   &fTax Rate: &c" + nation.getInteger("taxRate") + "&f%");
-                    economyMessage.add("   &fTreasury: &7" + nation.getInteger("treasury"));
-                    economyMessage.add("   &fWood: &7" + nation.getInteger("wood"));
-                    economyMessage.add("   &fStone: &7" + nation.getInteger("stone"));
-                    economyMessage.add("   &fBrick: &7" + nation.getInteger("brick"));
-                    economyMessage.add("   &fDarkstone: &7" + nation.getInteger("darkstone"));
-                    economyMessage.add("   &fObsidian: &7" + nation.getInteger("obsidian"));
+                    economyMessage.add("   &fTax Rate: &c" + nation.getInteger("taxRate") + "&f/" + Config.Tax.max_tax_rate + "&f%");
+                    economyMessage.add("   &fHappiness: &7" + nation.getInteger("happiness") + "&f%");
+                    List<String> villagers = nation.getStringList("villagers");
+                    List<String> villagerNames = new ArrayList<>();
+
+                    for (int i = 0; i < villagers.size() && i < 3; i++) {
+                        String villagerData = villagers.get(i);
+                        String villagerName = villagerData.split(",")[0];
+                        villagerNames.add(villagerName);
+                    }
+
+                    economyMessage.add("   &fPopulation: &7" + nation.getStringList("villagers").size());
+                    economyMessage.add("   &fVillagers: &7" + String.join(", ", villagerNames) + "...");
+                    Double taxRate = nation.getInteger("taxRate") / 100.0;
+                    Double happiness = nation.getInteger("happiness") / 100.0;
+                    Integer ApproxTaxCollection = (int) (villagers.size() * 100 * taxRate * happiness);
+                    economyMessage.add("   &fCalculated tax revenue: &7$" + ApproxTaxCollection + " (approx.)");
+                    NationTaxCollection taxCollection = new NationTaxCollection();
+                    Integer recentpayments= taxCollection.getRecentTaxPayout(nation.getString("nationName"));
+                    economyMessage.add("   &fLast tax revenue: &a$" + recentpayments);
                     economyMessage.add("&f" + Common.chatLineSmooth());
                     tellNoPrefix(economyMessage);
                     break;

@@ -26,6 +26,7 @@ public class NationDeleteSubCommand extends SimpleSubCommand {
     public NationDeleteSubCommand(SimpleCommandGroup parent) {
         super(parent, "delete");
 
+        setPermission("nation.player");
         setDescription("Delete your Nation.");
         setUsage("confirm");
     }

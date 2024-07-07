@@ -1207,5 +1207,17 @@
     },
     "done": true
   },
+  "minecraft:recipes/misc/sugar_from_sugar_cane": {
+    "criteria": {
+      "has_sugar_cane": "2024-07-07 15:01:08 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/paper": {
+    "criteria": {
+      "has_reeds": "2024-07-07 15:01:08 +0200"
+    },
+    "done": true
+  },
   "DataVersion": 3700
 }

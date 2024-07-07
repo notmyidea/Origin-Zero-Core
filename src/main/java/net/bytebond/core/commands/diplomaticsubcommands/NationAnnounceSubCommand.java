@@ -22,6 +22,7 @@ public class NationAnnounceSubCommand extends SimpleSubCommand {
     public NationAnnounceSubCommand(SimpleCommandGroup parent) {
         super(parent, "announce");
 
+        setPermission("nation.player");
         setDescription("Announce a message into the chat");
         setUsage("/nation announce <message>");
     }
@@ -36,7 +37,7 @@ public class NationAnnounceSubCommand extends SimpleSubCommand {
         Player player = (Player) sender;
         UUID UUID = player.getUniqueId();
         NationYML nation = new NationYML(UUID);
-
+        checkPerm("nation.player");
 
         if (!(nation.isSet("nationName"))) {
             tellWarn("&fYou are not currently part of a Nation.");

@@ -17,7 +17,7 @@ public class NationSetSubCommand extends SimpleSubCommand {
 
     public NationSetSubCommand(SimpleCommandGroup parent) {
         super("set");
-
+        setPermission("nation.player");
         setDescription("Change your Nation's settings.");
         setUsage("<option> <value>");
     }

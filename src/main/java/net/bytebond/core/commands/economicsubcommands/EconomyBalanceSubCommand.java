@@ -1,5 +1,6 @@
 package net.bytebond.core.commands.economicsubcommands;
 
+import net.bytebond.core.Core;
 import net.bytebond.core.commands.EconomyHandler;
 import net.bytebond.core.data.NationPlayer;
 import net.bytebond.core.data.NationYML;
@@ -20,7 +21,7 @@ public class EconomyBalanceSubCommand extends SimpleSubCommand {
 
     public EconomyBalanceSubCommand(SimpleCommandGroup parent) {
         super(parent, "balance");
-
+        setPermission("nation.player");
         setDescription("View your nation's treasury balance");
         setUsage("/economy balance");
     }
@@ -43,7 +44,7 @@ public class EconomyBalanceSubCommand extends SimpleSubCommand {
         }
         NationYML nation = nationPlayer.getNation();
         messages.add("   &fNation: &7" + nationPlayer.getNation().getString("nationName") + " (" + nationPlayer.getNation().getString("TAG") + ")");
-        messages.add("   &fTreasury: &a$&7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.TREASURY));
+        messages.add("   &fMoney: &a$&7" + Core.getEconomy().getBalance(player));
         messages.add("   &fWood: &7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.WOOD) + "   &fStone: &7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.STONE));
         messages.add("   &fBrick: &7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.BRICK) + "   &fDarkstone: &7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.DARKSTONE));
         messages.add("   &fObsidian: &7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.OBSIDIAN));

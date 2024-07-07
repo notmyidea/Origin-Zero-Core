@@ -1,6 +1,7 @@
 package net.bytebond.core.commands.nationsubcommands;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.bytebond.core.Core;
 import net.bytebond.core.data.HashManager;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import static net.bytebond.core.Core.*;
+
 public class NationCreateSubCommand extends SimpleSubCommand {
     private static final Logger log = LoggerFactory.getLogger(NationCreateSubCommand.class);
     /* Parent: ../$NationCommand.class
@@ -27,6 +30,7 @@ public class NationCreateSubCommand extends SimpleSubCommand {
 
     public NationCreateSubCommand(SimpleCommandGroup parent) {
         super(parent, "create");
+        setPermission("nation.player");
         setDescription("Create a new Nation.");
         setUsage("<name>");
 
@@ -110,12 +114,7 @@ public class NationCreateSubCommand extends SimpleSubCommand {
            }
        }
 
-       if(!(Config.Nations.Creation.cost == 0) && (!Objects.equals(Config.Economy.provider, "null"))) {
-           //if(!(Behavior.hasMoney(player, Config.Nations.Creation.cost))) {
-             //   tellWarn("You do not have enough money to create a nation.");
-             //   return;
-             // }
-       }
+
 
        // check if any of the nation files have the same nationName as firstArg in a for each loop
         // Get the name the user wants to use
@@ -141,6 +140,16 @@ public class NationCreateSubCommand extends SimpleSubCommand {
             }
         }
 
+        if(!(Config.Nations.Creation.cost == 0)) {
+
+            double cost = Config.Nations.Creation.cost;
+            if (!Core.getEconomy().has(player, cost)) {
+                tellWarn("You do not have enough money to create a nation.");
+                return;
+            }
+
+            Core.getEconomy().withdrawPlayer(player, cost);
+        }
 
        //if(NationYML.getNations().containsKey(firstArg)) {
        //    tellWarn("A Nation with that name already exists.");
@@ -161,6 +170,7 @@ public class NationCreateSubCommand extends SimpleSubCommand {
        nation.set("darkstone", 1000);
        nation.set("obsidian", 1000);
        nation.set("taxRate", 10);
+       nation.set("happiness", 70);
        nation.set("housing", new ArrayList<String>());
             List<String> housing_messages = nation.getStringList("housing");
             housing_messages.add("");
@@ -193,9 +203,8 @@ public class NationCreateSubCommand extends SimpleSubCommand {
        //EconomyHandler economyHandler = new EconomyHandler();
        //economyHandler.generateNationBankAccount(UUID);
        Common.log("Nation Bank Account created for " + firstArg + " with the owner of " + UUID.toString() + ".");
-
        String joinText = "&fYou have created a Nation named &7" + firstArg + "&f.";
-       joinText = PlaceholderAPI.setPlaceholders(player, joinText);
+       Core.getEconomy().createPlayerAccount(player);
        tellSuccess(joinText);
 
     }

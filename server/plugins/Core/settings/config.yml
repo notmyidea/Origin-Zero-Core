@@ -20,10 +20,10 @@ General:
 # -----------------------------------------------------------
 Economy:
   # The Economy provider, set to "null" to disable any economic behavior
-  provider: "internal"
-  vault_currency: "dollars, dollar, $"
+  provider: internal
+  vault_currency: dollars, dollar, $
   # UltraEconomy currencies
-  currencies: "Wood, Stone, Brick, Darkstone, Obsidian"
+  currencies: Wood, Stone, Brick, Darkstone, Obsidian
 
 
 # -----------------------------------------------------------
@@ -37,7 +37,7 @@ Nations:
     #
     # are players allowed to create a nation?
     enabled: true
-    required_permissions: "none" # "none" or "nations.create"
+    required_permissions: none
     #
     # How much does it cost to create a nation?
     # Requires an economy provider to be set in #Economy.provider
@@ -47,57 +47,39 @@ Nations:
     # /nation create <name>
     Naming:
         # Allows/Denies the use of color codes (&a,b,c) in Nation names, set to null to disable
-        color_coding_permission: "nations.naming.colorcoding"
+      color_coding_permission: nations.naming.colorcoding
         # Maximum amount of characters for Nation names
-        max_characters: 20
+      max_characters: 20
         # Minimum amount of characters for a Nation names
         # Minimum amount is 4 to prevent empty tags
-        min_characters: 4
+      min_characters: 4
         # Blacklisted names for Nations, can be multiple separated by commas
-        blacklist: "admin,moderator,owner,staff,helper,dev,developer,admin,mod,moderator,owner,staff,helper,dev,developer,"
+      blacklist: admin,moderator,owner,staff,helper,dev,developer,admin,mod,moderator,owner,staff,helper,dev,developer,
     Tags:
-        # Maximum amount of characters for Nation tags
-        max_characters: 4
-        # Minimum amount of characters for a Nation tags
-        min_characters: 2
-        # Blacklisted tags for Nations, can be multiple separated by commas
-        blacklist: "admin,moderator,owner,staff,helper,dev,developer,admin,mod,moderator,owner,staff,helper,dev,developer,"
+      max_characters: 4
+      min_characters: 2
+      blacklist: admin,moderator,owner,staff,helper,dev,developer,admin,mod,moderator,owner,staff,helper,dev,developer,
     Description:
-        color_coding_permission: "null"
-        # Maximum amount of characters for Nation descriptions
-        max_characters: 100
-        # Minimum amount of characters for a Nation descriptions
-        min_characters: 10
-        # Blacklisted descriptions for Nations, can be multiple separated by commas
-        blacklist: "admin,moderator,owner,staff,helper,dev,developer,admin,mod,moderator,owner,staff,helper,dev,developer,"
-  #
-  # This part is about the claiming of territory
-  # It requires the player to be in a Nation
-  # /nation <claim>
+      color_coding_permission: 'null'
+      max_characters: 100
+      min_characters: 10
+      blacklist: admin,moderator,owner,staff,helper,dev,developer,admin,mod,moderator,owner,staff,helper,dev,developer,
   Territory:
     Claiming:
-      # Can Nations claim territory?
       enabled: true
-      # How much does it cost to claim a chunk?
       cost: 100
-      # Maximum amount of Chunks a Nation can claim
       max: 100
-      # Minimum amount of Chunks a Nation can claim, will prevent the Nation from claiming 0
       min: 9
     Building:
-      # Allow fighting on Nation territory
       allow_fighting: true
-      # Allow alliances to do x on each other's territory
       Alliances:
         allow_building: true
         allow_usage: true
         allow_destroy: true
-      # Allow neutral nations to do x on each other's territory
       Neutral:
         allow_building: false
         allow_usage: false
         allow_destroy: false
-        # Allow nations to do x on each other's territory
       War:
         allow_building: false
         allow_usage: false
@@ -105,7 +87,19 @@ Nations:
 Housing:
   allow_housing: true
   max_houses: 100
-  max_housing_per_chunk: 1
+  max_housing_per_chunk: 10
+Tax:
+  enabled: true
+  # Maximum tax rate a nation can have in percent
+  max_tax_rate: 20
+  # "daily" is collecting every 24 hours starting on server launch
+  #  - Tax is collected by this formula:
+  #  - Nation population * 100 (Max collectable per villager) * 0.00 - 0.20 (0% - 20% configurable tax rate) * 1 (happiness 1 = 100% happiness = 100% tax collection, 0.70 = 70% happiness = 70% tax collection)
+  # NOTE: Since happiness is still work in progress their happiness is always 70% for now. 
+  # "interval:hours" (interval:168 <- for a week)
+  #  - IS NOT YET IMPLEMENTED !!!!
+  #tax_collection_system: "interval:168"
+  tax_collection_system: daily
   #
   #
   #

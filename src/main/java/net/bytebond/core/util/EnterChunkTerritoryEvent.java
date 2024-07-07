@@ -37,7 +37,7 @@ public final class EnterChunkTerritoryEvent implements Listener {
             Chunk oldChunk = event.getFrom().getChunk();
 
             if (Config.General.debugging) {
-                System.out.println("!!!Player moved a chunk");
+                //System.out.println("!!!Player moved a chunk");
             }
 
             // Get the nation for the new chunk

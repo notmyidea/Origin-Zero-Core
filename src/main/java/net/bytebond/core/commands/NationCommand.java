@@ -10,6 +10,7 @@ import net.bytebond.core.data.NationYML;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
+import org.mineacademy.fo.command.ReloadCommand;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.model.SimpleComponent;
 import org.mineacademy.fo.plugin.SimplePlugin;
@@ -39,6 +40,7 @@ public final class NationCommand extends SimpleCommandGroup {
         registerSubcommand(new NationArchiveSubCommand(this));
         registerSubcommand(new NationDiplomacySubCommand(this));
         registerSubcommand(new AdminNationManager(this));
+        registerSubcommand(new ReloadCommand("nation.admin"));
     }
 
 

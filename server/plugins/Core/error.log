@@ -52,3 +52,394 @@ ClassCastException class com.destroystokyo.paper.console.TerminalConsoleCommandS
 ----------------------------------------------------------------------------------------------
 
 
+------------------------------------[ 07.07.2024 01:56:33 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: PlaceholderAPI v2.11.6, UltraEconomy v2.8.0, Vault v1.7.3-b131, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Field 'cost' in class net.bytebond.core.settings.Config$Territory$Claiming must not be primitive!
+FoException Report: Field 'cost' in class net.bytebond.core.settings.Config$Territory$Claiming must not be primitive!
+	 at Core.jar//org.mineacademy.fo.Valid.checkBoolean(Valid.java:90)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.checkFields(YamlStaticConfig.java:237)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeMethodsIn(YamlStaticConfig.java:222)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:189)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:193)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:193)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.loadViaReflection(YamlStaticConfig.java:175)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.access$000(YamlStaticConfig.java:34)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig$1.onLoad(YamlStaticConfig.java:75)
+	 at Core.jar//org.mineacademy.fo.settings.FileConfig.load(FileConfig.java:1210)
+	 at Core.jar//org.mineacademy.fo.settings.YamlConfig.loadConfiguration(YamlConfig.java:195)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.loadConfiguration(YamlStaticConfig.java:253)
+	 at Core.jar//net.bytebond.core.settings.Config.onLoad(Config.java:13)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.load(YamlStaticConfig.java:93)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.registerSettings(AutoRegisterScanner.java:211)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:79)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.onEnable(SimplePlugin.java:308)
+	 at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:287)
+	 at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:188)
+	 at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:104)
+	 at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:507)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugin(CraftServer.java:639)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugins(CraftServer.java:550)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 02:51:15 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: PlaceholderAPI v2.11.6, UltraEconomy v2.8.0, Vault v1.7.3-b131, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Field 'cost' in class net.bytebond.core.settings.Config$Territory$Claiming must not be primitive!
+FoException Report: Field 'cost' in class net.bytebond.core.settings.Config$Territory$Claiming must not be primitive!
+	 at Core.jar//org.mineacademy.fo.Valid.checkBoolean(Valid.java:90)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.checkFields(YamlStaticConfig.java:237)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeMethodsIn(YamlStaticConfig.java:222)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:189)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:193)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:193)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.loadViaReflection(YamlStaticConfig.java:175)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.access$000(YamlStaticConfig.java:34)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig$1.onLoad(YamlStaticConfig.java:75)
+	 at Core.jar//org.mineacademy.fo.settings.FileConfig.load(FileConfig.java:1210)
+	 at Core.jar//org.mineacademy.fo.settings.YamlConfig.loadConfiguration(YamlConfig.java:195)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.loadConfiguration(YamlStaticConfig.java:253)
+	 at Core.jar//net.bytebond.core.settings.Config.onLoad(Config.java:13)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.load(YamlStaticConfig.java:93)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.registerSettings(AutoRegisterScanner.java:211)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:79)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.onEnable(SimplePlugin.java:308)
+	 at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:287)
+	 at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:188)
+	 at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:104)
+	 at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:507)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugin(CraftServer.java:639)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugins(CraftServer.java:550)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 02:59:21 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: PlaceholderAPI v2.11.6, UltraEconomy v2.8.0, Vault v1.7.3-b131, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Field 'cost' in class net.bytebond.core.settings.Config$Nations$Creation must not be primitive!
+FoException Report: Field 'cost' in class net.bytebond.core.settings.Config$Nations$Creation must not be primitive!
+	 at Core.jar//org.mineacademy.fo.Valid.checkBoolean(Valid.java:90)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.checkFields(YamlStaticConfig.java:237)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeMethodsIn(YamlStaticConfig.java:222)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:189)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:193)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:193)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.loadViaReflection(YamlStaticConfig.java:175)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.access$000(YamlStaticConfig.java:34)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig$1.onLoad(YamlStaticConfig.java:75)
+	 at Core.jar//org.mineacademy.fo.settings.FileConfig.load(FileConfig.java:1210)
+	 at Core.jar//org.mineacademy.fo.settings.YamlConfig.loadConfiguration(YamlConfig.java:195)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.loadConfiguration(YamlStaticConfig.java:253)
+	 at Core.jar//net.bytebond.core.settings.Config.onLoad(Config.java:13)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.load(YamlStaticConfig.java:93)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.registerSettings(AutoRegisterScanner.java:211)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:79)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.onEnable(SimplePlugin.java:308)
+	 at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:287)
+	 at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:188)
+	 at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:104)
+	 at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:507)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugin(CraftServer.java:639)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugins(CraftServer.java:550)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 12:30:31 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: PlaceholderAPI v2.11.6, UltraEconomy v2.8.0, Vault v1.7.3-b131, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Field 'cost' in class net.bytebond.core.settings.Config$Nations$Creation must not be primitive!
+FoException Report: Field 'cost' in class net.bytebond.core.settings.Config$Nations$Creation must not be primitive!
+	 at Core.jar//org.mineacademy.fo.Valid.checkBoolean(Valid.java:90)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.checkFields(YamlStaticConfig.java:237)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeMethodsIn(YamlStaticConfig.java:222)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:189)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:193)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.invokeAll(YamlStaticConfig.java:193)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.loadViaReflection(YamlStaticConfig.java:175)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.access$000(YamlStaticConfig.java:34)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig$1.onLoad(YamlStaticConfig.java:75)
+	 at Core.jar//org.mineacademy.fo.settings.FileConfig.load(FileConfig.java:1210)
+	 at Core.jar//org.mineacademy.fo.settings.YamlConfig.loadConfiguration(YamlConfig.java:195)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.loadConfiguration(YamlStaticConfig.java:253)
+	 at Core.jar//net.bytebond.core.settings.Config.onLoad(Config.java:13)
+	 at Core.jar//org.mineacademy.fo.settings.YamlStaticConfig.load(YamlStaticConfig.java:93)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.registerSettings(AutoRegisterScanner.java:211)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:79)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.onEnable(SimplePlugin.java:308)
+	 at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:287)
+	 at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:188)
+	 at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:104)
+	 at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:507)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugin(CraftServer.java:639)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugins(CraftServer.java:550)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 16:52:31 ]-----------------------------------
+Core 0.3.5 encountered a NullPointerException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: PlaceholderAPI v2.11.6, UltraEconomy v2.8.0, Vault v1.7.3-b131, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Failed to execute command /nation admin collecttax MyAwesomeNation
+NullPointerException Cannot invoke "org.bukkit.OfflinePlayer.getName()" because "<parameter1>" is null
+	 at UltraEconomy-2.8.0.jar//me.TechsCode.UltraEconomy.hooks.pluginHooks.VaultHook.depositPlayer(VaultHook.java:198)
+	 at Core.jar//net.bytebond.core.util.NationTaxCollection.collectTax(NationTaxCollection.java:54)
+	 at Core.jar//net.bytebond.core.commands.adminsubcommands.AdminNationManager.onCommand(AdminNationManager.java:299)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.command.BukkitCommandWrapper.run(BukkitCommandWrapper.java:64)
+	 at com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.a(ExecuteCommand.java:31)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:19)
+	 at net.minecraft.commands.execution.UnboundEntryAction.a(UnboundEntryAction.java:8)
+	 at net.minecraft.commands.execution.CommandQueueEntry.a(CommandQueueEntry.java:5)
+	 at net.minecraft.commands.execution.ExecutionContext.a(ExecutionContext.java:103)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:434)
+	 at net.minecraft.commands.CommandDispatcher.performCommand(CommandDispatcher.java:336)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:323)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 16:53:31 ]-----------------------------------
+Core 0.3.5 encountered a NullPointerException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: PlaceholderAPI v2.11.6, UltraEconomy v2.8.0, Vault v1.7.3-b131, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Failed to execute command /nation admin collecttax MyAwesomeNation
+NullPointerException Cannot invoke "org.bukkit.OfflinePlayer.getName()" because "<parameter1>" is null
+	 at UltraEconomy-2.8.0.jar//me.TechsCode.UltraEconomy.hooks.pluginHooks.VaultHook.depositPlayer(VaultHook.java:198)
+	 at Core.jar//net.bytebond.core.util.NationTaxCollection.collectTax(NationTaxCollection.java:54)
+	 at Core.jar//net.bytebond.core.commands.adminsubcommands.AdminNationManager.onCommand(AdminNationManager.java:299)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.command.BukkitCommandWrapper.run(BukkitCommandWrapper.java:64)
+	 at com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.a(ExecuteCommand.java:31)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:19)
+	 at net.minecraft.commands.execution.UnboundEntryAction.a(UnboundEntryAction.java:8)
+	 at net.minecraft.commands.execution.CommandQueueEntry.a(CommandQueueEntry.java:5)
+	 at net.minecraft.commands.execution.ExecutionContext.a(ExecutionContext.java:103)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:434)
+	 at net.minecraft.commands.CommandDispatcher.performCommand(CommandDispatcher.java:336)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:323)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 16:53:32 ]-----------------------------------
+Core 0.3.5 encountered a NullPointerException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: PlaceholderAPI v2.11.6, UltraEconomy v2.8.0, Vault v1.7.3-b131, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Failed to execute command /nation admin collecttax MyAwesomeNation
+NullPointerException Cannot invoke "org.bukkit.OfflinePlayer.getName()" because "<parameter1>" is null
+	 at UltraEconomy-2.8.0.jar//me.TechsCode.UltraEconomy.hooks.pluginHooks.VaultHook.depositPlayer(VaultHook.java:198)
+	 at Core.jar//net.bytebond.core.util.NationTaxCollection.collectTax(NationTaxCollection.java:54)
+	 at Core.jar//net.bytebond.core.commands.adminsubcommands.AdminNationManager.onCommand(AdminNationManager.java:299)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.command.BukkitCommandWrapper.run(BukkitCommandWrapper.java:64)
+	 at com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.a(ExecuteCommand.java:31)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:19)
+	 at net.minecraft.commands.execution.UnboundEntryAction.a(UnboundEntryAction.java:8)
+	 at net.minecraft.commands.execution.CommandQueueEntry.a(CommandQueueEntry.java:5)
+	 at net.minecraft.commands.execution.ExecutionContext.a(ExecutionContext.java:103)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:434)
+	 at net.minecraft.commands.CommandDispatcher.performCommand(CommandDispatcher.java:336)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:323)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 16:53:35 ]-----------------------------------
+Core 0.3.5 encountered a NullPointerException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: PlaceholderAPI v2.11.6, UltraEconomy v2.8.0, Vault v1.7.3-b131, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Failed to execute command /nation admin collecttax MyAwesomeNation
+NullPointerException Cannot invoke "org.bukkit.OfflinePlayer.getName()" because "<parameter1>" is null
+	 at UltraEconomy-2.8.0.jar//me.TechsCode.UltraEconomy.hooks.pluginHooks.VaultHook.depositPlayer(VaultHook.java:198)
+	 at Core.jar//net.bytebond.core.util.NationTaxCollection.collectTax(NationTaxCollection.java:54)
+	 at Core.jar//net.bytebond.core.commands.adminsubcommands.AdminNationManager.onCommand(AdminNationManager.java:299)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.command.BukkitCommandWrapper.run(BukkitCommandWrapper.java:64)
+	 at com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.a(ExecuteCommand.java:31)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:19)
+	 at net.minecraft.commands.execution.UnboundEntryAction.a(UnboundEntryAction.java:8)
+	 at net.minecraft.commands.execution.CommandQueueEntry.a(CommandQueueEntry.java:5)
+	 at net.minecraft.commands.execution.ExecutionContext.a(ExecutionContext.java:103)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:434)
+	 at net.minecraft.commands.CommandDispatcher.performCommand(CommandDispatcher.java:336)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:323)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 18:45:40 ]-----------------------------------
+Core 0.3.5 encountered a NoSuchMethodError
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: Vault v1.7.3-b131, Essentials v2.21.0-dev+102-fcf6e64, PlaceholderAPI v2.11.6, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Failed to execute command /nation info economy
+NoSuchMethodError 'java.lang.Double net.bytebond.core.util.NationTaxCollection.getRecentTaxPayout(java.lang.String)'
+	 at Core.jar//net.bytebond.core.commands.nationsubcommands.NationInfoSubCommand.onCommand(NationInfoSubCommand.java:126)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.command.BukkitCommandWrapper.run(BukkitCommandWrapper.java:64)
+	 at com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.a(ExecuteCommand.java:31)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:19)
+	 at net.minecraft.commands.execution.UnboundEntryAction.a(UnboundEntryAction.java:8)
+	 at net.minecraft.commands.execution.CommandQueueEntry.a(CommandQueueEntry.java:5)
+	 at net.minecraft.commands.execution.ExecutionContext.a(ExecutionContext.java:103)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:434)
+	 at net.minecraft.commands.CommandDispatcher.performCommand(CommandDispatcher.java:336)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:323)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 18:45:59 ]-----------------------------------
+Core 0.3.5 encountered a NoSuchMethodError
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: Vault v1.7.3-b131, Essentials v2.21.0-dev+102-fcf6e64, PlaceholderAPI v2.11.6, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Failed to execute command /nation info economy
+NoSuchMethodError 'java.lang.Double net.bytebond.core.util.NationTaxCollection.getRecentTaxPayout(java.lang.String)'
+	 at Core.jar//net.bytebond.core.commands.nationsubcommands.NationInfoSubCommand.onCommand(NationInfoSubCommand.java:126)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.command.BukkitCommandWrapper.run(BukkitCommandWrapper.java:64)
+	 at com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.a(ExecuteCommand.java:31)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:19)
+	 at net.minecraft.commands.execution.UnboundEntryAction.a(UnboundEntryAction.java:8)
+	 at net.minecraft.commands.execution.CommandQueueEntry.a(CommandQueueEntry.java:5)
+	 at net.minecraft.commands.execution.ExecutionContext.a(ExecutionContext.java:103)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:434)
+	 at net.minecraft.commands.CommandDispatcher.performCommand(CommandDispatcher.java:336)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:323)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 20:01:57 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: Vault v1.7.3-b131, Essentials v2.21.0-dev+102-fcf6e64, PlaceholderAPI v2.11.6, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Please make class net.bytebond.core.util.BlockBreakBuildEvent final for it to be registered automatically (or via @AutoRegister)
+FoException Report: Please make class net.bytebond.core.util.BlockBreakBuildEvent final for it to be registered automatically (or via @AutoRegister)
+	 at Core.jar//org.mineacademy.fo.Valid.checkBoolean(Valid.java:90)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:112)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.onEnable(SimplePlugin.java:308)
+	 at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:287)
+	 at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:188)
+	 at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:104)
+	 at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:507)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugin(CraftServer.java:639)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugins(CraftServer.java:550)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 20:02:25 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: Vault v1.7.3-b131, Essentials v2.21.0-dev+102-fcf6e64, PlaceholderAPI v2.11.6, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Please make class net.bytebond.core.util.BlockBreakBuildEvent final for it to be registered automatically (or via @AutoRegister)
+FoException Report: Please make class net.bytebond.core.util.BlockBreakBuildEvent final for it to be registered automatically (or via @AutoRegister)
+	 at Core.jar//org.mineacademy.fo.Valid.checkBoolean(Valid.java:90)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:112)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.reload(SimplePlugin.java:809)
+	 at Core.jar//org.mineacademy.fo.command.ReloadCommand.onCommand(ReloadCommand.java:66)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.command.BukkitCommandWrapper.run(BukkitCommandWrapper.java:64)
+	 at com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.a(ExecuteCommand.java:31)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:19)
+	 at net.minecraft.commands.execution.UnboundEntryAction.a(UnboundEntryAction.java:8)
+	 at net.minecraft.commands.execution.CommandQueueEntry.a(CommandQueueEntry.java:5)
+	 at net.minecraft.commands.execution.ExecutionContext.a(ExecutionContext.java:103)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:434)
+	 at net.minecraft.commands.CommandDispatcher.performCommand(CommandDispatcher.java:336)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:323)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 20:05:29 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: Vault v1.7.3-b131, Essentials v2.21.0-dev+102-fcf6e64, PlaceholderAPI v2.11.6, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Your class class net.bytebond.core.util.BlockBreakBuildEvent using @AutoRegister must EITHER have 1) one public no arguments constructor, OR 2) one private no arguments constructor plus a 'private static final BlockBreakBuildEvent instance' instance field.
+FoException Report: Your class class net.bytebond.core.util.BlockBreakBuildEvent using @AutoRegister must EITHER have 1) one public no arguments constructor, OR 2) one private no arguments constructor plus a 'private static final BlockBreakBuildEvent instance' instance field.
+	 at Core.jar//org.mineacademy.fo.Valid.checkNotNull(Valid.java:60)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.findInstance(AutoRegisterScanner.java:466)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.autoRegister(AutoRegisterScanner.java:277)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:115)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.onEnable(SimplePlugin.java:308)
+	 at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:287)
+	 at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:188)
+	 at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:104)
+	 at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:507)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugin(CraftServer.java:639)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugins(CraftServer.java:550)
+----------------------------------------------------------------------------------------------
+
+

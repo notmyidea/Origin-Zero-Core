@@ -24,6 +24,7 @@ public class EconomyHelpCommand extends SimpleSubCommand {
         super(parent, "help");
         setDescription("View the usage of the economy system");
         setUsage("/economy help");
+        setPermission("nation.player");
     }
 
 

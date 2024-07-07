@@ -1,5 +1,7 @@
 package net.bytebond.core.commands.nationsubcommands;
 
+import net.bytebond.core.Core;
+import net.bytebond.core.commands.EconomyHandler;
 import net.bytebond.core.data.ClaimRegistry;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
@@ -16,11 +18,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+
 public class NationsClaimManagerSubCommand extends SimpleSubCommand {
 
     public NationsClaimManagerSubCommand(SimpleCommandGroup parent) {
         super(parent, "territory");
-
+        setPermission("nation.player");
         setDescription("Claim or unclaim a chunk of land for your faction");
         setUsage("<claim|unclaim>");
     }
@@ -74,6 +77,17 @@ public class NationsClaimManagerSubCommand extends SimpleSubCommand {
                         }
                     }
                 }
+                if(Config.Territory.Claiming.cost != 0) {
+                    Integer cost = Config.Territory.Claiming.cost;
+                        if(Core.getEconomy().getBalance(player) >= cost) {
+                            Core.getEconomy().withdrawPlayer(player, cost);
+                        } else {
+                            tellWarn("&fYou do not have enough money to claim this chunk. &7$" + Config.Territory.Claiming.cost + " are required to claim this chunk.");
+                            return;
+                        }
+                }
+
+
                 // 1/2 Claim the chunk using the Nation territory method
                 if(nation.isSet("territory")) {
                     List<String> territory = nation.getStringList("territory");

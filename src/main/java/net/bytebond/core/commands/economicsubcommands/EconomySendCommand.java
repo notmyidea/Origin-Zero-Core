@@ -22,6 +22,7 @@ public class EconomySendCommand extends SimpleSubCommand {
     public EconomySendCommand(SimpleCommandGroup parent) {
         super(parent, "send");
 
+        setPermission("nation.player");
         setDescription("Deposit currency in another nations treasury");
         setUsage("/economy send <nation> <currency> <amount>");
     }
@@ -31,6 +32,7 @@ public class EconomySendCommand extends SimpleSubCommand {
     protected void onCommand() {
         Player player = (Player) sender;
         NationPlayer nationPlayer = new NationPlayer(player);
+        setPermission("nation.player");
 
         if(!(nationPlayer.inNation())) {
             tellError("You are not in a nation.");

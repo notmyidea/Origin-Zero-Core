@@ -7,6 +7,8 @@ import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
 import net.bytebond.core.settings.Drills;
 import net.bytebond.core.settings.Messages;
+import net.bytebond.core.util.ItemManager;
+import net.bytebond.core.util.NationTaxCollection;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -36,7 +38,7 @@ public class AdminNationManager extends SimpleSubCommand {
 
     public AdminNationManager(SimpleCommandGroup parent) {
         super(parent, "admin");
-        setPermission("bytebond.command.admin");
+        setPermission("nation.admin");
         setDescription("Admin nation manager");
         setUsage("/nation admin <delete/rename/list/removechunk/endwar/givetroop/give> <nation/mob/block>");
     }
@@ -48,7 +50,7 @@ public class AdminNationManager extends SimpleSubCommand {
         Player player = (Player) sender;
         UUID UUID = player.getUniqueId();
         NationYML nation = new NationYML(UUID);
-        checkPerm("nations.command.adminsubcommands.adminnationmanager");
+        checkPerm("nation.admin");
 
         if (args.length < 1) {
             tellWarn("&fYou must specify a subcommand. &7/nation admin <delete/rename/list/removechunk/endwar/givetroop/give> <nation/mob/block>");
@@ -146,38 +148,8 @@ public class AdminNationManager extends SimpleSubCommand {
                             tellWarn("Player not found: " + playerName);
                             return;
                         }
-
-                        // Create a new ItemStack for the chest
-                        ItemStack housingBlock = new ItemStack(Material.CHEST);
-
-                        // Get the ItemMeta of the ItemStack
-                        ItemMeta meta = housingBlock.getItemMeta();
-
-                        // Set the display name and lore of the item
-                        meta.setDisplayName(ChatColor.WHITE + "Housing Block (Placeable) (" + playerName + ")");
-                        List<String> lore = new ArrayList<>();
-                        lore.add(ChatColor.WHITE + "Place this block to create a housing object.");
-                        lore.add(ChatColor.WHITE + "You can only place " + ChatColor.GRAY + Config.Housing.max_houses + ChatColor.WHITE + " housing objects.");
-                        lore.add(ChatColor.WHITE + "And only " + ChatColor.GRAY + Config.Housing.max_housing_per_chunk + ChatColor.WHITE + " per chunk.");
-                        lore.add("");
-                        lore.add(ChatColor.WHITE + "It will by time spawn villagers.");
-                        lore.add(ChatColor.WHITE + "Higher " + ChatColor.GREEN + "happiness " + ChatColor.WHITE + "means more villagers. (§aPull§f- and §cPush§f-System)");
-                        lore.add(ChatColor.WHITE + "Losing the chunk in a war will give the block to the new owner.");
-                        meta.setLore(lore);
-                        meta.setCustomModelData(22222); // Set a unique identifier for the housing block
-
-
-                        // Add a hidden enchantment to make the item glow
-                        //meta.addEnchant(Enchantment.AQUA_AFFINITY, 1, true);
-                        //.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-
-                        // Apply the modified ItemMeta to the ItemStack
-                        housingBlock.setItemMeta(meta);
-
-                        // Add the custom item to the player's inventory
-                        targetPlayer.getInventory().addItem(housingBlock);
-
-                        Common.tellNoPrefix(targetPlayer, "&fYou have been given a Housing Block by an admin.");
+                        // THE ENTIRE ITEMSTACK HAS BEEN MOVED TO UTIL.ITEMMANAGER
+                        ItemManager.giveHousingObject(targetPlayer, false);
 
                         tellSuccess("Given Housing Block to " + playerName);
                         break;
@@ -283,6 +255,21 @@ public class AdminNationManager extends SimpleSubCommand {
                 listAdminMessage.add("&f" + Common.chatLineSmooth());
                 tellNoPrefix(listAdminMessage);
                 break;
+            case "collecttax":
+                if(args.length != 2) {
+                    tellWarn("Usage: /nation admin collecttax <nation>");
+                    return;
+                }
+                String collectTaxNationName = args[1];
+                NationYML collectTaxNation = NationYML.getNationsByName(collectTaxNationName).stream().findFirst().orElse(null);
+                if (collectTaxNation == null) {
+                    tellWarn("Nation not found: " + collectTaxNationName);
+                    return;
+                }
+                NationTaxCollection nationTaxCollection = new NationTaxCollection();
+                nationTaxCollection.collectTax(collectTaxNation);
+                tellSuccess("Manually started tax collection for nation " + collectTaxNationName);
+                break;
             default:
                 tellWarn("&fYou must specify a subcommand. &7/nation admin <delete/rename/removechunk/endwar/givetroop/give> <nation/mob/block>");
                 break;
@@ -298,9 +285,9 @@ public class AdminNationManager extends SimpleSubCommand {
 
         switch (args.length) {
             case 1:
-                return completeLastWord("delete", "rename", "list", "removechunk", "endwar", "givetroop", "give");
+                return completeLastWord("delete", "rename", "list", "removechunk", "endwar", "givetroop", "give", "collecttax");
             case 2:
-                if (args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("rename")) {
+                if (args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("rename") || args[0].equalsIgnoreCase("collectTax")) {
                     // Get all nations
                     Map<UUID, NationYML> nations = NationYML.getNations();
                     // Extract nation names

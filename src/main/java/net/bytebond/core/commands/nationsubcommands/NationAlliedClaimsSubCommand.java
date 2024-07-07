@@ -17,7 +17,7 @@ public class NationAlliedClaimsSubCommand extends SimpleSubCommand {
 
     public NationAlliedClaimsSubCommand(SimpleCommandGroup parent) {
         super(parent, "alliedclaims");
-
+        setPermission("nation.player");
         setDescription("Toggles if allies can build, interact and move armies through your nations territory");
         setUsage("/nation alliedclaims <true/false>");
     }

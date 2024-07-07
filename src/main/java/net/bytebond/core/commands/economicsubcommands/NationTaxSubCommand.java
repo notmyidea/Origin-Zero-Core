@@ -1,6 +1,7 @@
 package net.bytebond.core.commands.economicsubcommands;
 
 import net.bytebond.core.data.NationYML;
+import net.bytebond.core.settings.Config;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
@@ -17,7 +18,7 @@ public class NationTaxSubCommand extends SimpleSubCommand {
 
     public NationTaxSubCommand(SimpleCommandGroup parent) {
         super(parent, "tax");
-
+        setPermission("nation.player");
         setDescription("Manage your Nations taxes");
         setUsage("/nation tax <increase/decrease> ");
     }
@@ -45,7 +46,7 @@ public class NationTaxSubCommand extends SimpleSubCommand {
 
         switch(args[0]) {
             case "increase":
-                if(nation.getInteger("taxRate") == 100) {
+                if(nation.getInteger("taxRate") > Config.Tax.max_tax_rate || nation.getInteger("taxRate") == Config.Tax.max_tax_rate) {
                     tellWarn("&fYou cannot increase the tax rate any further.");
                     return;
                 }

@@ -20,6 +20,7 @@ public class NationArchiveSubCommand extends SimpleSubCommand {
     public NationArchiveSubCommand(SimpleCommandGroup parent) {
         super(parent, "archive");
 
+        setPermission("nation.player");
         setDescription("View the archived announcement and actions of that Nation");
         setUsage("/nation archive <nation>");
     }

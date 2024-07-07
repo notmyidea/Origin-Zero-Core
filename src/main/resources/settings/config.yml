@@ -105,7 +105,19 @@ Nations:
 Housing:
   allow_housing: true
   max_houses: 100
-  max_housing_per_chunk: 1
+  max_housing_per_chunk: 3
+Tax:
+  enabled: true
+  # Maximum tax rate a nation can have in percent
+  max_tax_rate: 20
+  # "daily" is collecting every 24 hours starting on server launch
+  #  - Tax is collected by this formula:
+  #  - Nation population * 100 (Max collectable per villager) * 0.00 - 0.20 (0% - 20% configurable tax rate) * 1 (happiness 1 = 100% happiness = 100% tax collection, 0.70 = 70% happiness = 70% tax collection)
+  # NOTE: Since happiness is still work in progress their happiness is always 70% for now.
+  # "interval:hours" (interval:168 <- for a week)
+  #  - IS NOT YET IMPLEMENTED !!!!
+  #tax_collection_system: "interval:168"
+  tax_collection_system: "daily"
   #
   #
   #

@@ -21,6 +21,7 @@ public class NationDiplomacySubCommand extends SimpleSubCommand {
     public NationDiplomacySubCommand(SimpleCommandGroup parent) {
         super(parent, "diplomacy||d");
 
+        setPermission("nation.player");
         setDescription("Manage your nations diplomacy");
         setUsage("/nation diplomacy <ally/unally/declare/surrender>");
     }

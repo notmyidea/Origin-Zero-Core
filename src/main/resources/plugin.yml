@@ -9,10 +9,8 @@ name: ${project.name}
 version: ${project.version}
 main: ${main.class}
 author: ${author}
-depend: [UltraEconomy]
 # DO NOT EDIT. This api-version is used for maximum backward compatibility.
 api-version: 1.13
-
 # Load the following libraries
 libraries: 
   # DO NOT EDIT THE FIRST LIBRARY, required to make your plugin work under Java 15+

@@ -1,6 +1,7 @@
 package net.bytebond.core.util;
 
 
+import de.tr7zw.nbtapi.NBTBlock;
 import de.tr7zw.nbtapi.plugin.NBTAPI;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import net.bytebond.core.data.ClaimRegistry;
 import net.bytebond.core.data.NationPlayer;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.data.Villager;
+import net.bytebond.core.settings.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -68,7 +70,49 @@ public final class TerritoryInteractionEvent implements Listener {
 
         NationYML chunkNation = ClaimRegistry.getNation(chunk);
         if (chunkNation == null) {
+            Common.tell(player, "returned because chunkNation == null");
             return;
+        }
+
+        if(chunkNation.getString("owner").equals(player.getUniqueId().toString()) && event.getBlock().getType() == Material.OAK_SIGN) {
+            Block signBlock = event.getBlock();
+            NBTBlock nbtBlock = new NBTBlock(signBlock);
+
+            // Check if the sign block has the NBT data
+            if (nbtBlock.getData().hasKey("isHousingSign") && nbtBlock.getData().getBoolean("isHousingSign")) {
+                signBlock.setType(Material.AIR);
+                signBlock.getRelative(BlockFace.DOWN).setType(Material.AIR);
+                Common.tellNoPrefix(player, "You have removed your housing block.");
+                NationYML nation = new NationYML(player.getUniqueId());
+                List<String> housingList = nation.getStringList("housing");
+                String blockString = signBlock.getWorld().getName() + "," + signBlock.getX() + "," + signBlock.getY() + "," + signBlock.getZ();
+                if(housingList.contains(blockString)) {
+                    housingList.remove(blockString);
+                    nation.set("housing", housingList);
+                    nation.save();
+                }
+
+                // Get the name of the villager that was associated with the housing block
+                String villagerName = null;
+                List<String> villagersList = nation.getStringList("villagers");
+                String villagerString = villagerName + "," + event.getBlock().getWorld().getName() + "," + event.getBlock().getChunk().getX() + "," + event.getBlock().getChunk().getZ();
+                if(villagersList.contains(villagerString)) {
+                    villagersList.remove(villagerString);
+                    nation.set("villagers", villagersList);
+                    nation.save();
+                }
+
+                nation.set("villagers", villagersList);
+                nation.save();
+
+                if (villagerName != null) {
+                    Villager villager = Villager.findVillager(chunk, nation);
+                    if (villager != null && villager.getVillagerName().equals(villagerName)) {
+                        villager.removeVillagerInChunk(chunk, nation);
+                    }
+                }
+
+            }
         }
 
 
@@ -189,8 +233,9 @@ public final class TerritoryInteractionEvent implements Listener {
                     NationYML nation = new NationYML(UUID);
 
                     if(ClaimRegistry.getOwnerOfChunk(chunk) == null) {
-                        event.setCancelled(true);Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");
-                        Common.tell(player, "null");
+                        event.setCancelled(true); Common.tellTimedNoPrefix(5, player, "You can only place a housing block in a chunk owned by your nation!");
+                        //Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");
+                        //Common.tell(player, "null");
                         return;
                     }
 
@@ -211,13 +256,19 @@ public final class TerritoryInteractionEvent implements Listener {
 
                         if (checkForHousingBlockInChunk(chunk, nation)) {
                             event.setCancelled(true);
-                            Common.tellNoPrefix(player, "There is already a housing block in this chunk!");
+                            Common.tellTimedNoPrefix(5, player, "You already reached the maximum amount of housing blocks in this chunk!");
+                            //Common.tellNoPrefix(player, "There is already a housing block in this chunk!");
                             return;
                         }
 
                         Chunk blockChunk = event.getBlock().getChunk();
                         Block block = event.getBlock();
                         String blockString = block.getX() + "," + block.getY() + "," + block.getZ();
+                        /*String chunkString = blockChunk.getWorld().getName() + "," + blockChunk.getX() + "," + blockChunk.getZ() + "," + blockString;
+                        List<String> housingList = nationPlayer.getNation().getStringList("housing");
+                        housingList.add(chunkString);
+                        nation.set("housing", housingList);
+                        nation.save(); */
                         String chunkString = blockChunk.getWorld().getName() + "," + blockChunk.getX() + "," + blockChunk.getZ() + "," + blockString;
                         List<String> housingList = nationPlayer.getNation().getStringList("housing");
                         housingList.add(chunkString);
@@ -228,6 +279,11 @@ public final class TerritoryInteractionEvent implements Listener {
                         bedrockBlock.setType(Material.BEDROCK);
                         bedrockBlock.getRelative(BlockFace.UP).setType(Material.BEDROCK);
                         Block signBlock = bedrockBlock.getRelative(BlockFace.UP);
+
+                        // Apply NBT data to the sign block
+                        NBTBlock nbtBlock = new NBTBlock(signBlock);
+                        nbtBlock.getData().setBoolean("isHousingSign", true);
+
                         signBlock.setType(Material.OAK_SIGN);
                         Sign sign = (Sign) signBlock.getState();
                         sign.setLine(0, "Housing Block");
@@ -239,7 +295,6 @@ public final class TerritoryInteractionEvent implements Listener {
                         Core.getInstance().debugLog("World: " + chunk.getWorld().getName() + ", X: " + chunk.getX() + ", Z: " + chunk.getZ());
                         Core.getInstance().debugLog("Location: " + block.getX() + ", " + block.getY() + ", " + block.getZ());
                         Core.getInstance().debugLog("Nation: " + nation.getString("nationName"));
-
                         Villager villager = new Villager(nation, chunk);
 
 
@@ -267,26 +322,42 @@ public final class TerritoryInteractionEvent implements Listener {
                                     sign.setLine(2, "'" + ChatColor.GREEN + villagerName + ChatColor.BLACK + "'");
                                     sign.setLine(3, "Happiness" + ChatColor.GREEN + " 73%");
                                     sign.update();
+
+                                    String villagerLocationString = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ() + "," + block.getX() + "," + block.getY() + "," + block.getZ();
+                                    String villagerLocationStringWithName = villager.getVillagerName() + "," + villagerLocationString;
+                                    List<String> villagersList = nationPlayer.getNation().getStringList("villagers");
+                                    villagersList.add(villagerLocationStringWithName);
+                                    nation.set("villagers", villagersList);
+                                    nation.save();
+
+                                    Villager villager = Villager.findVillager(chunk, nation);
+                                    if (villager != null) {
+                                        Common.tell(player, villager.getVillagerName());
+                                    } else {
+                                        Common.tell(player, "null");
+                                    }
                                     this.cancel();
                                 }
                             }
                         }.runTaskTimer(Core.getInstance(), 0, 20); // run every second (20 ticks = 1 second)
-
+                        return;
                         }
-                    event.setCancelled(true);Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");return;
+                    event.setCancelled(true); Common.tellTimedNoPrefix(5, player, "You can only place a housing block in a chunk owned by your nation!");
+                    //Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");return;
                     } else {
-                    event.setCancelled(true);Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");return;
+                    event.setCancelled(true);Common.tellTimedNoPrefix(5, player, "You can only place a housing block in a chunk owned by your nation!");
+                    //Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");return;
                     }
                 } else {
-                    event.setCancelled(true);
-                    Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");
+                    event.setCancelled(true); Common.tellTimedNoPrefix(5, player, "You can only place a housing block in a chunk owned by your nation!");
+                    //Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");
                     return;
                 }
             }
 
         }
 
-    @Deprecated
+    /*@Deprecated
     public Boolean checkForHousingBlockInChunk(Chunk chunk, NationYML nation) {
         List<String> housingList = nation.getStringList("housing");
         for (String housing : housingList) {
@@ -296,7 +367,20 @@ public final class TerritoryInteractionEvent implements Listener {
             }
         }
         return false;
+    }*/
+
+    public Boolean checkForHousingBlockInChunk(Chunk chunk, NationYML nation) {
+        List<String> housingList = nation.getStringList("housing");
+        int count = 0;
+        for (String housing : housingList) {
+            String[] split = housing.split(",");
+            if (split[0].equals(chunk.getWorld().getName()) && Integer.parseInt(split[1]) == chunk.getX() && Integer.parseInt(split[2]) == chunk.getZ()) {
+                count++;
+            }
+        }
+        return (!(count < Config.Housing.max_housing_per_chunk));
     }
+
 
     @Deprecated
     public Integer getHousingBlocksInChunk(Chunk chunk, NationYML nation) {

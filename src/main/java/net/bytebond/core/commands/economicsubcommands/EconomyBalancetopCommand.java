@@ -10,6 +10,7 @@ public class EconomyBalancetopCommand extends SimpleSubCommand {
 
         setDescription("View the top 10 nations by treasury balance");
         setUsage("/economy balancetop");
+        setPermission("nation.player");
     }
 
 
