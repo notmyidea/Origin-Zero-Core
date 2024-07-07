@@ -61,6 +61,7 @@ public class Config extends YamlStaticConfig {
             // Nations.Creation.
             public static Boolean enabled;
             public static String requiredPermission;
+            public static Integer starting_resources;
 
             public static Integer cost;
 
@@ -68,6 +69,7 @@ public class Config extends YamlStaticConfig {
                 pathPrefix("Nations.Creation");
                 enabled = getBoolean("enabled");
                 requiredPermission = getString("required_permissions");
+                starting_resources = getInteger("starting_resources");
                 cost = getInteger("cost");
             }
 

@@ -76,6 +76,10 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>MikeRepo</id>
+            <url>https://repo.mikeprimm.com/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -109,6 +113,12 @@
             <groupId>${foundation.path}</groupId>
             <artifactId>Foundation</artifactId>
             <version>${foundation.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>us.dynmap</groupId>
+            <artifactId>dynmap-api</artifactId>
+            <version>3.4-beta-3</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.bergerkiller.bukkit</groupId>

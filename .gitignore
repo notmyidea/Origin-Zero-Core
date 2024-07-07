@@ -9,7 +9,7 @@
 
 # IntelliJ
 out/
-
+server/
 target/
 
 #################
@@ -66,4 +66,4 @@ $RECYCLE.BIN/
 REBASE.bat
 
 # Place your proprietary software here, this won't get synced to remote 
-library/
+library/!/server/

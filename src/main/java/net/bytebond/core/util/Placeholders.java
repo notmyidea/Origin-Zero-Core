@@ -3,6 +3,7 @@ package net.bytebond.core.util;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.bytebond.core.Core;
 import net.bytebond.core.data.NationYML;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -46,19 +47,42 @@ public class Placeholders extends PlaceholderExpansion {
         if (player == null) {
             return "";
         }
-        // please wrk
+
+        Map<UUID, NationYML> nationsMap = NationYML.getNations();
+        UUID playerUUID = player.getUniqueId();
+        NationYML playerNation = nationsMap.get(playerUUID);
+
         // If the placeholder is "nation_name", return the nation name of the player
         if ("nation_name".equals(identifier)) {
-            UUID playerUUID = player.getUniqueId();
-            Map<UUID, NationYML> nationsMap = NationYML.getNations();
+            return playerNation != null ? playerNation.getString("nationName") : "";
+        }
+        if ("nation_tag".equals(identifier)) {
+            return playerNation != null ? playerNation.getString("TAG") : "";
+        }
 
-            String nationName = nationsMap.values().stream()
-                    .filter(nation -> playerUUID.equals(nation.getString("owner")))
-                    .map(nation -> nation.getString("nationName"))
-                    .findFirst()
-                    .orElse("");
-            // please work
-            return nationName;
+        // If the placeholder is "isAllied" or "isEnemy", return whether the player is allied or enemy with the target player
+        if (identifier.startsWith("isAllied_") || identifier.startsWith("isEnemy_")) {
+            String targetPlayerName = identifier.split("_")[1];
+            OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(targetPlayerName);
+            if (targetPlayer == null) {
+                return "";
+            }
+
+            UUID targetPlayerUUID = targetPlayer.getUniqueId();
+            NationYML targetPlayerNation = nationsMap.get(targetPlayerUUID);
+            if (targetPlayerNation == null) {
+                return "";
+            }
+
+            String targetNationName = targetPlayerNation.getString("nationName");
+
+            if ("isAllied_".concat(targetPlayerName).equals(identifier)) {
+                return playerNation.getStringList("allied_nations").contains(targetNationName) ? "Yes" : "No";
+            }
+
+            if ("isEnemy_".concat(targetPlayerName).equals(identifier)) {
+                return playerNation.getStringList("enemy_nations").contains(targetNationName) ? "Yes" : "No";
+            }
         }
 
         return null;

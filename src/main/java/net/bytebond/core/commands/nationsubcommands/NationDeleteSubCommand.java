@@ -2,8 +2,10 @@ package net.bytebond.core.commands.nationsubcommands;
 
 import net.bytebond.core.Core;
 import net.bytebond.core.data.NationYML;
+import net.bytebond.core.util.DynmapIntegration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.dynmap.markers.AreaMarker;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
 import org.mineacademy.fo.settings.YamlConfig;
@@ -77,6 +79,17 @@ public class NationDeleteSubCommand extends SimpleSubCommand {
         }
 
         tellSuccess("&fYou have successfully deleted your Nation.");
+        List<String> territories = nation.getStringList("territory");
+        DynmapIntegration dynmapIntegration = new DynmapIntegration(Core.getInstance());
+
+        for (String territory : territories) {
+            // Remove the unclaimed territory from the dynmap
+            String id = nation.getString("nationName") + "_" + territory;
+            AreaMarker marker = dynmapIntegration.getMarkerSet().findAreaMarker(id);
+            if (marker != null) {
+                marker.deleteMarker();
+            }
+        }
         nation.deleteFile();
 
     }

@@ -24,11 +24,12 @@ public class ItemManager {
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.WHITE + "Place this block to create a housing object.");
         lore.add(ChatColor.WHITE + "You can only place " + ChatColor.GRAY + Config.Housing.max_houses + ChatColor.WHITE + " housing objects.");
-        lore.add(ChatColor.WHITE + "And only " + ChatColor.GRAY + Config.Housing.max_housing_per_chunk + ChatColor.WHITE + " per chunk.");
+        lore.add(ChatColor.WHITE + "Each chunk can contain a maximum of " + ChatColor.GRAY + Config.Housing.max_housing_per_chunk + ChatColor.WHITE + " housing objects.");
         lore.add("");
-        lore.add(ChatColor.WHITE + "It will by time spawn villagers.");
-        lore.add(ChatColor.WHITE + "Higher " + ChatColor.GREEN + "happiness " + ChatColor.WHITE + "means more villagers. (§aPull§f- and §cPush§f-System)");
-        lore.add(ChatColor.WHITE + "Losing the chunk in a war will give the block to the new owner.");
+        lore.add(ChatColor.WHITE + "Over time, villagers will naturally spawn.");
+        lore.add(ChatColor.WHITE + "Higher " + ChatColor.GREEN + "happiness" + ChatColor.WHITE + " results in more villagers (§aPull§f- and §cPush§f-System).");
+        lore.add(ChatColor.WHITE + "If the chunk is lost in a war,");
+        lore.add(ChatColor.WHITE + "ownership of the block will transfer to the new owner.");
         meta.setLore(lore);
         meta.setCustomModelData(22222); // Set a unique identifier for the housing block
 

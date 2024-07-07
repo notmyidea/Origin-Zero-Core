@@ -66,7 +66,7 @@ public final class EnterChunkTerritoryEvent implements Listener {
 
             if (newNation.getStringList("territory").contains(newChunk.getWorld().getName() + "," + newChunk.getX() + "," + newChunk.getZ())) {
                 if (Config.General.debugging) {
-                    System.out.println("Player is in a claimed chunk");
+                    //System.out.println("Player is in a claimed chunk");
                 }
                 // Check if the nation still exists
                 if (newNation.getString("nationName") != null) {

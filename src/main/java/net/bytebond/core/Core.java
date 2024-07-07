@@ -4,27 +4,31 @@ import net.bytebond.core.commands.EconomyCommand;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.data.Villager;
 import net.bytebond.core.settings.Config;
+import net.bytebond.core.util.DynmapIntegration;
 import net.bytebond.core.util.NationTaxCollection;
 import net.bytebond.core.util.Placeholders;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.dynmap.markers.AreaMarker;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.plugin.SimplePlugin;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.List;
 
 public final class Core extends SimplePlugin {
-
+	// Note to me: Internal dynmap webserver is running on 8123
 	private static Economy econ = null;
 	Map<UUID, NationYML> nations = NationYML.getNations();
 
@@ -38,7 +42,7 @@ public final class Core extends SimplePlugin {
 		//Thread t1 = new Thread(new LoadItemsImpl());
 		//t1.start();
 
-		if(!setupEconomy()) {
+		if (!setupEconomy()) {
 			Common.logFramed("Vault not found! Disabling plugin!", "Please install Vault to use this plugin!");
 			System.exit(0);
 			getServer().getPluginManager().disablePlugin(this);
@@ -46,6 +50,46 @@ public final class Core extends SimplePlugin {
 		}
 
 
+		DynmapIntegration dynmapIntegration = new DynmapIntegration(this);
+		File nationsDirectory = new File("plugins/Core/data/");
+		for (File nationFile : Objects.requireNonNull(nationsDirectory.listFiles())) {
+			YamlConfiguration nationConfig = YamlConfiguration.loadConfiguration(nationFile);
+			String colorName = nationConfig.getString("MainColor");
+			DynmapIntegration.MainColor nationColor;
+			if (colorName != null) {
+				nationColor = DynmapIntegration.MainColor.valueOf(colorName);
+			} else {
+				nationColor = DynmapIntegration.MainColor.WHITE;
+			}
+
+			List<String> claimedTerritories = nationConfig.getStringList("territory");
+			for (String territory : claimedTerritories) {
+				String[] split = territory.split(",");
+				String worldName = split[0];
+				double chunkX = Double.parseDouble(split[1]);
+				double chunkZ = Double.parseDouble(split[2]);
+
+				// Calculate the coordinates of the center of the chunk
+				// Or just not he-he
+				double x = chunkX; //* 16 + 8;
+				double z = chunkZ; //* 16 + 8;
+
+				// Get the nation's name
+				String nationName = nationConfig.getString("nationName");
+
+				String id = nationName + "_" + territory;
+				String label = "Territory of " + nationName;
+
+				dynmapIntegration.addClaimToDynmap(id, label, x, z, worldName);
+				AreaMarker marker = dynmapIntegration.getMarkerSet().findAreaMarker(id);
+				if (marker != null) {
+					// Convert the hex color to an RGB color and mask it to get a positive value
+					int rgbColor = Color.decode(nationColor.getHexValue()).getRGB() & 0xFFFFFF;
+					marker.setFillStyle(0.30, rgbColor);
+					marker.setLineStyle(0, 1.0, 0xFF0000);
+				}
+			}
+		}
 	}
 
 	private Boolean setupEconomy() {

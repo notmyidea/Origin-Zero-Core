@@ -74,7 +74,7 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                     } else {
                         messages.add("   &fYou are the owner of &7" + nation.getString("nationName") + " &7(&f" + nation.getString("TAG") + "&7)&f");
                     }
-                    messages.add("   &fWarscore: &a★&f" + nation.getInteger("warscore"));
+                    messages.add("   &fWarscore: &a★&f" + nation.getInteger("warscore") + "&f                 Dynmap Color: &7" + nation.getString("MainColor"));
                     messages.add("   &fEconomic Information:       Tax: &c" + nation.getInteger("taxRate")+ "&f%, Happiness: " + "&aCalc.%");
                     messages.add("");
                     messages.add("   &fMoney: &7" + Core.getEconomy().getBalance(player));

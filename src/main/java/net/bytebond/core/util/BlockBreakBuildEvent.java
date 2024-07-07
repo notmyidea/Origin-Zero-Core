@@ -10,22 +10,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.mineacademy.fo.annotation.AutoRegister;
 
-@AutoRegister
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class BlockBreakBuildEvent implements Listener {
+//@AutoRegister
+//@NoArgsConstructor(access = AccessLevel.PRIVATE) //implements Listener
+public final class BlockBreakBuildEvent{
 
     // Modified plugin Blocks:
     // - Housing Object (Chest) (ItemID: 22222)
     // - Drill (Obsidian) (ItemID: 22223 - 22226)
 
-    @EventHandler
+    /*@EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event) {
         Player player = (Player) event.getPlayer();
 
 
 
 
-        }
+        }*/
 
 
 

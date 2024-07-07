@@ -84,33 +84,43 @@ public final class TerritoryInteractionEvent implements Listener {
                 signBlock.getRelative(BlockFace.DOWN).setType(Material.AIR);
                 Common.tellNoPrefix(player, "You have removed your housing block.");
                 NationYML nation = new NationYML(player.getUniqueId());
+
+
+                // Get the housing_message from the NBT data and remove it from the housing list
+                String housingMessage = nbtBlock.getData().getString("housing_message");
                 List<String> housingList = nation.getStringList("housing");
-                String blockString = signBlock.getWorld().getName() + "," + signBlock.getX() + "," + signBlock.getY() + "," + signBlock.getZ();
-                if(housingList.contains(blockString)) {
-                    housingList.remove(blockString);
+                if(housingList.isEmpty()) {
+                    return;
+                }
+                if(housingList.contains(housingMessage)) {
+                    housingList.remove(housingMessage);
                     nation.set("housing", housingList);
                     nation.save();
                 }
 
-                // Get the name of the villager that was associated with the housing block
-                String villagerName = null;
+                // Get the villager_message from the NBT data and remove it from the villagers list
+                String villagerMessage = nbtBlock.getData().getString("villager_message");
                 List<String> villagersList = nation.getStringList("villagers");
-                String villagerString = villagerName + "," + event.getBlock().getWorld().getName() + "," + event.getBlock().getChunk().getX() + "," + event.getBlock().getChunk().getZ();
-                if(villagersList.contains(villagerString)) {
-                    villagersList.remove(villagerString);
+                if(villagersList.isEmpty()) {
+                    return;
+                }
+                if(villagersList.contains(villagerMessage)) {
+                    villagersList.remove(villagerMessage);
                     nation.set("villagers", villagersList);
                     nation.save();
                 }
+                ItemManager.giveHousingObject(player, true);
 
-                nation.set("villagers", villagersList);
-                nation.save();
 
-                if (villagerName != null) {
+                //nation.set("villagers", villagersList);
+                //nation.save();
+
+                /*if (villagerName != null) {
                     Villager villager = Villager.findVillager(chunk, nation);
                     if (villager != null && villager.getVillagerName().equals(villagerName)) {
                         villager.removeVillagerInChunk(chunk, nation);
                     }
-                }
+                }*/
 
             }
         }
@@ -177,31 +187,6 @@ public final class TerritoryInteractionEvent implements Listener {
         player.sendMessage("§cYou cannot build here. This territory belongs to another nation.");
     }
 
-
-    @EventHandler
-    public void onBlockInteractEvent(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        Action action = event.getAction();
-        Block block = event.getClickedBlock();
-
-        // Check if the player is interacting with a block
-        if (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK) {
-            // Check if the block is a chest
-            if (block.getType() == CHEST) {
-                // Get the chest
-                Chest chest = (Chest) block.getState();
-                // Wrap it in an NBTItem
-                NBTItem nbtItem = new NBTItem(new ItemStack(block.getType()));
-
-                // Check the NBT data and handle the interaction accordingly
-                if (nbtItem.hasKey("drill")) {
-                    // Handle drill chest interaction
-                } else if (nbtItem.hasKey("tradingchest") && !player.isSneaking()) {
-                    // Handle trading chest interaction
-                }
-            }
-        }
-    }
 
     @EventHandler
     public void onBlockPlace(final BlockPlaceEvent event) {
@@ -283,6 +268,7 @@ public final class TerritoryInteractionEvent implements Listener {
                         // Apply NBT data to the sign block
                         NBTBlock nbtBlock = new NBTBlock(signBlock);
                         nbtBlock.getData().setBoolean("isHousingSign", true);
+                        nbtBlock.getData().setString("housing_message", chunkString);
 
                         signBlock.setType(Material.OAK_SIGN);
                         Sign sign = (Sign) signBlock.getState();
@@ -304,6 +290,11 @@ public final class TerritoryInteractionEvent implements Listener {
                             @Override
                             public void run() {
                                 if (counter > 0) {
+                                    if (bedrockBlock.getType() == Material.AIR) {
+                                        this.cancel();
+                                        ItemManager.giveHousingObject(player, true);
+                                        return;
+                                    }
                                     Sign sign = (Sign) signBlock.getState();
                                     sign.setLine(3, "Spawning in: " + counter + " seconds");
                                     sign.update();
@@ -329,6 +320,8 @@ public final class TerritoryInteractionEvent implements Listener {
                                     villagersList.add(villagerLocationStringWithName);
                                     nation.set("villagers", villagersList);
                                     nation.save();
+                                    NBTBlock nbtBlock = new NBTBlock(sign.getBlock());
+                                    nbtBlock.getData().setString("villager_message", villagerLocationStringWithName);
 
                                     Villager villager = Villager.findVillager(chunk, nation);
                                     if (villager != null) {

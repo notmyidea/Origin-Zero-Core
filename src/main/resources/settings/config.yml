@@ -38,6 +38,9 @@ Nations:
     # are players allowed to create a nation?
     enabled: true
     required_permissions: "none" # "none" or "nations.create"
+    # Resources a Nation starts with. Those include the following:
+    # - Wood, - Stone, - Brick, - Darkstone, - Obsidian
+    starting_resources: 250
     #
     # How much does it cost to create a nation?
     # Requires an economy provider to be set in #Economy.provider

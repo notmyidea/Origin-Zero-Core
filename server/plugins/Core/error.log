@@ -443,3 +443,126 @@ FoException Report: Your class class net.bytebond.core.util.BlockBreakBuildEvent
 ----------------------------------------------------------------------------------------------
 
 
+------------------------------------[ 07.07.2024 20:57:03 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: Vault v1.7.3-b131, Essentials v2.21.0-dev+102-fcf6e64, PlaceholderAPI v2.11.6, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Your class class net.bytebond.core.util.BlockBreakBuildEvent using @AutoRegister must EITHER have 1) one public no arguments constructor, OR 2) one private no arguments constructor plus a 'private static final BlockBreakBuildEvent instance' instance field.
+FoException Report: Your class class net.bytebond.core.util.BlockBreakBuildEvent using @AutoRegister must EITHER have 1) one public no arguments constructor, OR 2) one private no arguments constructor plus a 'private static final BlockBreakBuildEvent instance' instance field.
+	 at Core.jar//org.mineacademy.fo.Valid.checkNotNull(Valid.java:60)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.findInstance(AutoRegisterScanner.java:466)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.autoRegister(AutoRegisterScanner.java:277)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:115)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.onEnable(SimplePlugin.java:308)
+	 at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:287)
+	 at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:188)
+	 at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:104)
+	 at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:507)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugin(CraftServer.java:639)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugins(CraftServer.java:550)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 20:57:18 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: Vault v1.7.3-b131, Essentials v2.21.0-dev+102-fcf6e64, PlaceholderAPI v2.11.6, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Your class class net.bytebond.core.util.BlockBreakBuildEvent using @AutoRegister must EITHER have 1) one public no arguments constructor, OR 2) one private no arguments constructor plus a 'private static final BlockBreakBuildEvent instance' instance field.
+FoException Report: Your class class net.bytebond.core.util.BlockBreakBuildEvent using @AutoRegister must EITHER have 1) one public no arguments constructor, OR 2) one private no arguments constructor plus a 'private static final BlockBreakBuildEvent instance' instance field.
+	 at Core.jar//org.mineacademy.fo.Valid.checkNotNull(Valid.java:60)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.findInstance(AutoRegisterScanner.java:466)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.autoRegister(AutoRegisterScanner.java:277)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:115)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.reload(SimplePlugin.java:809)
+	 at Core.jar//org.mineacademy.fo.command.ReloadCommand.onCommand(ReloadCommand.java:66)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchServerCommand(CraftServer.java:984)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 20:57:51 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: Vault v1.7.3-b131, Essentials v2.21.0-dev+102-fcf6e64, PlaceholderAPI v2.11.6, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Your class class net.bytebond.core.util.BlockBreakBuildEvent using @AutoRegister must EITHER have 1) one public no arguments constructor, OR 2) one private no arguments constructor plus a 'private static final BlockBreakBuildEvent instance' instance field.
+FoException Report: Your class class net.bytebond.core.util.BlockBreakBuildEvent using @AutoRegister must EITHER have 1) one public no arguments constructor, OR 2) one private no arguments constructor plus a 'private static final BlockBreakBuildEvent instance' instance field.
+	 at Core.jar//org.mineacademy.fo.Valid.checkNotNull(Valid.java:60)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.findInstance(AutoRegisterScanner.java:466)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.autoRegister(AutoRegisterScanner.java:277)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:115)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.reload(SimplePlugin.java:809)
+	 at Core.jar//org.mineacademy.fo.command.ReloadCommand.onCommand(ReloadCommand.java:66)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchServerCommand(CraftServer.java:984)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 20:58:16 ]-----------------------------------
+Core 0.3.5 encountered a FoException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: Vault v1.7.3-b131, Essentials v2.21.0-dev+102-fcf6e64, PlaceholderAPI v2.11.6, NBTAPI v2.12.4, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Your class class net.bytebond.core.util.BlockBreakBuildEvent using @AutoRegister must EITHER have 1) one public no arguments constructor, OR 2) one private no arguments constructor plus a 'private static final BlockBreakBuildEvent instance' instance field.
+FoException Report: Your class class net.bytebond.core.util.BlockBreakBuildEvent using @AutoRegister must EITHER have 1) one public no arguments constructor, OR 2) one private no arguments constructor plus a 'private static final BlockBreakBuildEvent instance' instance field.
+	 at Core.jar//org.mineacademy.fo.Valid.checkNotNull(Valid.java:60)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.findInstance(AutoRegisterScanner.java:466)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.autoRegister(AutoRegisterScanner.java:277)
+	 at Core.jar//org.mineacademy.fo.plugin.AutoRegisterScanner.scanAndRegister(AutoRegisterScanner.java:115)
+	 at Core.jar//org.mineacademy.fo.plugin.SimplePlugin.onEnable(SimplePlugin.java:308)
+	 at org.bukkit.plugin.java.JavaPlugin.setEnabled(JavaPlugin.java:287)
+	 at io.papermc.paper.plugin.manager.PaperPluginInstanceManager.enablePlugin(PaperPluginInstanceManager.java:188)
+	 at io.papermc.paper.plugin.manager.PaperPluginManagerImpl.enablePlugin(PaperPluginManagerImpl.java:104)
+	 at org.bukkit.plugin.SimplePluginManager.enablePlugin(SimplePluginManager.java:507)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugin(CraftServer.java:639)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.enablePlugins(CraftServer.java:550)
+----------------------------------------------------------------------------------------------
+
+
+------------------------------------[ 07.07.2024 21:22:14 ]-----------------------------------
+Core 0.3.5 encountered a NullPointerException
+Running Paper 1.20.4-R0.1-SNAPSHOT and Java 20.0.1
+Plugins: Vault v1.7.3-b131, Essentials v2.21.0-dev+102-fcf6e64, PlaceholderAPI v2.11.6, NBTAPI v2.12.4, dynmap v3.7-SNAPSHOT-948, Core v0.3.5
+----------------------------------------------------------------------------------------------
+
+More Information: 
+Failed to execute command /nation territory claim
+NullPointerException Cannot invoke "org.dynmap.markers.MarkerSet.createAreaMarker(String, String, boolean, String, double[], double[], boolean)" because "this.markerSet" is null
+	 at Core.jar//net.bytebond.core.util.DynmapIntegration.addClaimToDynmap(DynmapIntegration.java:19)
+	 at Core.jar//net.bytebond.core.commands.nationsubcommands.NationsClaimManagerSubCommand.onCommand(NationsClaimManagerSubCommand.java:126)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommandGroup$MainCommand.onCommand(SimpleCommandGroup.java:446)
+	 at Core.jar//org.mineacademy.fo.command.SimpleCommand.execute(SimpleCommand.java:406)
+	 at org.bukkit.command.SimpleCommandMap.dispatch(SimpleCommandMap.java:155)
+	 at org.bukkit.craftbukkit.v1_20_R3.CraftServer.dispatchCommand(CraftServer.java:999)
+	 at org.bukkit.craftbukkit.v1_20_R3.command.BukkitCommandWrapper.run(BukkitCommandWrapper.java:64)
+	 at com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.a(ExecuteCommand.java:31)
+	 at net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:19)
+	 at net.minecraft.commands.execution.UnboundEntryAction.a(UnboundEntryAction.java:8)
+	 at net.minecraft.commands.execution.CommandQueueEntry.a(CommandQueueEntry.java:5)
+	 at net.minecraft.commands.execution.ExecutionContext.a(ExecutionContext.java:103)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:434)
+	 at net.minecraft.commands.CommandDispatcher.performCommand(CommandDispatcher.java:336)
+	 at net.minecraft.commands.CommandDispatcher.a(CommandDispatcher.java:323)
+----------------------------------------------------------------------------------------------
+
+

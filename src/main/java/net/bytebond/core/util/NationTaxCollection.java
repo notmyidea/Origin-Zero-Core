@@ -30,7 +30,7 @@ public class NationTaxCollection {
                 }
                 nations.forEach(thisInstance::collectTax);
             }
-        }, 0, DAY_IN_MILLIS); // start immediately and run every 24 hours
+        }, DAY_IN_MILLIS); // start immediately and run every 24 hours
     }
 
     public void collectTax(NationYML nation) {

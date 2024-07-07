@@ -6,11 +6,14 @@ import net.bytebond.core.data.ClaimRegistry;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
 import net.bytebond.core.settings.Messages;
+import net.bytebond.core.util.DynmapIntegration;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
+import org.dynmap.markers.AreaMarker;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -105,10 +108,36 @@ public class NationsClaimManagerSubCommand extends SimpleSubCommand {
 
                 nation.save();
                 tellSuccess(Messages.Nation.Claim.success);
-                if(Config.General.debugging) {
-                    System.out.println("Nation [" + nation.getString("nationName") + "] has claimed chunk " + chunk.toString());
-                    System.out.println("Nations current list of claimed territory: " + nation.getStringList("territory"));
-                    System.out.println("Chunk has been saved to " + chunkStr + ".yml");
+
+                Core.getInstance().debugLog("Nation [" + nation.getString("nationName") + "] has claimed chunk " + chunk.toString());
+                Core.getInstance().debugLog("Nations current list of claimed territory: " + nation.getStringList("territory"));
+                Core.getInstance().debugLog("Chunk has been saved to " + chunkStr + ".yml");
+                String colorName = nation.getString("MainColor");
+                DynmapIntegration.MainColor nationColor;
+                if (colorName != null) {
+                    nationColor = DynmapIntegration.MainColor.valueOf(colorName);
+                } else {
+                    nationColor = DynmapIntegration.MainColor.WHITE;
+                }
+
+
+                // Add the newly claimed territory to the Dynmap
+                String[] split = chunkStr.split(",");
+                String worldName = split[0];
+                double x = Double.parseDouble(split[1]);
+                double z = Double.parseDouble(split[2]);
+
+                String id = nation.getString("nationName") + "_" + chunkStr;
+                String label = "Territory of " + nation.getString("nationName");
+
+                DynmapIntegration dynmapIntegration = new DynmapIntegration(Core.getInstance());
+                dynmapIntegration.addClaimToDynmap(id, label, x, z, worldName);
+                AreaMarker marker = dynmapIntegration.getMarkerSet().findAreaMarker(id);
+                if (marker != null) {
+                    // Convert the hex color to an RGB color and mask it to get a positive value
+                    int rgbColor = Color.decode(nationColor.getHexValue()).getRGB() & 0xFFFFFF;
+                    marker.setFillStyle(0.30, rgbColor);
+                    marker.setLineStyle(0, 1.0, 0xFF0000);
                 }
                 break;
             case "unclaim":
@@ -125,6 +154,14 @@ public class NationsClaimManagerSubCommand extends SimpleSubCommand {
                         }
                         nation.save();
                         tellSuccess("&fChunk has been successfully unclaimed.");
+
+                        // Remove the unclaimed territory from the Dynmap
+                        String unclaimId = nation.getString("nationName") + "_" + chunkStr;
+                        DynmapIntegration unclaimDynmapIntegration = new DynmapIntegration(Core.getInstance());
+                        AreaMarker unclaimMarker = unclaimDynmapIntegration.getMarkerSet().findAreaMarker(unclaimId);
+                        if (unclaimMarker != null) {
+                            unclaimMarker.deleteMarker();
+                        }
                     } else {
                         tellWarn("&fThis chunk is not claimed by your nation.");
                     }

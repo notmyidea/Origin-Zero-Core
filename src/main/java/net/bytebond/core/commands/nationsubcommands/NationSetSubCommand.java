@@ -2,6 +2,7 @@ package net.bytebond.core.commands.nationsubcommands;
 
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
+import net.bytebond.core.util.DynmapIntegration;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.command.SimpleCommandGroup;
@@ -110,6 +111,17 @@ public class NationSetSubCommand extends SimpleSubCommand {
             case "taxrate":
                 tellWarn("&fThis setting is not yet implemented.");
                 break;
+            case "color":
+                String colorArg = args[1].toUpperCase();
+                try {
+                    DynmapIntegration.MainColor selectedColor = DynmapIntegration.MainColor.valueOf(colorArg);
+                    nation.set("MainColor", selectedColor.name());
+                    nation.save();
+                    tellSuccess(Messages.Nation.Set.set_setting_success.replace("{setting}", firstArg).replace("{value}", colorArg));
+                } catch (IllegalArgumentException e) {
+                    tellWarn("Invalid color. Please choose a color from the following: " + Arrays.toString(DynmapIntegration.MainColor.values()));
+                }
+                break;
 
             default:
                 messages.add("&f" + Common.chatLineSmooth());
@@ -132,7 +144,7 @@ public class NationSetSubCommand extends SimpleSubCommand {
 
             switch (args.length) {
                 case 1:
-                    return completeLastWord("description", "tag", "name");
+                    return completeLastWord("description", "tag", "name", "color");
                 case 2:
                     if (args[0].equals("description")) {
                         return completeLastWord("value can be multiple");
@@ -142,6 +154,9 @@ public class NationSetSubCommand extends SimpleSubCommand {
                     }
                     if(args[0].equals("name")) {
                         return completeLastWord("value in 16 characters");
+                    }
+                    if(args[0].equals("color")) {
+                        return completeLastWord("RED", "GREEN", "BLUE", "YELLOW", "CYAN", "MAGENTA", "WHITE", "BLACK");
                     }
 
             }
