@@ -1,12 +1,24 @@
 package net.bytebond.core.util;
 
+import de.tr7zw.nbtapi.NBTBlock;
+import de.tr7zw.nbtapi.NBTCompound;
+import de.tr7zw.nbtapi.NBTItem;
 import net.bytebond.core.Core;
+import net.bytebond.core.data.Drill;
+import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
+import net.bytebond.core.settings.Drills;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.mineacademy.fo.Common;
 
 import java.util.ArrayList;
@@ -37,12 +49,94 @@ public class ItemManager {
 
         player.getInventory().addItem(housingBlock);
         if(!silent) {
-            Common.tellNoPrefix(player, "&fYou have been given a Housing Block");
+            Common.tellNoPrefix(player, "" + ChatColor.WHITE + "You have been given a Housing Block");
         }
         Core.getInstance().debugLog("Housing Block given to " + playerName);
     }
 
+    public List<Block> checkForHousingObjects(Chunk chunk) {
+        List<Block> housingBlocks = new ArrayList<>();
+
+        for (BlockState state : chunk.getTileEntities()) {
+            if (state instanceof Sign) {
+                NBTBlock nbtBlock = new NBTBlock(state.getBlock());
+                NBTCompound compound = nbtBlock.getData();
+
+                if (compound.hasKey("isHousingSign") && compound.getInteger("isHousingSign") == 1) {
+                    Block blockUnder = state.getBlock().getRelative(BlockFace.DOWN);
+                    if (blockUnder.getType() == Material.BEDROCK) {
+                        housingBlocks.add(blockUnder);
+                    }
+                }
+            }
+        }
+
+        return housingBlocks;
+    }
+
+    public static void giveDrill(Player player, Drill.DrillType drillType, Boolean silent) {
+        String playerName = player.getName();
+
+        ItemStack drillBlock = new ItemStack(Material.CHEST);
+        ItemMeta meta = drillBlock.getItemMeta();
+
+        meta.setDisplayName(ChatColor.WHITE + "Drill " + ChatColor.GRAY + "(" + ChatColor.GOLD + playerName + ChatColor.GRAY + ")");
+        List<String> lore = new ArrayList<>();
+
+        if(drillType == Drill.DrillType.WOOD) {
+            lore.add(ChatColor.WHITE + "This is the " + ChatColor.GRAY + "WOOD" + ChatColor.WHITE + " drill.");
+            lore.add(ChatColor.WHITE + "You can only place the drill a specific chunk " + ChatColor.RED + "!");
+            lore.add("");
+            lore.add(ChatColor.WHITE + "Over time, your drill will generate " + ChatColor.GRAY  + Drills.Drill.Wood.rate_per_hour.toString() +  ChatColor.WHITE + " Wood per hour.");
+            meta.setCustomModelData(22223);
+        }
+        if(drillType == Drill.DrillType.STONE) {
+            lore.add(ChatColor.WHITE + "This is the " + ChatColor.GRAY + "STONE" + ChatColor.WHITE + " drill.");
+            lore.add(ChatColor.WHITE + "You can only place the drill a specific chunk " + ChatColor.RED + "!");
+            lore.add("");
+            lore.add(ChatColor.WHITE + "Over time, your drill will generate " + ChatColor.GRAY + Drills.Drill.Stone.rate_per_hour.toString() +  ChatColor.WHITE + " Stone per hour.");
+            meta.setCustomModelData(22224);
+        }
+        if(drillType == Drill.DrillType.BRICK) {
+            lore.add(ChatColor.WHITE + "This is the " + ChatColor.GRAY + "BRICK" + ChatColor.WHITE + " drill.");
+            lore.add(ChatColor.WHITE + "You can only place the drill a specific chunk " + ChatColor.RED + "!");
+            lore.add("");
+            lore.add(ChatColor.WHITE + "Over time, your drill will generate " + ChatColor.GRAY  + Drills.Drill.Brick.rate_per_hour.toString() +  ChatColor.WHITE + " Brick per hour.");
+            meta.setCustomModelData(22225);
+        }
+        if(drillType == Drill.DrillType.DARKSTONE) {
+            lore.add(ChatColor.WHITE + "This is the " + ChatColor.GRAY + "DARKSTONE" + ChatColor.WHITE + " drill.");
+            lore.add(ChatColor.WHITE + "You can only place the drill a specific chunk " + ChatColor.RED + "!");
+            lore.add("");
+            lore.add(ChatColor.WHITE + "Over time, your drill will generate " + ChatColor.GRAY  + Drills.Drill.Darkstone.rate_per_hour.toString() +  ChatColor.WHITE + " Darkstone per hour.");
+            meta.setCustomModelData(22226);
+        }
+        if(drillType == Drill.DrillType.OBSIDIAN) {
+            lore.add(ChatColor.WHITE + "This is the " + ChatColor.GRAY + "OBSIDIAN" + ChatColor.WHITE + " drill.");
+            lore.add(ChatColor.WHITE + "You can only place the drill a specific chunk " + ChatColor.RED + "!");
+            lore.add("");
+            lore.add(ChatColor.WHITE + "Over time, your drill will generate " + ChatColor.GRAY  + Drills.Drill.Obsidian.rate_per_hour.toString() +  ChatColor.WHITE + " Obsidian per hour.");
+            meta.setCustomModelData(22227);
+        }
+        lore.add(ChatColor.WHITE + "If the chunk is lost in a war: ownership of");
+        lore.add(ChatColor.WHITE + "the drill will transfer to the new owner.");
+        lore.add("");
+        lore.add(ChatColor.GRAY + "Right-click" + ChatColor.WHITE + " to place the drill.");
+        Common.colorize(lore);
+        meta.setLore(lore);
+
+        drillBlock.setItemMeta(meta);
+
+        NBTItem nbtItem = new NBTItem(drillBlock);
+        nbtItem.setBoolean("isDrill", true);
+        nbtItem.setString("drillType", drillType.toString());
+
+        player.getInventory().addItem(drillBlock);
+        if(!silent) {
+            Common.tellNoPrefix(player, "" + ChatColor.WHITE + "You have been given a Drill Object");
+        }
+        Core.getInstance().debugLog("Drill Object given to " + playerName);
+    }
 
 
-
-}
+    }

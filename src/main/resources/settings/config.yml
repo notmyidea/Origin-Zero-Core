@@ -30,6 +30,8 @@ Economy:
 #                   Nation Configuration
 # -----------------------------------------------------------
 Nations:
+  # Seconds of cooldown for /n announce <message to announce>
+  announcement_cooldown: 100
   #
   # This part is for the creation of a Nation
   # /nation <create>
@@ -109,6 +111,11 @@ Housing:
   allow_housing: true
   max_houses: 100
   max_housing_per_chunk: 3
+  # Allow Housing objects with killed villagers to be "reclaimed" and replaced for a new Villager.
+  allow_dead_housing: true
+  # Cost to reclaim a dead housing object, set to 0 to disable
+  # DOES NOt YET WORK !!!
+  dead_housing_cost: 1000
 Tax:
   enabled: true
   # Maximum tax rate a nation can have in percent
@@ -121,6 +128,8 @@ Tax:
   #  - IS NOT YET IMPLEMENTED !!!!
   #tax_collection_system: "interval:168"
   tax_collection_system: "daily"
+  # Tax collection interval in hours
+  tax_collection_interval: 8
   #
   #
   #

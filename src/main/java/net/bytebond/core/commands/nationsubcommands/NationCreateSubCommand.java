@@ -1,11 +1,10 @@
 package net.bytebond.core.commands.nationsubcommands;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.bytebond.core.Core;
 import net.bytebond.core.data.HashManager;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
-import net.bytebond.core.util.DynmapIntegration;
+import net.bytebond.core.util.integrations.DynmapAPI;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.command.SimpleCommandGroup;
@@ -16,8 +15,6 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import static net.bytebond.core.Core.*;
 
 public class NationCreateSubCommand extends SimpleSubCommand {
     private static final Logger log = LoggerFactory.getLogger(NationCreateSubCommand.class);
@@ -160,9 +157,9 @@ public class NationCreateSubCommand extends SimpleSubCommand {
        nation.set("owner", UUID.toString());
        nation.set("nationDescription", "&7THIS IS YOUR NATION DESCRIPTION.");
        nation.set("TAG", firstArg.substring(0, Config.Nations.Creation.Tags.max_characters).toUpperCase());
-            DynmapIntegration.MainColor[] colors = DynmapIntegration.MainColor.values();
+            DynmapAPI.MainColor[] colors = DynmapAPI.MainColor.values();
             int randomIndex = new Random().nextInt(colors.length);
-            DynmapIntegration.MainColor randomColor = colors[randomIndex];
+            DynmapAPI.MainColor randomColor = colors[randomIndex];
        nation.set("MainColor", randomColor.name());
        nation.set("treasury", 0);
        nation.set("wood", Config.Nations.Creation.starting_resources);

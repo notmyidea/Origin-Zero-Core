@@ -1,11 +1,9 @@
 package net.bytebond.core.commands.nationsubcommands;
 
-import com.comphenix.net.bytebuddy.asm.Advice;
 import net.bytebond.core.Core;
 import net.bytebond.core.data.ClaimRegistry;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
-import net.bytebond.core.util.EnterChunkTerritoryEvent;
 import net.bytebond.core.util.NationTaxCollection;
 import net.bytebond.core.util.TerritoryInteractionEvent;
 import org.bukkit.entity.Player;

@@ -2,6 +2,7 @@ package net.bytebond.core.util;
 
 import net.bytebond.core.Core;
 import net.bytebond.core.data.NationYML;
+import net.bytebond.core.settings.Config;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -11,13 +12,14 @@ import java.util.*;
 
 public class NationTaxCollection {
 
-    private static final long DAY_IN_MILLIS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    private static final long DAY_IN_MILLIS = Config.Tax.tax_collection_interval * 60 * 60 * 1000; // hours in milliseconds
     private final HashMap<String, Integer> recentTaxPayouts = new HashMap<>(); // Store recent tax payouts for each nation
-
+    private Integer nationsTaxed = 0;
 
     public void startTaxCollection() {
         Timer timer = new Timer();
         NationTaxCollection thisInstance = this;
+        Core.getInstance().debugLog("Starting tax collection timer: NEXT COLLECTION IN __" + DAY_IN_MILLIS + "__ DAY_IN_MILLIS");
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -28,9 +30,12 @@ public class NationTaxCollection {
                 if(nations == null) {
                     return;
                 }
+                nationsTaxed++;
                 nations.forEach(thisInstance::collectTax);
+                Core.getInstance().debugLog("Tax collection has been completed for " + nationsTaxed + " nations.");
             }
-        }, DAY_IN_MILLIS); // start immediately and run every 24 hours
+        }, DAY_IN_MILLIS);
+        nationsTaxed = 0;
     }
 
     public void collectTax(NationYML nation) {
@@ -55,11 +60,10 @@ public class NationTaxCollection {
         EconomyResponse r = Core.getEconomy().depositPlayer(owner, taxCollection);
         if (r.transactionSuccess()) {
             if(owner.isOnline()) {
-               Common.tellNoPrefix(owner.getPlayer(), "&fYour nation has collected &a$" + taxCollection + " &ftoday.") ;
+               Common.tellNoPrefix(owner.getPlayer(), "&fYour nation has collected &a$" + taxCollection + "&f.") ;
             }
-            Core.getInstance().debugLog("IRS deposited " + taxCollection + " to " + owner.getName());
         } else {
-            throw new IllegalArgumentException("IRS could not deposit tax money to " + owner.getName());
+            throw new IllegalArgumentException("Could not deposit tax money to " + owner.getName());
        }
 
     }

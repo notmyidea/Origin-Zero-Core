@@ -52,8 +52,15 @@ public class Config extends YamlStaticConfig {
 
     public static class Nations {
 
+        public static Integer announcement_cooldown;
+
         // Nations Configuration
         // Nations.
+
+        private static void init() {
+            pathPrefix("Nations");
+            announcement_cooldown = getInteger("announcement_cooldown");
+        }
 
         public static class Creation {
 
@@ -211,12 +218,16 @@ public class Config extends YamlStaticConfig {
         public static Boolean allow_housing;
         public static Integer max_houses;
         public static Integer max_housing_per_chunk;
+        public static Boolean allow_dead_housing;
+        public static Integer dead_housing_cost;
 
         private static void init() {
             pathPrefix("Housing");
             allow_housing = getBoolean("allow_housing");
             max_houses = getInteger("max_houses");
             max_housing_per_chunk = getInteger("max_housing_per_chunk");
+            allow_dead_housing = getBoolean("allow_dead_housing");
+            dead_housing_cost = getInteger("dead_housing_cost");
         }
 
     } // Housing
@@ -225,12 +236,14 @@ public class Config extends YamlStaticConfig {
         public static Boolean enabled;
         public static Integer max_tax_rate;
         public static String tax_collection_system;
+        public static Integer tax_collection_interval;
 
         private static void init() {
             pathPrefix("Tax");
             enabled = getBoolean("enabled");
             max_tax_rate = getInteger("max_tax_rate");
             tax_collection_system = getString("tax_collection_system");
+            tax_collection_interval = getInteger("tax_collection_interval");
         }
     }
 

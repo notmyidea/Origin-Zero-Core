@@ -89,7 +89,7 @@ public class EconomySendCommand extends SimpleSubCommand {
         }
 
         if(amount < 1) {
-            tellError("You cannot send less than $1.");
+            tellError("You cannot send less than 'one' !");
             return;
         }
 
@@ -122,7 +122,10 @@ public class EconomySendCommand extends SimpleSubCommand {
             return completeLastWord(Arrays.asList(EconomyHandler.Currency.values()));
         }
         if(args.length == 3) {
-            return completeLastWord("0-" + EconomyHandler.GetEconomy(nationPlayer.getNation(), currency));
+            if(!(args[1].equalsIgnoreCase("wood") || args[1].equalsIgnoreCase("stone") || args[1].equalsIgnoreCase("brick") || args[1].equalsIgnoreCase("darkstone") || args[1].equalsIgnoreCase("obsidian"))){
+                return NO_COMPLETE;
+            }
+            return completeLastWord("0-" + EconomyHandler.GetEconomy(nationPlayer.getNation(), EconomyHandler.Currency.valueOf(args[1].toUpperCase())));
         }
 
         return NO_COMPLETE;

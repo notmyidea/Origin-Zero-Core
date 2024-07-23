@@ -1,12 +1,12 @@
 package net.bytebond.core.commands.nationsubcommands;
 
 import net.bytebond.core.Core;
-import net.bytebond.core.commands.EconomyHandler;
 import net.bytebond.core.data.ClaimRegistry;
+import net.bytebond.core.data.NationPlayer;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
 import net.bytebond.core.settings.Messages;
-import net.bytebond.core.util.DynmapIntegration;
+import net.bytebond.core.util.integrations.DynmapAPI;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.dynmap.markers.AreaMarker;
@@ -14,12 +14,12 @@ import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
 
 import java.awt.*;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 public class NationsClaimManagerSubCommand extends SimpleSubCommand {
@@ -113,11 +113,11 @@ public class NationsClaimManagerSubCommand extends SimpleSubCommand {
                 Core.getInstance().debugLog("Nations current list of claimed territory: " + nation.getStringList("territory"));
                 Core.getInstance().debugLog("Chunk has been saved to " + chunkStr + ".yml");
                 String colorName = nation.getString("MainColor");
-                DynmapIntegration.MainColor nationColor;
+                DynmapAPI.MainColor nationColor;
                 if (colorName != null) {
-                    nationColor = DynmapIntegration.MainColor.valueOf(colorName);
+                    nationColor = DynmapAPI.MainColor.valueOf(colorName);
                 } else {
-                    nationColor = DynmapIntegration.MainColor.WHITE;
+                    nationColor = DynmapAPI.MainColor.WHITE;
                 }
 
 
@@ -130,7 +130,7 @@ public class NationsClaimManagerSubCommand extends SimpleSubCommand {
                 String id = nation.getString("nationName") + "_" + chunkStr;
                 String label = "Territory of " + nation.getString("nationName");
 
-                DynmapIntegration dynmapIntegration = new DynmapIntegration(Core.getInstance());
+                DynmapAPI dynmapIntegration = new DynmapAPI(Core.getInstance());
                 dynmapIntegration.addClaimToDynmap(id, label, x, z, worldName);
                 AreaMarker marker = dynmapIntegration.getMarkerSet().findAreaMarker(id);
                 if (marker != null) {
@@ -157,7 +157,7 @@ public class NationsClaimManagerSubCommand extends SimpleSubCommand {
 
                         // Remove the unclaimed territory from the Dynmap
                         String unclaimId = nation.getString("nationName") + "_" + chunkStr;
-                        DynmapIntegration unclaimDynmapIntegration = new DynmapIntegration(Core.getInstance());
+                        DynmapAPI unclaimDynmapIntegration = new DynmapAPI(Core.getInstance());
                         AreaMarker unclaimMarker = unclaimDynmapIntegration.getMarkerSet().findAreaMarker(unclaimId);
                         if (unclaimMarker != null) {
                             unclaimMarker.deleteMarker();
@@ -167,6 +167,45 @@ public class NationsClaimManagerSubCommand extends SimpleSubCommand {
                     }
                 } else {
                     tellWarn("&fYour nation has not claimed any territories.");
+                }
+            case "transfer":
+                if(nation.isSet("territory")) {
+                    Chunk chunkRn = player.getLocation().getChunk();
+                    NationYML nationRn = new NationYML(UUID);
+                    if(args.length != 2) {
+                        tellWarn("&fYou must specify a valid argument. &7/nation territory transfer <nation>");
+                        return;
+                    }
+                    if(args[1].equalsIgnoreCase(nationRn.getString("nationName"))) {
+                        tellWarn("&fYou cannot transfer a chunk to your own nation.");
+                        return;
+                    }
+                    // Get the NationYML object of the new owner
+                    NationYML newOwnerNation = null;
+                    for (NationYML n : NationYML.getNations().values()) {
+                        if (n.getString("nationName").equalsIgnoreCase(args[1])) {
+                            newOwnerNation = n;
+                            break;
+                        }
+                    }
+
+                    if (newOwnerNation == null) {
+                        tellWarn("&fNo nation found with the name " + args[1]);
+                        return;
+                    }
+
+                    if(ClaimRegistry.doesClaimExist(chunkRn) || Objects.equals(ClaimRegistry.getOwnerOfChunk(chunk), nationRn.getString("owner"))) {
+                        try {
+                            ClaimRegistry.transferChunkOwnership(chunkRn, newOwnerNation, false, "Transferred to " + args[1]);
+                            tellSuccess("&fChunk has been successfully transferred to &7" + args[1]);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+
+                    } else {
+                        tellWarn("&fYou do not own this chunk.");
+                    }
                 }
                 break;
             default:
@@ -183,7 +222,20 @@ public class NationsClaimManagerSubCommand extends SimpleSubCommand {
 
         switch (args.length) {
             case 1:
-                return completeLastWord("claim", "unclaim");
+                return completeLastWord("claim", "unclaim", "transfer");
+            case 2:
+                if(args[0].equalsIgnoreCase("transfer")) {
+                    Map<UUID, NationYML> nations = NationYML.getNations();
+                    List<String> nationNames = nations.values().stream()
+                            .map(nation -> nation.getString("nationName"))
+                            .collect(Collectors.toList());
+                    NationYML nation = new NationYML(player.getUniqueId());
+                    NationPlayer nationPlayer = new NationPlayer(player);
+                    if(nationPlayer.inNation()) {
+                        nationNames.remove(nation.getString("nationName"));
+                    }
+                    return completeLastWord(nationNames.toArray(new String[0]));
+                }
         }
 
         return NO_COMPLETE;

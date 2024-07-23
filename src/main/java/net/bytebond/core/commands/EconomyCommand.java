@@ -43,9 +43,9 @@ public final class EconomyCommand extends SimpleCommandGroup {
 
         messages.add(Common.colorize("&f--- Nations Overview ---"));
         if (nationPlayer.inNation()) {
-            messages.add(Common.colorize("&fWelcome to the Nations plugin! Here, you can manage your nation's wealth and resources."));
+            messages.add(Common.colorize("&fWelcome to the Nations economy !"));
             messages.add(Common.colorize("&fUse /economy help to get started."));
-            messages.add(Common.colorize("&fCurrencies: &6Treasury&f, &6Wood&f, &6Stone&f, &6Brick&f, &6Darkstone&f, &6Obsidian&f (Hover)"));
+            messages.add(Common.colorize("&fCurrencies: &6Treasury&f, &6Wood&f, &6Stone&f, &6Brick&f, &6Darkstone&f, &6Obsidian&f"));
         } else {
             messages.add(Common.colorize("&cNote: &fThese features are only accessible to nations."));
         }

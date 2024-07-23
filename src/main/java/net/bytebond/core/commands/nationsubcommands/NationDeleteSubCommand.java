@@ -2,13 +2,12 @@ package net.bytebond.core.commands.nationsubcommands;
 
 import net.bytebond.core.Core;
 import net.bytebond.core.data.NationYML;
-import net.bytebond.core.util.DynmapIntegration;
+import net.bytebond.core.util.integrations.DynmapAPI;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.dynmap.markers.AreaMarker;
 import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
-import org.mineacademy.fo.settings.YamlConfig;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -56,7 +55,7 @@ public class NationDeleteSubCommand extends SimpleSubCommand {
             tellWarn("&fYou must confirm the deletion of your Nation. &7/nation delete confirm");
             return;
         }
-        // cleanup-process
+        // cleanup-process for claims
         try {
             String nationName = nation.getString("nationName");
             AtomicInteger deletedFilesCount = new AtomicInteger();
@@ -77,10 +76,13 @@ public class NationDeleteSubCommand extends SimpleSubCommand {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // cleanup-process for housing objects
+
+
 
         tellSuccess("&fYou have successfully deleted your Nation.");
         List<String> territories = nation.getStringList("territory");
-        DynmapIntegration dynmapIntegration = new DynmapIntegration(Core.getInstance());
+        DynmapAPI dynmapIntegration = new DynmapAPI(Core.getInstance());
 
         for (String territory : territories) {
             // Remove the unclaimed territory from the dynmap

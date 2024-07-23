@@ -2,7 +2,7 @@ package net.bytebond.core.commands.nationsubcommands;
 
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
-import net.bytebond.core.util.DynmapIntegration;
+import net.bytebond.core.util.integrations.DynmapAPI;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.command.SimpleCommandGroup;
@@ -114,12 +114,12 @@ public class NationSetSubCommand extends SimpleSubCommand {
             case "color":
                 String colorArg = args[1].toUpperCase();
                 try {
-                    DynmapIntegration.MainColor selectedColor = DynmapIntegration.MainColor.valueOf(colorArg);
+                    DynmapAPI.MainColor selectedColor = DynmapAPI.MainColor.valueOf(colorArg);
                     nation.set("MainColor", selectedColor.name());
                     nation.save();
                     tellSuccess(Messages.Nation.Set.set_setting_success.replace("{setting}", firstArg).replace("{value}", colorArg));
                 } catch (IllegalArgumentException e) {
-                    tellWarn("Invalid color. Please choose a color from the following: " + Arrays.toString(DynmapIntegration.MainColor.values()));
+                    tellWarn("Invalid color. Please choose a color from the following: " + Arrays.toString(DynmapAPI.MainColor.values()));
                 }
                 break;
 

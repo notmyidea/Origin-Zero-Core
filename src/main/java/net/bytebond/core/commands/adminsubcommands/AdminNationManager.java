@@ -2,13 +2,17 @@ package net.bytebond.core.commands.adminsubcommands;
 
 import com.comphenix.net.bytebuddy.implementation.bytecode.Throw;
 import net.bytebond.core.Core;
+import net.bytebond.core.commands.EconomyHandler;
 import net.bytebond.core.data.ClaimRegistry;
+import net.bytebond.core.data.Drill;
+import net.bytebond.core.data.NationPlayer;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
 import net.bytebond.core.settings.Drills;
 import net.bytebond.core.settings.Messages;
 import net.bytebond.core.util.ItemManager;
 import net.bytebond.core.util.NationTaxCollection;
+import net.bytebond.core.util.handler.DrillHandling;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -22,10 +26,7 @@ import org.mineacademy.fo.command.SimpleCommandGroup;
 import org.mineacademy.fo.command.SimpleSubCommand;
 import org.mineacademy.fo.remain.nbt.ReadableItemNBT;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.bukkit.Material.CHEST;
@@ -161,7 +162,7 @@ public class AdminNationManager extends SimpleSubCommand {
                         String material = args[2];
                         String drillPlayerName = args[3];
 
-                        if (!material.equals("wood") && !material.equals("stone") && !material.equals("brick") && !material.equals("darkstone")) {
+                        if (!material.equals("wood") && !material.equals("stone") && !material.equals("brick") && !material.equals("darkstone") && !material.equals("obsidian")) {
                             tellWarn("Invalid material: " + material);
                             return;
                         }
@@ -171,56 +172,8 @@ public class AdminNationManager extends SimpleSubCommand {
                             tellWarn("Player not found: " + args[3]);
                             return;
                         }
-
-                        int modelData = 0;
-                        String drillType = "none";
-                        String Location = null;
-                        switch (material) {
-                            case "wood":
-                                modelData = 11112;
-                                drillType = "wood";
-                                Location = Drills.Drill.Wood.position.toString();
-                                break;
-                            case "stone":
-                                modelData = 11113;
-                                drillType = "stone";
-                                Location = Drills.Drill.Stone.position.toString();
-                                break;
-                            case "brick":
-                                modelData = 11114;
-                                drillType = "brick";
-                                Location = Drills.Drill.Brick.position.toString();
-                                break;
-                            case "obsidian":
-                                modelData = 11115;
-                                drillType = "obsidian";
-                                Location = Drills.Drill.Obsidian.position.toString();
-                                break;
-                            case "darkstone":
-                                modelData = 11116;
-                                drillType = "darkstone";
-                                Location = Drills.Drill.Darkstone.position.toString();
-                            default:
-                                throw new IllegalArgumentException("Invalid material: " + material);
-                        }
-
-                        ItemStack drill = new ItemStack(Material.OBSIDIAN);
-                        ItemMeta drillMeta = drill.getItemMeta();
-                        drillMeta.setDisplayName(ChatColor.WHITE + "Drill (Placeable) (" + drillPlayerName + ")");
-                        List<String> drilllore = new ArrayList<>();
-                        drilllore.add(ChatColor.WHITE + "Place this block to create a " + ChatColor.GOLD + "DRILL" + ChatColor.WHITE + " object.");
-                        drilllore.add(ChatColor.WHITE + "It will by time earn you " + ChatColor.GOLD + drillType + ChatColor.WHITE + " for your nation's economy.");
-                        drilllore.add("");
-                        drilllore.add(ChatColor.WHITE + "It can only be spawned at " + ChatColor.GRAY + Location + ".");
-                        drilllore.add(ChatColor.WHITE + "Losing the chunk in a war will give the " + ChatColor.GOLD + "DRILL" + ChatColor.WHITE + "to the new owner.");
-                        drillMeta.setLore(drilllore);
-
-                        drillMeta.setCustomModelData(modelData);
-                        drill.setItemMeta(drillMeta);
-
-                        drillTargetPlayer.getInventory().addItem(drill);
-
-                        Common.tellNoPrefix(drillTargetPlayer, "&fYou have been given a Drill by an admin.");
+                        Drill.DrillType drillType = Drill.DrillType.valueOf(material.toUpperCase());
+                        ItemManager.giveDrill(drillTargetPlayer, drillType, false);
 
                         tellSuccess("Given Drill Block to " + drillPlayerName);
 
@@ -237,6 +190,51 @@ public class AdminNationManager extends SimpleSubCommand {
                         break;
                     case "darkstone":
                         tellWarn("unimplemented");
+                        break;
+                    case "block":
+                        if (args.length < 7) {
+                            tellInfo("Usage: /nation admin give block <nation> <currency> <cost> <blockType> <amount> <player>");
+                            return;
+                        }
+                        String currencyType = args[2];
+                        int cost;
+                        try {
+                            cost = Integer.parseInt(args[3]);
+                        } catch (NumberFormatException e) {
+                            tellError("Invalid cost.");
+                            return;
+                        }
+                        Material blockType;
+                        try {
+                            blockType = Material.valueOf(args[4].toUpperCase());
+                        } catch (IllegalArgumentException e) {
+                            tellError("Invalid block type.");
+                            return;
+                        }
+                        int amount;
+                        try {
+                            amount = Integer.parseInt(args[5]);
+                        } catch (NumberFormatException e) {
+                            tellError("Invalid amount.");
+                            return;
+                        }
+                        Player giveBlockTargetPlayer = Bukkit.getPlayer(args[6]);
+                        NationPlayer giveBlockNationPlayer = new NationPlayer(giveBlockTargetPlayer);
+                        if (!giveBlockNationPlayer.inNation() || !giveBlockNationPlayer.getNation().equals(nation)) {
+                            tellWarn("Player is not in a nation.");
+                            return;
+                        }
+                        if (giveBlockTargetPlayer == null) {
+                            tellWarn("Player not found: " + args[6]);
+                            return;
+                        }
+                        EconomyHandler.Currency currency = EconomyHandler.Currency.valueOf(currencyType.toUpperCase());
+                        if (EconomyHandler.checkAvailableEconomy(giveBlockNationPlayer.getNation(), currency, cost)) {
+                            EconomyHandler.SubtractEconomy(giveBlockNationPlayer.getNation(), currency, cost);
+                            ItemStack blockStack = new ItemStack(blockType, amount);
+                            giveBlockTargetPlayer.getInventory().addItem(blockStack);
+                        }
+                        tellSuccess("Interaction completed.");
                         break;
                     default:
                         tellWarn("Invalid resource type");
@@ -270,6 +268,60 @@ public class AdminNationManager extends SimpleSubCommand {
                 nationTaxCollection.collectTax(collectTaxNation);
                 tellSuccess("Manually started tax collection for nation " + collectTaxNationName);
                 break;
+            case "set":
+                if(args.length != 4) {
+                    tellWarn("Usage: /nation admin set economy <nation> <type or reset> <amount>");
+                    return;
+                }
+
+                switch (args[1]) {
+                    case "economy":
+                        String targetNationName = args[2];
+                        String typeOrReset = args[3];
+
+                        if(args.length != 4) {
+                            tellWarn("Usage: /nation admin set economy <nation> <type or reset> <amount>");
+                            return;
+                        }
+
+                        // Check if the targeted nation exists
+                        NationYML targetNation = NationYML.getNationsByName(targetNationName).stream().findFirst().orElse(null);
+                        if (targetNation == null) {
+                            tellWarn("Nation not found: " + targetNationName);
+                            return;
+                        }
+
+                        // Check if the type equals one of the Economy Handler Materials or "reset"
+                        if (!typeOrReset.equalsIgnoreCase("reset") || typeOrReset.equalsIgnoreCase("wood") || typeOrReset.equalsIgnoreCase("stone") || typeOrReset.equalsIgnoreCase("brick") || typeOrReset.equalsIgnoreCase("darkstone")){
+                            tellWarn("Invalid type. Please enter one of the following: " + Arrays.toString(EconomyHandler.Currency.values()) + ", or 'reset'");
+                            return;
+                        }
+
+                        // If the type is "reset", reset the economy of the targeted nation
+                        if (typeOrReset.equalsIgnoreCase("reset")) {
+                            // Reset economy logic here
+                            tellSuccess("Economy of the nation " + targetNationName + " has been reset.");
+                            return;
+                        }
+
+                        // If the type is one of the Economy Handler Materials, update the economy of the targeted nation
+                        int amount;
+                        try {
+                            amount = Integer.parseInt(args[4]);
+                        } catch (NumberFormatException e) {
+                            tellError("Invalid amount.");
+                            return;
+                        }
+
+                        // Update economy logic here
+                        tellSuccess("Economy of the nation " + targetNationName + " has been updated.");
+                        break;
+                    default:
+                        tellWarn("Usage: /nation admin set economy <nation> <type or reset> <amount>");
+                        break;
+                }
+                break;
+
             default:
                 tellWarn("&fYou must specify a subcommand. &7/nation admin <delete/rename/removechunk/endwar/givetroop/give> <nation/mob/block>");
                 break;
@@ -296,10 +348,42 @@ public class AdminNationManager extends SimpleSubCommand {
                 }
 
                 if (args[0].equalsIgnoreCase("give")) {
-                    return completeLastWord("drill", "housing", "wood", "stone", "brick", "darkstone");
+                    return completeLastWord("drill", "housing", "wood", "stone", "brick", "darkstone", "block");
                 }
             case 3:
                 if (args[1].equalsIgnoreCase("housing")) {
+                    return completeLastWord(Bukkit.getOnlinePlayers().stream()
+                            .map(Player::getName)
+                            .toArray(String[]::new));
+                }
+                if(args[1].equalsIgnoreCase("drill")) {
+                    return completeLastWord("wood", "stone", "brick", "darkstone", "obsidian");
+                }
+                if(args[1].equalsIgnoreCase("block")) {
+                    return completeLastWord("wood", "stone", "brick", "darkstone", "obsidian");
+                }
+            case 4:
+                if(args[1].equalsIgnoreCase("block")) {
+                    return completeLastWord("cost");
+                }
+                if(args[1].equalsIgnoreCase("drill")) {
+                    return completeLastWord(Bukkit.getOnlinePlayers().stream()
+                            .map(Player::getName)
+                            .toArray(String[]::new));
+                }
+            case 5:
+                if(args[1].equalsIgnoreCase("block")) {
+                    return completeLastWord(Arrays.stream(Material.values())
+                            .filter(Material::isBlock)
+                            .map(Material::name)
+                            .toArray(String[]::new));
+                }
+            case 6:
+                if(args[1].equalsIgnoreCase("block")) {
+                    return completeLastWord("amount");
+                }
+            case 7:
+                if(args[1].equalsIgnoreCase("block")) {
                     return completeLastWord(Bukkit.getOnlinePlayers().stream()
                             .map(Player::getName)
                             .toArray(String[]::new));

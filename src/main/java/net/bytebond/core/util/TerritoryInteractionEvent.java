@@ -2,46 +2,43 @@ package net.bytebond.core.util;
 
 
 import de.tr7zw.nbtapi.NBTBlock;
-import de.tr7zw.nbtapi.plugin.NBTAPI;
+import de.tr7zw.nbtapi.NBTEntity;
+import de.tr7zw.nbtapi.NBTItem;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.bytebond.core.Core;
-import net.bytebond.core.data.ClaimRegistry;
-import net.bytebond.core.data.NationPlayer;
-import net.bytebond.core.data.NationYML;
-import net.bytebond.core.data.Villager;
+import net.bytebond.core.data.*;
 import net.bytebond.core.settings.Config;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+//import org.bukkit.*;
+//import org.bukkit.block.*;
+//import org.bukkit.entity.*;
+import net.bytebond.core.util.runnables.HousingObjectManager;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.Chunk;
-import org.bukkit.block.Block;
-import de.tr7zw.nbtapi.NBTItem;
-import de.tr7zw.nbtapi.NBT;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.RayTraceResult;
+import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
+import org.mineacademy.fo.remain.Remain;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-
-import static org.bukkit.Material.CHEST;
+import java.util.*;
 
 @AutoRegister
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -79,9 +76,8 @@ public final class TerritoryInteractionEvent implements Listener {
             NBTBlock nbtBlock = new NBTBlock(signBlock);
 
             // Check if the sign block has the NBT data
-            if (nbtBlock.getData().hasKey("isHousingSign") && nbtBlock.getData().getBoolean("isHousingSign")) {
-                signBlock.setType(Material.AIR);
-                signBlock.getRelative(BlockFace.DOWN).setType(Material.AIR);
+            if (nbtBlock.getData().hasKey("isHousingSign") && nbtBlock.getData().getBoolean("isHousingSign") && !nbtBlock.getData().getBoolean("isDrillSign")) {
+
                 Common.tellNoPrefix(player, "You have removed your housing block.");
                 NationYML nation = new NationYML(player.getUniqueId());
 
@@ -89,10 +85,10 @@ public final class TerritoryInteractionEvent implements Listener {
                 // Get the housing_message from the NBT data and remove it from the housing list
                 String housingMessage = nbtBlock.getData().getString("housing_message");
                 List<String> housingList = nation.getStringList("housing");
-                if(housingList.isEmpty()) {
+                if (housingList.isEmpty()) {
                     return;
                 }
-                if(housingList.contains(housingMessage)) {
+                if (housingList.contains(housingMessage)) {
                     housingList.remove(housingMessage);
                     nation.set("housing", housingList);
                     nation.save();
@@ -101,15 +97,63 @@ public final class TerritoryInteractionEvent implements Listener {
                 // Get the villager_message from the NBT data and remove it from the villagers list
                 String villagerMessage = nbtBlock.getData().getString("villager_message");
                 List<String> villagersList = nation.getStringList("villagers");
-                if(villagersList.isEmpty()) {
-                    return;
+                if (villagersList.isEmpty()) {
+                    //return;
                 }
-                if(villagersList.contains(villagerMessage)) {
+                if (villagersList.contains(villagerMessage)) {
                     villagersList.remove(villagerMessage);
                     nation.set("villagers", villagersList);
                     nation.save();
+                    }
                 }
-                ItemManager.giveHousingObject(player, true);
+
+
+                if(nbtBlock.getData().hasKey("villager_id") && nbtBlock.getData().hasKey("villager_name") && nbtBlock.getData().getBoolean("villager_alive")) {
+                    String villagerId = nbtBlock.getData().getString("villager_id");
+                    Entity entity = Bukkit.getEntity(UUID.fromString(villagerId));
+                    if(entity != null) {
+                        entity.remove();
+                    }
+                }
+
+
+                if(nbtBlock.getData().getBoolean("isDrillSign") && nbtBlock.getData().getString("drillType") != null) {
+                    Common.tellNoPrefix(player, "You have removed your drill.");
+                    NationYML nation = new NationYML(player.getUniqueId());
+
+                    // Get the drillSetMessage from the NBT data and remove it from the drills list
+                    String drillSetMessage = nbtBlock.getData().getString("drillSetMessage");
+                    List<String> drillList = nation.getStringList("drills");
+                    if (drillList.isEmpty()) {
+                        return;
+                    }
+                    if (drillList.contains(drillSetMessage)) {
+                        drillList.remove(drillSetMessage);
+                        nation.set("drills", drillList);
+                        nation.save();
+                    }
+                    // Remove the drill from the chunks drill list
+                    YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(ClaimRegistry.getClaimFile(chunk));
+                    if(yamlConfiguration.isSet("drills")) {
+                        List<String> chunkDrillList = yamlConfiguration.getStringList("drills");
+                        if (chunkDrillList.contains(drillSetMessage)) {
+                            chunkDrillList.remove(drillSetMessage);
+                            yamlConfiguration.set("drills", chunkDrillList);
+                        }
+                    }
+                    // give the player the right drill
+                    ItemManager.giveDrill(player, Drill.DrillType.valueOf(nbtBlock.getData().getString("drillType")), true);
+                } else {
+                    ItemManager.giveHousingObject(player, true);
+                }
+
+
+
+
+
+
+                signBlock.setType(Material.AIR);
+                signBlock.getRelative(BlockFace.DOWN).setType(Material.AIR);
 
 
                 //nation.set("villagers", villagersList);
@@ -123,33 +167,15 @@ public final class TerritoryInteractionEvent implements Listener {
                 }*/
 
             }
-        }
-
 
         if (!isPlayerInNation(player)) {
             event.setCancelled(true);
-            player.sendMessage("§cYou cannot break blocks here, this chunk is claimed.");
+            //player.sendMessage("§cYou cannot break blocks here, this chunk is claimed.");
             return;
         }
-
-        NationYML playerNation = new NationYML(player.getUniqueId());
-
-        if (chunkNation.getString("nationName").equals(playerNation.getString("nationName"))) {
-            return;
-        }
-
-        if (chunkNation.getStringList("allied_nations").contains(playerNation.getString("nationName"))) {
-            if (chunkNation.getBoolean("allyPermissions")) {
-                return;
-            }
-            event.setCancelled(true);
-        }
-
-        event.setCancelled(true);
-        player.sendMessage("§cYou cannot break blocks here. This territory belongs to another nation.");
     }
 
-    @EventHandler
+    //@EventHandler
     public void onBlockBuildEvent(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         Chunk chunk = player.getLocation().getChunk();
@@ -166,15 +192,11 @@ public final class TerritoryInteractionEvent implements Listener {
 
         if (!isPlayerInNation(player)) {
             event.setCancelled(true);
-            player.sendMessage("§cYou cannot build here, this chunk is claimed.");
+            //player.sendMessage("§cYou cannot build here, this chunk is claimed.");
             return;
         }
 
         NationYML playerNation = new NationYML(player.getUniqueId());
-
-        if (chunkNation.getString("nationName").equals(playerNation.getString("nationName"))) {
-            return;
-        }
 
         if (chunkNation.getStringList("allied_nations").contains(playerNation.getString("nationName"))) {
             if (chunkNation.getBoolean("allyPermissions")) {
@@ -183,8 +205,13 @@ public final class TerritoryInteractionEvent implements Listener {
             event.setCancelled(true);
         }
 
-        event.setCancelled(true);
-        player.sendMessage("§cYou cannot build here. This territory belongs to another nation.");
+        if (!chunkNation.getString("owner").equals(player.getUniqueId().toString())) {
+            event.setCancelled(true);
+            //player.sendMessage("§cYou cannot build here. This territory belongs to another nation.");
+        }
+
+        //event.setCancelled(true);
+        //player.sendMessage("§cYou cannot build here. This territory belongs to another nation.");
     }
 
 
@@ -199,168 +226,245 @@ public final class TerritoryInteractionEvent implements Listener {
             ItemMeta meta = itemInHand.getItemMeta();
             // 22222 == housing block
             assert meta != null;
-            if(!(meta.hasCustomModelData())) {
+            if (!(meta.hasCustomModelData())) {
                 return;
             }
 
-            if(meta.getCustomModelData() == 22222) {
+            //if (meta.getCustomModelData() == 22222) {
+            if(meta.getCustomModelData() == 1111) {
                 Chunk chunk = event.getBlock().getChunk();
                 NationPlayer nationPlayer = new NationPlayer(player);
 
-                if(!(nationPlayer.inNation())) {
+                if (!(nationPlayer.inNation())) {
                     event.setCancelled(true);
                     Common.tellNoPrefix(player, "You are not in a nation.");
                     return;
                 }
 
-                // Check if the chunk is claimed
-                if (ClaimRegistry.doesClaimExist(chunk)) {
-                    NationYML nation = new NationYML(UUID);
+                if (!(nationPlayer.inNation())) {
+                    event.setCancelled(true);
+                    Common.tellNoPrefix(player, "You are not in a nation.");
+                    return;
+                }
 
-                    if(ClaimRegistry.getOwnerOfChunk(chunk) == null) {
-                        event.setCancelled(true); Common.tellTimedNoPrefix(5, player, "You can only place a housing block in a chunk owned by your nation!");
-                        //Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");
-                        //Common.tell(player, "null");
+
+                if (!(ClaimRegistry.doesClaimExist(chunk))) {
+                    event.setCancelled(true);
+                    Common.tellTimedNoPrefix(5, player, "You can only place a housing block in a chunk owned by your nation!");
+                    return;
+                }
+                NationYML nation = new NationYML(UUID);
+
+                if (ClaimRegistry.getOwnerOfChunk(chunk) == null) {
+                    event.setCancelled(true);
+                    Common.tellTimedNoPrefix(5, player, "You can only place a housing block in a chunk owned by your nation!");
+                    return;
+                }
+
+                if (Objects.equals(ClaimRegistry.getOwnerOfChunk(chunk), nationPlayer.getNation().getString("owner"))) {
+
+                    if (checkForHousingBlockInChunk(chunk, nation)) {
+                        event.setCancelled(true);
+                        Common.tellTimedNoPrefix(5, player, "You already reached the maximum amount of housing blocks in this chunk!");
+                        //Common.tellNoPrefix(player, "There is already a housing block in this chunk!");
                         return;
                     }
-
-                    /*if(ClaimRegistry.getOwnerOfChunk(chunk).toString() != player.getUniqueId().toString()) {
-                        event.setCancelled(true);Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");
-                        Common.tell(player, "null 2");
-                        return;
-                    }*/
-
-                    /*if(!(ClaimRegistry.getOwnerOfChunk(chunk).equals(nation.getString("owner")))) {
-                        event.setCancelled(true);
-                        Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");
-                        return;
-                    }*/
-
-                    //if(ClaimRegistry.getOwnerOfChunk(chunk) == nation.getString("owner")) {
-                    if(Objects.equals(ClaimRegistry.getOwnerOfChunk(chunk), nationPlayer.getNation().getString("owner"))) {
-
-                        if (checkForHousingBlockInChunk(chunk, nation)) {
-                            event.setCancelled(true);
-                            Common.tellTimedNoPrefix(5, player, "You already reached the maximum amount of housing blocks in this chunk!");
-                            //Common.tellNoPrefix(player, "There is already a housing block in this chunk!");
-                            return;
-                        }
-
-                        Chunk blockChunk = event.getBlock().getChunk();
-                        Block block = event.getBlock();
-                        String blockString = block.getX() + "," + block.getY() + "," + block.getZ();
-                        /*String chunkString = blockChunk.getWorld().getName() + "," + blockChunk.getX() + "," + blockChunk.getZ() + "," + blockString;
-                        List<String> housingList = nationPlayer.getNation().getStringList("housing");
-                        housingList.add(chunkString);
-                        nation.set("housing", housingList);
-                        nation.save(); */
-                        String chunkString = blockChunk.getWorld().getName() + "," + blockChunk.getX() + "," + blockChunk.getZ() + "," + blockString;
-                        List<String> housingList = nationPlayer.getNation().getStringList("housing");
-                        housingList.add(chunkString);
-                        nation.set("housing", housingList);
-                        nation.save();
-
-                        Block bedrockBlock = event.getBlock();
-                        bedrockBlock.setType(Material.BEDROCK);
-                        bedrockBlock.getRelative(BlockFace.UP).setType(Material.BEDROCK);
-                        Block signBlock = bedrockBlock.getRelative(BlockFace.UP);
-
-                        // Apply NBT data to the sign block
-                        NBTBlock nbtBlock = new NBTBlock(signBlock);
-                        nbtBlock.getData().setBoolean("isHousingSign", true);
-                        nbtBlock.getData().setString("housing_message", chunkString);
-
-                        signBlock.setType(Material.OAK_SIGN);
-                        Sign sign = (Sign) signBlock.getState();
-                        sign.setLine(0, "Housing Block");
-                        sign.setLine(1, "Owner: " + ChatColor.GRAY  + nation.getString("TAG"));
-                        sign.setLine(2, "Villagers: " + ChatColor.GRAY  +  "0");
-                        sign.setEditable(false);
-                        sign.update();
-                        Core.getInstance().debugLog("Started the process of spawning a villager in 4 minutes in:");
-                        Core.getInstance().debugLog("World: " + chunk.getWorld().getName() + ", X: " + chunk.getX() + ", Z: " + chunk.getZ());
-                        Core.getInstance().debugLog("Location: " + block.getX() + ", " + block.getY() + ", " + block.getZ());
-                        Core.getInstance().debugLog("Nation: " + nation.getString("nationName"));
-                        Villager villager = new Villager(nation, chunk);
+                    HousingObjectManager housingObjectManager = new HousingObjectManager();
+                    housingObjectManager.runHousingObjectManager(chunk, event.getBlock(), nation, player, event.getBlock().getRelative(BlockFace.DOWN));
 
 
-                        new BukkitRunnable() {
-                            int counter = 1 * 60; // 4 minutes in seconds
+                    Chunk blockChunk = event.getBlock().getChunk();
+                    Block block = event.getBlock();
+                    String blockString = block.getX() + "," + block.getY() + "," + block.getZ();
+                    String chunkString = blockChunk.getWorld().getName() + "," + blockChunk.getX() + "," + blockChunk.getZ() + "," + blockString;
 
-                            @Override
-                            public void run() {
-                                if (counter > 0) {
-                                    if (bedrockBlock.getType() == Material.AIR) {
-                                        this.cancel();
-                                        ItemManager.giveHousingObject(player, true);
-                                        return;
-                                    }
-                                    Sign sign = (Sign) signBlock.getState();
-                                    sign.setLine(3, "Spawning in: " + counter + " seconds");
-                                    sign.update();
 
-                                    counter--;
-                                } else {
+                    List<String> housingList = nationPlayer.getNation().getStringList("housing");
+                    housingList.add(chunkString);
+                    nation.set("housing", housingList);
+                    nation.save();
 
-                                    villager.spawnVillager();
-                                    Sign sign = (Sign) signBlock.getState();
-                                    if(sign == null) {
+                    Block bedrockBlock = event.getBlock();
+                    bedrockBlock.setType(Material.BEDROCK);
+                    bedrockBlock.getRelative(BlockFace.UP).setType(Material.BEDROCK);
+                    Block signBlock = bedrockBlock.getRelative(BlockFace.UP);
+
+                    // Apply NBT data to the sign block
+                    NBTBlock nbtBlock = new NBTBlock(signBlock);
+                    nbtBlock.getData().setBoolean("isHousingSign", true);
+                    nbtBlock.getData().setString("housing_message", chunkString);
+
+                    signBlock.setType(Material.OAK_SIGN);
+                    Sign sign = (Sign) signBlock.getState();
+                    sign.setLine(0, "Housing Block");
+                    sign.setLine(1, "Owner: " + ChatColor.GRAY + nation.getString("TAG"));
+                    sign.setLine(2, "Villagers: " + ChatColor.GRAY + "0");
+                    sign.setEditable(false);
+                    sign.update();
+                    Common.tellNoPrefix(player, "You have placed a housing block.");
+                    Villager villager = new Villager(nation, chunk, bedrockBlock);
+
+
+                    new BukkitRunnable() {
+                        int counter = 1 * 60; // 4 minutes in seconds
+                        int bugCounter = 0;
+
+                        @Override
+                        public void run() {
+                            if (counter > 0) {
+                                if (bedrockBlock.getType() == Material.AIR || signBlock.getType() == Material.AIR) {
+                                    this.cancel();
+                                    Core.getInstance().debugLog("Cancelled the villager spawn because the bedrock or sign block was removed.");
+                                    //ItemManager.giveHousingObject(player, true);
+                                    bugCounter++;
+                                    return;
+                                }
+                                Sign sign = (Sign) signBlock.getState();
+                                sign.setLine(3, "Spawning in: " + counter + " seconds");
+                                sign.update();
+                                counter--;
+                            } else {
+                                if (bedrockBlock.getType() == Material.AIR || signBlock.getType() == Material.AIR) {
+                                    this.cancel();
+                                    Core.getInstance().debugLog("Cancelled the villager spawn because the bedrock or sign block was removed.");
+                                    //ItemManager.giveHousingObject(player, true);
+                                    if (bugCounter != 0) {
                                         this.cancel();
                                         return;
                                     }
-                                    sign.setLine(1, "Villager: ");
-                                    String villagerName = villager.getVillagerName();
-                                    sign.setLine(2, "'" + ChatColor.GREEN + villagerName + ChatColor.BLACK + "'");
-                                    sign.setLine(3, "Happiness" + ChatColor.GREEN + " 73%");
-                                    sign.update();
+                                }
+                                int villager_spawns = 0;
+                                if (villager_spawns == 0) {
+                                    villager.runVillagerSpawn();
+                                    villager_spawns++;
+                                }
+                                NBTBlock nbtBlock1 = new NBTBlock(bedrockBlock);
+                                nbtBlock1.getData().setString("villager_id", villager.getVillager().getUniqueId().toString());
 
-                                    String villagerLocationString = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ() + "," + block.getX() + "," + block.getY() + "," + block.getZ();
-                                    String villagerLocationStringWithName = villager.getVillagerName() + "," + villagerLocationString;
-                                    List<String> villagersList = nationPlayer.getNation().getStringList("villagers");
-                                    villagersList.add(villagerLocationStringWithName);
-                                    nation.set("villagers", villagersList);
-                                    nation.save();
-                                    NBTBlock nbtBlock = new NBTBlock(sign.getBlock());
-                                    nbtBlock.getData().setString("villager_message", villagerLocationStringWithName);
+                                NBTEntity nbtEntity = new NBTEntity(villager.getVillager());
+                                nbtEntity.setString("bedrock_coords", bedrockBlock.getX() + "," + bedrockBlock.getY() + "," + bedrockBlock.getZ());
+                                nbtEntity.setString("nation", nation.getString("nationName"));
+                                nbtEntity.setString("owner_uuid", nation.getString("owner"));
+                                nbtEntity.setString("chunk", chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ());
+                                nbtEntity.setString("villager_name", villager.getVillagerName());
+                                nbtEntity.setInteger("happiness", 73);
 
-                                    Villager villager = Villager.findVillager(chunk, nation);
+                                if (bedrockBlock.getType() == Material.AIR || signBlock.getType() == Material.AIR) {
+                                    this.cancel();
+                                    Core.getInstance().debugLog("Cancelled the villager spawn because the bedrock or sign block was removed.");
+                                    //ItemManager.giveHousingObject(player, true);
+                                    return;
+                                }
+                                if (signBlock == null) {
+                                    this.cancel();
+                                    Core.getInstance().debugLog("Cancelled the villager spawn because the sign block was removed.");
+                                    return;
+                                }
+                                Sign sign = (Sign) signBlock.getState();
+                                sign.setLine(1, "Villager: ");
+                                String villagerName = villager.getVillagerName();
+                                sign.setLine(2, "'" + ChatColor.GREEN + villagerName + ChatColor.BLACK + "'");
+                                sign.setLine(3, "Happiness" + ChatColor.GREEN + " 73%");
+                                sign.update();
+
+                                String villagerLocationString = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ() + "," + block.getX() + "," + block.getY() + "," + block.getZ();
+                                String villagerLocationStringWithName = villager.getVillagerName() + "," + villagerLocationString;
+                                List<String> villagersList = nationPlayer.getNation().getStringList("villagers");
+                                villagersList.add(villagerLocationStringWithName);
+                                nbtEntity.setString("villager_message", villagerLocationStringWithName);
+                                nation.set("villagers", villagersList);
+                                nation.save();
+                                NBTBlock nbtBlock = new NBTBlock(sign.getBlock());
+                                nbtBlock.getData().setString("villager_message", villagerLocationStringWithName);
+
+                                    /*Villager villager = Villager
                                     if (villager != null) {
                                         Common.tell(player, villager.getVillagerName());
                                     } else {
                                         Common.tell(player, "null");
-                                    }
-                                    this.cancel();
-                                }
+                                    }*/
+
+                                this.cancel();
                             }
-                        }.runTaskTimer(Core.getInstance(), 0, 20); // run every second (20 ticks = 1 second)
-                        return;
                         }
-                    event.setCancelled(true); Common.tellTimedNoPrefix(5, player, "You can only place a housing block in a chunk owned by your nation!");
-                    //Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");return;
-                    } else {
-                    event.setCancelled(true);Common.tellTimedNoPrefix(5, player, "You can only place a housing block in a chunk owned by your nation!");
-                    //Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");return;
-                    }
-                } else {
-                    event.setCancelled(true); Common.tellTimedNoPrefix(5, player, "You can only place a housing block in a chunk owned by your nation!");
-                    //Common.tellNoPrefix(player, "You can only place a housing block in a chunk owned by your nation!");
+                    }.runTaskTimer(Core.getInstance(), 0, 20); // run every second (20 ticks = 1 second)
                     return;
                 }
             }
+        }
+    }
 
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        Block block = event.getClickedBlock();
+
+        if(block == null || block.getType() == Material.AIR) {
+            return;
         }
 
-    /*@Deprecated
-    public Boolean checkForHousingBlockInChunk(Chunk chunk, NationYML nation) {
-        List<String> housingList = nation.getStringList("housing");
-        for (String housing : housingList) {
-            String[] split = housing.split(",");
-            if (split[0].equals(chunk.getWorld().getName()) && Integer.parseInt(split[1]) == chunk.getX() && Integer.parseInt(split[2]) == chunk.getZ()) {
-                return true;
+        // Check if the player has interacted with a chest or any kind of sign
+        if ((block.getType() == Material.CHEST) || (block.getType() == Material.TRAPPED_CHEST) || (block.getType() == Material.FURNACE) || (block.getType() == Material.BARREL)
+                || (block.getType() == Material.OAK_SIGN)
+                || (block.getType() == Material.OAK_WALL_SIGN)
+                || (block.getType() == Material.BAMBOO_SIGN)
+                || (block.getType() == Material.BAMBOO_WALL_SIGN)
+                || (block.getType() == Material.ACACIA_SIGN)
+                || (block.getType() == Material.ACACIA_WALL_SIGN)
+                || (block.getType() == Material.BIRCH_SIGN)
+                || (block.getType() == Material.BIRCH_WALL_SIGN)
+                || (block.getType() == Material.CRIMSON_SIGN)
+                || (block.getType() == Material.CRIMSON_WALL_SIGN)
+                || (block.getType() == Material.DARK_OAK_SIGN)
+                || (block.getType() == Material.DARK_OAK_WALL_SIGN)
+                || (block.getType() == Material.JUNGLE_SIGN)
+                || (block.getType() == Material.JUNGLE_WALL_SIGN)
+                || (block.getType() == Material.SPRUCE_SIGN)
+                || (block.getType() == Material.SPRUCE_WALL_SIGN)
+                || (block.getType() == Material.WARPED_SIGN)
+                || (block.getType() == Material.WARPED_WALL_SIGN)
+        ){
+            Chunk chunk = block.getChunk();
+
+            // Check if the chunk is claimed
+            if (!ClaimRegistry.doesClaimExist(chunk)) {
+                return;
             }
+
+            NationYML chunkNation = ClaimRegistry.getNation(chunk);
+            if (chunkNation == null) {
+                return;
+            }
+
+            // Check if the player is in a nation
+            if (!isPlayerInNation(player)) {
+                event.setCancelled(true);
+                sendYouCannotxHere(player, "interact", true, true);
+                return;
+            }
+
+            NationYML playerNation = new NationYML(player.getUniqueId());
+
+            // Check if the player is in the nation that owns the chunk
+            if (chunkNation.getString("nationName").equals(playerNation.getString("nationName"))) {
+                return;
+            }
+
+            event.setCancelled(true);
+            sendYouCannotxHere(player, "interact", true, true);
+
         }
-        return false;
-    }*/
+    }
+
+    public void sendYouCannotxHere(Player player, String action, Boolean message, Boolean isOwned) {
+
+        if(message) {
+            Common.tellTimedNoPrefix(5, player, "&cYou cannot " + action + " here!" + (isOwned ? " This chunk is owned by someone else." : ""));
+        } else {
+            Remain.sendActionBar(player, "&cYou cannot " + action + " here!");
+        }
+
+    }
 
     public Boolean checkForHousingBlockInChunk(Chunk chunk, NationYML nation) {
         List<String> housingList = nation.getStringList("housing");
@@ -369,6 +473,9 @@ public final class TerritoryInteractionEvent implements Listener {
             String[] split = housing.split(",");
             if (split[0].equals(chunk.getWorld().getName()) && Integer.parseInt(split[1]) == chunk.getX() && Integer.parseInt(split[2]) == chunk.getZ()) {
                 count++;
+            }
+            if(count >= Config.Housing.max_houses) {
+                return false;
             }
         }
         return (!(count < Config.Housing.max_housing_per_chunk));

@@ -4,9 +4,9 @@ import net.bytebond.core.commands.EconomyCommand;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.data.Villager;
 import net.bytebond.core.settings.Config;
-import net.bytebond.core.util.DynmapIntegration;
+import net.bytebond.core.util.integrations.DynmapAPI;
 import net.bytebond.core.util.NationTaxCollection;
-import net.bytebond.core.util.Placeholders;
+import net.bytebond.core.util.integrations.PlaceholderAPI;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -49,17 +49,16 @@ public final class Core extends SimplePlugin {
 
 		}
 
-
-		DynmapIntegration dynmapIntegration = new DynmapIntegration(this);
+		DynmapAPI dynmapIntegration = new DynmapAPI(this);
 		File nationsDirectory = new File("plugins/Core/data/");
 		for (File nationFile : Objects.requireNonNull(nationsDirectory.listFiles())) {
 			YamlConfiguration nationConfig = YamlConfiguration.loadConfiguration(nationFile);
 			String colorName = nationConfig.getString("MainColor");
-			DynmapIntegration.MainColor nationColor;
+			DynmapAPI.MainColor nationColor;
 			if (colorName != null) {
-				nationColor = DynmapIntegration.MainColor.valueOf(colorName);
+				nationColor = DynmapAPI.MainColor.valueOf(colorName);
 			} else {
-				nationColor = DynmapIntegration.MainColor.WHITE;
+				nationColor = DynmapAPI.MainColor.WHITE;
 			}
 
 			List<String> claimedTerritories = nationConfig.getStringList("territory");
@@ -108,7 +107,7 @@ public final class Core extends SimplePlugin {
 	@Override
 	protected void onReloadablesStart() {
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-			new Placeholders(this).register();
+			new PlaceholderAPI(this).register();
 		} else {
 			Bukkit.getPluginManager().disablePlugin(this);
 			System.exit(1);

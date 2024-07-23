@@ -11,41 +11,32 @@
 Drill:
   Messages:
     positions: |
-      You cannot place the {drill} here, it must be placed on a specific block:
-      {for_each_blocks}
+      You cannot place the {drill} here, it must be placed in a specific chunk:
+      {${drill}_positions}
   Wood:
     # The rate at which the Drill will produce Wood
     rate_per_hour: 1
-    positions: |
-      - 0,0,0
-      - 100,100,100
+    # Chunk X and Z coordinates, no support for the Y-Chunk coordinates yet
+    positions: -16,-7
     # Set to "null" to disable
     permission: "nations.drills.wood"
   Stone:
     rate_per_hour: 1
-    positions: |
-      - 0,0,0
-      - 100,100,100
+    positions: -16,-7
     # Set to "null" to disable
     permission: "nations.drills.stone"
   Brick:
     rate_per_hour: 1
-    positions: |
-      - 0,0,0
-      - 100,100,100
+    positions: -16,-7
     # Set to "null" to disable
     permission: "nations.drills.brick"
   Darkstone:
     rate_per_hour: 1
-    positions: |
-      - 0,0,0
-      - 100,100,100
+    positions: -16,-7
     # Set to "null" to disable
     permission: "nations.drills.darkstone"
   Obsidian:
     rate_per_hour: 1
-    positions: |
-      - 0,0,0
-      - 100,100,100
+    positions: -16,-7
     # Set to "null" to disable
     permission: "nations.drills.obsidian"
