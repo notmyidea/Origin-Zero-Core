@@ -39,9 +39,9 @@ public class AdminNationManager extends SimpleSubCommand {
 
     public AdminNationManager(SimpleCommandGroup parent) {
         super(parent, "admin");
-        setPermission("nation.admin");
         setDescription("Admin nation manager");
         setUsage("/nation admin <delete/rename/list/removechunk/endwar/givetroop/give> <nation/mob/block>");
+        setPermission("nation.admin");
     }
 
 
@@ -52,6 +52,7 @@ public class AdminNationManager extends SimpleSubCommand {
         UUID UUID = player.getUniqueId();
         NationYML nation = new NationYML(UUID);
         checkPerm("nation.admin");
+        //checkPerm("nation.admin");
 
         if (args.length < 1) {
             tellWarn("&fYou must specify a subcommand. &7/nation admin <delete/rename/list/removechunk/endwar/givetroop/give> <nation/mob/block>");
@@ -131,9 +132,9 @@ public class AdminNationManager extends SimpleSubCommand {
                 tellWarn("unimplemented");
                 break;
             case "give":
-
+                //setPermission("nation.admin");
                 if (args.length < 2) {
-                    tellInfo("Usage: /nation admin give <housing, drill, wood, stone, brick, ...> <resource/player> <amount>");
+                    tellInfo("Usage: /nation admin give <housing, drill, wood, stone, brick, ...> <resource/player> <amount> <> ()");
                 }
                 String secondArg = args[1];
                 switch (secondArg) {
@@ -192,8 +193,9 @@ public class AdminNationManager extends SimpleSubCommand {
                         tellWarn("unimplemented");
                         break;
                     case "block":
-                        if (args.length < 7) {
-                            tellInfo("Usage: /nation admin give block <nation> <currency> <cost> <blockType> <amount> <player>");
+
+                        if (args.length < 6) {
+                            tellInfo("Usage: /nation admin give block <nation> <currency> <cost> <blockType> <amount>");
                             return;
                         }
                         String currencyType = args[2];
@@ -218,23 +220,18 @@ public class AdminNationManager extends SimpleSubCommand {
                             tellError("Invalid amount.");
                             return;
                         }
-                        Player giveBlockTargetPlayer = Bukkit.getPlayer(args[6]);
-                        NationPlayer giveBlockNationPlayer = new NationPlayer(giveBlockTargetPlayer);
+                        NationPlayer giveBlockNationPlayer = new NationPlayer((Player) sender);
                         if (!giveBlockNationPlayer.inNation() || !giveBlockNationPlayer.getNation().equals(nation)) {
-                            tellWarn("Player is not in a nation.");
-                            return;
-                        }
-                        if (giveBlockTargetPlayer == null) {
-                            tellWarn("Player not found: " + args[6]);
+                            tellWarn("You are not in a Nation.");
                             return;
                         }
                         EconomyHandler.Currency currency = EconomyHandler.Currency.valueOf(currencyType.toUpperCase());
                         if (EconomyHandler.checkAvailableEconomy(giveBlockNationPlayer.getNation(), currency, cost)) {
                             EconomyHandler.SubtractEconomy(giveBlockNationPlayer.getNation(), currency, cost);
                             ItemStack blockStack = new ItemStack(blockType, amount);
-                            giveBlockTargetPlayer.getInventory().addItem(blockStack);
+                            ((Player) sender).getInventory().addItem(blockStack);
                         }
-                        tellSuccess("Interaction completed.");
+                        tellSuccess("You have bought &7'" + amount + " " + blockType + "'&r for &7" + cost + " " + currencyType + "&r.");
                         break;
                     default:
                         tellWarn("Invalid resource type");
@@ -269,20 +266,16 @@ public class AdminNationManager extends SimpleSubCommand {
                 tellSuccess("Manually started tax collection for nation " + collectTaxNationName);
                 break;
             case "set":
-                if(args.length != 4) {
-                    tellWarn("Usage: /nation admin set economy <nation> <type or reset> <amount>");
+                if (args.length < 3) {
+                    tellWarn("Usage: /nation admin set <economy/ > <> ()");
                     return;
                 }
-
                 switch (args[1]) {
                     case "economy":
+
+
                         String targetNationName = args[2];
                         String typeOrReset = args[3];
-
-                        if(args.length != 4) {
-                            tellWarn("Usage: /nation admin set economy <nation> <type or reset> <amount>");
-                            return;
-                        }
 
                         // Check if the targeted nation exists
                         NationYML targetNation = NationYML.getNationsByName(targetNationName).stream().findFirst().orElse(null);
@@ -292,14 +285,15 @@ public class AdminNationManager extends SimpleSubCommand {
                         }
 
                         // Check if the type equals one of the Economy Handler Materials or "reset"
-                        if (!typeOrReset.equalsIgnoreCase("reset") || typeOrReset.equalsIgnoreCase("wood") || typeOrReset.equalsIgnoreCase("stone") || typeOrReset.equalsIgnoreCase("brick") || typeOrReset.equalsIgnoreCase("darkstone")){
-                            tellWarn("Invalid type. Please enter one of the following: " + Arrays.toString(EconomyHandler.Currency.values()) + ", or 'reset'");
-                            return;
-                        }
+//----
 
                         // If the type is "reset", reset the economy of the targeted nation
                         if (typeOrReset.equalsIgnoreCase("reset")) {
-                            // Reset economy logic here
+                            EconomyHandler.SetEconomy(targetNation, EconomyHandler.Currency.WOOD, Config.Nations.Creation.starting_resources);
+                            EconomyHandler.SetEconomy(targetNation, EconomyHandler.Currency.STONE, Config.Nations.Creation.starting_resources);
+                            EconomyHandler.SetEconomy(targetNation, EconomyHandler.Currency.BRICK, Config.Nations.Creation.starting_resources);
+                            EconomyHandler.SetEconomy(targetNation, EconomyHandler.Currency.DARKSTONE, Config.Nations.Creation.starting_resources);
+                            EconomyHandler.SetEconomy(targetNation, EconomyHandler.Currency.OBSIDIAN, Config.Nations.Creation.starting_resources);
                             tellSuccess("Economy of the nation " + targetNationName + " has been reset.");
                             return;
                         }
@@ -308,6 +302,7 @@ public class AdminNationManager extends SimpleSubCommand {
                         int amount;
                         try {
                             amount = Integer.parseInt(args[4]);
+                            EconomyHandler.SetEconomy(targetNation, EconomyHandler.Currency.valueOf(typeOrReset.toUpperCase()), amount);
                         } catch (NumberFormatException e) {
                             tellError("Invalid amount.");
                             return;
@@ -317,7 +312,7 @@ public class AdminNationManager extends SimpleSubCommand {
                         tellSuccess("Economy of the nation " + targetNationName + " has been updated.");
                         break;
                     default:
-                        tellWarn("Usage: /nation admin set economy <nation> <type or reset> <amount>");
+                        tellWarn("Usage: /nation admin set <economy/ > <> ()");
                         break;
                 }
                 break;
@@ -337,7 +332,7 @@ public class AdminNationManager extends SimpleSubCommand {
 
         switch (args.length) {
             case 1:
-                return completeLastWord("delete", "rename", "list", "removechunk", "endwar", "givetroop", "give", "collecttax");
+                return completeLastWord("delete", "rename", "list", "removechunk", "endwar", "givetroop", "give", "collecttax", "set");
             case 2:
                 if (args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("rename") || args[0].equalsIgnoreCase("collectTax")) {
                     // Get all nations
@@ -345,6 +340,10 @@ public class AdminNationManager extends SimpleSubCommand {
                     // Extract nation names
                     return completeLastWord(nations.values().stream()
                             .map(nation -> nation.getString("nationName")).toArray(String[]::new));
+                }
+
+                if(args[0].equalsIgnoreCase("set")) {
+                    return completeLastWord("economy");
                 }
 
                 if (args[0].equalsIgnoreCase("give")) {
@@ -362,6 +361,13 @@ public class AdminNationManager extends SimpleSubCommand {
                 if(args[1].equalsIgnoreCase("block")) {
                     return completeLastWord("wood", "stone", "brick", "darkstone", "obsidian");
                 }
+                if(args[1].equalsIgnoreCase("economy")) {
+                    // Get all nations
+                    Map<UUID, NationYML> nations = NationYML.getNations();
+                    // Extract nation names
+                    return completeLastWord(nations.values().stream()
+                            .map(nation -> nation.getString("nationName")).toArray(String[]::new));
+                }
             case 4:
                 if(args[1].equalsIgnoreCase("block")) {
                     return completeLastWord("cost");
@@ -371,7 +377,13 @@ public class AdminNationManager extends SimpleSubCommand {
                             .map(Player::getName)
                             .toArray(String[]::new));
                 }
+                if(args[1].equalsIgnoreCase("economy")) {
+                    return completeLastWord("wood", "stone", "brick", "darkstone", "obsidian", "reset");
+                }
             case 5:
+                if (args[1].equalsIgnoreCase("economy")) {
+                    return completeLastWord("amount");
+                }
                 if(args[1].equalsIgnoreCase("block")) {
                     return completeLastWord(Arrays.stream(Material.values())
                             .filter(Material::isBlock)

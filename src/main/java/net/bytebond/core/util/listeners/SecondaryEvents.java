@@ -5,9 +5,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.bytebond.core.Core;
+import net.bytebond.core.data.ClaimRegistry;
 import net.bytebond.core.data.Drill;
+import net.bytebond.core.data.NationPlayer;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.util.ItemManager;
+import net.bytebond.core.util.TerritoryInteractionEvent;
 import net.bytebond.core.util.handler.DrillHandling;
 import net.bytebond.core.util.handler.HousingHandler;
 import org.bukkit.Chunk;
@@ -23,6 +26,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
+
+import java.util.Objects;
 
 @AutoRegister
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -64,8 +69,20 @@ public final class SecondaryEvents implements Listener {
 
         if(itemMeta != null && itemMeta.hasCustomModelData()) {
             DrillHandling drillHandling = new DrillHandling();
+            NationPlayer nationPlayer = new NationPlayer(player);
         switch(itemMeta.getCustomModelData()) {
             case 22222:
+                // check if there is a housing block in that chunk already and the amount of housing blocks in that chunk exceeds the Config value
+                if (Objects.equals(ClaimRegistry.getOwnerOfChunk(chunk), nationPlayer.getNation().getString("owner"))) {
+
+                    if (TerritoryInteractionEvent.getInstance().checkForHousingBlockInChunk(chunk, nation)) {
+                        event.setCancelled(true);
+                        Common.tellTimedNoPrefix(5, player, "You already reached the maximum amount of housing blocks in this chunk!");
+                        //Common.tellNoPrefix(player, "There is already a housing block in this chunk!");
+                        return;
+                    }
+                }
+
                 Core.getInstance().debugLog("Housing Block placed");
                 HousingHandler housingHandler = new HousingHandler();
                 housingHandler.runHousingHandler(player, chunk, event.getBlock(), nation);
