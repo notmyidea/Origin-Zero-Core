@@ -7,6 +7,8 @@ import net.bytebond.core.commands.diplomaticsubcommands.NationDiplomacySubComman
 import net.bytebond.core.commands.economicsubcommands.NationTaxSubCommand;
 import net.bytebond.core.commands.nationsubcommands.*;
 import net.bytebond.core.data.NationYML;
+import net.bytebond.core.settings.Config;
+import net.bytebond.core.settings.Messages;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
@@ -29,7 +31,9 @@ public final class NationCommand extends SimpleCommandGroup {
 
     @Override
     protected void registerSubcommands() {
-        registerSubcommand(new NationCreateSubCommand(this));
+        if(Config.Nations.Creation.enabled) {
+            registerSubcommand(new NationCreateSubCommand(this));
+        }
         registerSubcommand(new NationDeleteSubCommand(this));
         registerSubcommand(new NationInfoSubCommand(this));
         registerSubcommand(new NationSetSubCommand(this));

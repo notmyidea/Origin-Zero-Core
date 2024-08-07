@@ -134,6 +134,22 @@ public final class NationYML extends YamlConfig {
         return nations;
     }
 
+    // get all nation objects currently online
+    public static Map<NationYML, String> getOnlineNationsOptimized() {
+        return HashMan.getInstance().getNationMap();
+    }
+
+    public static Map<NationYML, String> getOnlineNationsNamesOptimized() {
+        Map<NationYML, String> nationNames = new HashMap<>();
+        Map<NationYML, String> nationMap = HashMan.getInstance().getNationMap();
+
+        for (NationYML nation : nationMap.keySet()) {
+            nationNames.put(nation, nation.getString("nationName"));
+        }
+
+        return nationNames;
+    }
+
 
 
     public NationYML(UUID owner) {

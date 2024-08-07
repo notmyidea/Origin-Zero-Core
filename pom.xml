@@ -13,7 +13,7 @@
     <name>Core</name>
 
     <!-- Change to the appropriate plugin's version, starting at 1.0.0. -->
-    <version>0.3.5</version>
+    <version>0.9.8-RELEASE</version>
 
     <!-- DO NOT EDIT. -->
     <packaging>jar</packaging>
@@ -60,11 +60,6 @@
         <repository>
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
-        </repository>
-        <!-- UltraEconomyAPI -->
-        <repository>
-            <id>techscode</id>
-            <url>https://repo.techscode.com/repository/techscode-apis/</url>
         </repository>
         <!-- CodeMC -->
         <repository>
@@ -141,11 +136,6 @@
         <!-- There was an issue with UltraEconomy, see a dm from one of their maintainers:
         "It seems that whoever built (or i guess manually copied classes together for) the api put the XMaterial class into the wrong package.
          I guess the only solution for now would be if you tried to compile (and code) against the actual plugin jar insted of the api"
-        <dependency>
-            <groupId>me.TechsCode</groupId>
-            <artifactId>UltraEconomyAPI</artifactId>
-            <version>1.0.0_build-7</version>
-        </dependency>
         -->
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
@@ -197,6 +187,7 @@
                         <includes>
                             <include>${foundation.path}:Foundation*</include>
                             <include>com.bergerkiller.bukkit:BKCommonLib*</include>
+                            <include>net.thenextlvl.holograms*</include>
                             <!-- Include UltraEconomyAPI in the shaded JAR -->
                             <!-- <include>me.TechsCode:UltraEconomyAPI</include> -->
                             <!-- Include item-nbt-api-plugin in the shaded JAR -->

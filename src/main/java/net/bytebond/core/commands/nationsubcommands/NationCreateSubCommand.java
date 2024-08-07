@@ -1,6 +1,7 @@
 package net.bytebond.core.commands.nationsubcommands;
 
 import net.bytebond.core.Core;
+import net.bytebond.core.data.HashMan;
 import net.bytebond.core.data.HashManager;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
@@ -28,9 +29,6 @@ public class NationCreateSubCommand extends SimpleSubCommand {
         setDescription("Create a new Nation.");
         setUsage("<name>");
 
-        if(!Objects.equals(Config.Nations.Creation.requiredPermission, "null")) {
-            setPermission(Config.Nations.Creation.requiredPermission);
-        }
 
     }
 
@@ -169,6 +167,8 @@ public class NationCreateSubCommand extends SimpleSubCommand {
        nation.set("obsidian", Config.Nations.Creation.starting_resources);
        nation.set("taxRate", 10);
        nation.set("happiness", 70);
+       nation.set("happiness_decline", 0);
+       nation.set("last_happiness_check", formatDateTime);
        nation.set("housing", new ArrayList<String>());
             //List<String> housing_messages = nation.getStringList("housing");
             //nation.set("housing", housing_messages);
@@ -186,10 +186,10 @@ public class NationCreateSubCommand extends SimpleSubCommand {
             archive_messages.add("Creation on " + formatDateTime + " by §7" + player.getName() + " §fwith the name of §7" + firstArg + "§f.");
             nation.set("archive_messages", archive_messages);
 
-
        nation.set("allied_nations", new ArrayList<String>());
        nation.set("pending_allied_nations", new ArrayList<String>());
        nation.set("enemy_nations", new ArrayList<String>());
+       nation.set("lastOnline", formatDateTime);
 
        nation.set("warscore", 0);
        nation.set("warswon", 0);
@@ -205,6 +205,9 @@ public class NationCreateSubCommand extends SimpleSubCommand {
        String joinText = "&fYou have created a Nation named &7" + firstArg + "&f.";
        Core.getEconomy().createPlayerAccount(player);
        tellSuccess(joinText);
+
+       HashMan.getInstance().addNation(nation, UUID);
+       HashMan.getInstance().addNationToAllNationMap(nation);
 
     }
 

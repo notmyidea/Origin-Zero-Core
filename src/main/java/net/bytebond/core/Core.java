@@ -1,14 +1,17 @@
 package net.bytebond.core;
 
 import net.bytebond.core.commands.EconomyCommand;
+import net.bytebond.core.data.HashMan;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.data.Villager;
 import net.bytebond.core.settings.Config;
 import net.bytebond.core.util.integrations.DynmapAPI;
 import net.bytebond.core.util.NationTaxCollection;
 import net.bytebond.core.util.integrations.PlaceholderAPI;
+import net.bytebond.core.util.runnables.HappinessRunnable;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -28,25 +31,31 @@ import java.util.*;
 import java.util.List;
 
 public final class Core extends SimplePlugin {
-	// Note to me: Internal dynmap webserver is running on 8123
 	private static Economy econ = null;
 	Map<UUID, NationYML> nations = NationYML.getNations();
 
 	@Override
 	protected void onPluginStart() {
 		registerCommands(new EconomyCommand());
-		Common.logFramed("Nations plugin has been enabled!", "Loading Nations and Claims from files.", "Nations plugin version: 1.0.0 (WIP)");
-		NationTaxCollection nationTaxCollection = new NationTaxCollection();
-		nationTaxCollection.startTaxCollection();
+		Common.logFramed(ChatColor.GREEN + "Nations plugin has been enabled!", ChatColor.GREEN + "Loading Nations and Claims from files.", ChatColor.GREEN + "Nations plugin version: 0.9.8");
+		//NationTaxCollection nationTaxCollection = new NationTaxCollection();
+		//nationTaxCollection.startTaxCollection();
 		//checkAndCreateDirectoris();
 		//Thread t1 = new Thread(new LoadItemsImpl());
 		//t1.start();
+
+		HashMan.getInstance().repopulateAllNationMap();
+		this.debugLog("All nation map size: " + HashMan.getInstance().allNationMap.size());
+
+		// Start the HappinessRunnable task
+		HappinessRunnable happinessRunnable = new HappinessRunnable();
+		happinessRunnable.startTask(Config.Runnables.happiness_calculator_interval);
+
 
 		if (!setupEconomy()) {
 			Common.logFramed("Vault not found! Disabling plugin!", "Please install Vault to use this plugin!");
 			System.exit(0);
 			getServer().getPluginManager().disablePlugin(this);
-
 		}
 
 		DynmapAPI dynmapIntegration = new DynmapAPI(this);
@@ -121,29 +130,7 @@ public final class Core extends SimplePlugin {
 				e.printStackTrace();
 			}
 		}
-
 	}
-
-		private void checkAndCreateDirectoris() {
-			String[] directories = {"nations", "economy", "territory", "transit"};
-			for(String directory : directories) {
-				Path dirPath1 = Paths.get("plugins/Nations/data/" + directory);
-				if(!Files.exists(dirPath1)) {
-					try {
-						Files.createDirectories(dirPath1);
-					} catch (IOException e) {
-						Common.logFramed("Error creating directory: " + dirPath1.toString() + "!", "Error: " + e.getMessage());
-					}
-				}
-			}
-		}
-
-		//if (EconomyHandler.checkIfCurrenciesExist()) {
-		//	EconomyHandler economyHandler = new EconomyHandler();
-		//} else {
-		//	Bukkit.getPluginManager().disablePlugin(this);
-		//}
-
 
 	// bStats
 	@Override

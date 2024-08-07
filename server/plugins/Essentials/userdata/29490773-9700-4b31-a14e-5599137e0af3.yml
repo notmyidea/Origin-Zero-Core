@@ -16,15 +16,15 @@ timestamps:
   mute: 0
   jail: 0
   onlinejail: 0
-  logout: 1720394840074
-  login: 1720394703669
-money: '5500.0'
+  logout: 1720976828650
+  login: 1720972714385
+money: '100000.0'
 last-account-name: pi16
 logoutlocation:
   world: 6944074a-5589-4c11-ae5f-a89571d2e05a
   world-name: world
-  x: -166.7810965972525
-  y: 64.0
-  z: -180.11372110778754
-  yaw: 81.14414978027344
-  pitch: 49.0147590637207
+  x: -155.679214802422
+  y: 66.53821540387982
+  z: -156.41505547073606
+  yaw: 27.7296142578125
+  pitch: 38.100013732910156

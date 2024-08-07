@@ -19,7 +19,7 @@ public class NationTaxCollection {
     public void startTaxCollection() {
         Timer timer = new Timer();
         NationTaxCollection thisInstance = this;
-        Core.getInstance().debugLog("Starting tax collection timer: NEXT COLLECTION IN __" + DAY_IN_MILLIS + "__ DAY_IN_MILLIS");
+        //Core.getInstance().debugLog("Starting tax collection timer: NEXT COLLECTION IN __" + DAY_IN_MILLIS + "__ DAY_IN_MILLIS");
         timer.schedule(new TimerTask() {
             @Override
             public void run() {

@@ -87,7 +87,14 @@ public final class ClaimRegistry extends YamlConfig {
 
     public static NationYML getNation(Chunk chunk) {
         String chunkStr = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ();
-        for (NationYML nation : NationYML.getNations().values()) {
+        /*for (NationYML nation : NationYML.getNations().values()) {
+            if (nation.isSet("territory")) {
+                if (nation.getStringList("territory").contains(chunkStr)) {
+                    return nation;
+                }
+            }
+        }*/
+        for (NationYML nation : HashMan.getInstance().getAllNationMap().keySet()) {
             if (nation.isSet("territory")) {
                 if (nation.getStringList("territory").contains(chunkStr)) {
                     return nation;

@@ -3,6 +3,7 @@ package net.bytebond.core.util.listeners;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.bytebond.core.Core;
 import net.bytebond.core.data.ClaimRegistry;
 import net.bytebond.core.data.NationPlayer;
 import net.bytebond.core.data.NationYML;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.permissions.PermissionAttachment;
 import org.mineacademy.fo.annotation.AutoRegister;
 import org.mineacademy.fo.remain.Remain;
 
@@ -48,6 +50,12 @@ public final class PlayerMoveEvents implements Listener {
             return;
         }
 
+        if(oldNation != null && newNation != null) {
+            if(Objects.equals(newNation.getString("owner"), oldNation.getString("owner"))) {
+                return;
+            }
+        }
+
         if(!inNation) {
             Remain.sendActionBar(player, "Welcome to &f" + newNation.getString("nationName"));
             return;
@@ -69,11 +77,17 @@ public final class PlayerMoveEvents implements Listener {
                 return;
             }
             Remain.sendActionBar(player, "Welcome to &a" + newNation.getString("nationName") + " &f(&aYou&f)");
+            player.addAttachment(Core.getInstance(), "nation.inclaim", true);
             return;
         }
 
         if(oldNation != null && Objects.equals(newNation.getString("owner"), oldNation.getString("owner"))) {
             return;
+        }
+
+        if(oldNation != null && Objects.equals(oldNation.getString("owner"), player.getUniqueId().toString())) {
+            PermissionAttachment attachment = player.addAttachment(Core.getInstance());
+            attachment.unsetPermission("nation.inclaim");
         }
 
         Remain.sendActionBar(player, "Welcome to &f" + newNation.getString("nationName"));

@@ -25,24 +25,24 @@ public class DynmapAPI {
     }
 
     public void addClaimToDynmap(String id, String label, double chunkX, double chunkZ, String worldName) {
-        Core.getInstance().debugLog("Adding claim to Dynmap: " + id);
-        Core.getInstance().debugLog("Chunk coordinates: x=" + chunkX + ", z=" + chunkZ);
+        //Core.getInstance().debugLog("Adding claim to Dynmap: " + id);
+        //Core.getInstance().debugLog("Chunk coordinates: x=" + chunkX + ", z=" + chunkZ);
 
         // Calculate the coordinates of the four corners of the chunk
         double[] x = {chunkX * 16, chunkX * 16, (chunkX + 1) * 16, (chunkX + 1) * 16};
         double[] z = {chunkZ * 16, (chunkZ + 1) * 16, (chunkZ + 1) * 16, chunkZ * 16};
 
-        Core.getInstance().debugLog("Area coordinates: x=" + Arrays.toString(x) + ", z=" + Arrays.toString(z));
+        //Core.getInstance().debugLog("Area coordinates: x=" + Arrays.toString(x) + ", z=" + Arrays.toString(z));
 
         if (markerSet == null) {
-            Core.getInstance().debugLog("markerSet is null");
+            //Core.getInstance().debugLog("markerSet is null");
         } else {
             AreaMarker marker = markerSet.createAreaMarker(id, label, false, worldName, x, z, false);
             if (marker != null) {
                 marker.setFillStyle(0.35, 0x00FF00);
                 marker.setLineStyle(3, 1.0, 0xFF0000);
             } else {
-                Core.getInstance().debugLog("Failed to create marker");
+                //Core.getInstance().debugLog("Failed to create marker");
             }
         }
     }

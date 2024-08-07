@@ -3,16 +3,14 @@ package net.bytebond.core.commands.adminsubcommands;
 import com.comphenix.net.bytebuddy.implementation.bytecode.Throw;
 import net.bytebond.core.Core;
 import net.bytebond.core.commands.EconomyHandler;
-import net.bytebond.core.data.ClaimRegistry;
-import net.bytebond.core.data.Drill;
-import net.bytebond.core.data.NationPlayer;
-import net.bytebond.core.data.NationYML;
+import net.bytebond.core.data.*;
 import net.bytebond.core.settings.Config;
 import net.bytebond.core.settings.Drills;
 import net.bytebond.core.settings.Messages;
 import net.bytebond.core.util.ItemManager;
 import net.bytebond.core.util.NationTaxCollection;
 import net.bytebond.core.util.handler.DrillHandling;
+import net.bytebond.core.util.integrations.DynmapAPI;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -20,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.dynmap.markers.AreaMarker;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.command.SimpleCommandGroup;
@@ -110,11 +109,11 @@ public class AdminNationManager extends SimpleSubCommand {
             case "removechunk":
                 // get the chunk the admin stays on
                 Chunk chunk = player.getLocation().getChunk();
+                String chunkStr = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ();
                 // is the chunk registered in ClaimRegistry?
                 if (ClaimRegistry.doesClaimExist(chunk)) {
                     NationYML nationToRemoveChunk = ClaimRegistry.getNation(chunk);
                     List<String> territory = nationToRemoveChunk.getStringList("territory");
-                    String chunkStr = chunk.getWorld().getName() + "," + chunk.getX() + "," + chunk.getZ();
                     territory.remove(chunkStr);
                     nationToRemoveChunk.set("territory", territory);
                     nationToRemoveChunk.save();
@@ -122,6 +121,12 @@ public class AdminNationManager extends SimpleSubCommand {
                 } else {
                     tellWarn("&rThere are no records of this chunk in the ClaimRegistry");
                     return;
+                }
+                String unclaimId = nation.getString("nationName") + "_" + chunkStr;
+                DynmapAPI unclaimDynmapIntegration = new DynmapAPI(Core.getInstance());
+                AreaMarker unclaimMarker = unclaimDynmapIntegration.getMarkerSet().findAreaMarker(unclaimId);
+                if (unclaimMarker != null) {
+                    unclaimMarker.deleteMarker();
                 }
                 tellSuccess("&rSuccessfully removed the chunk from the ClaimRegistry");
                 break;
@@ -181,16 +186,16 @@ public class AdminNationManager extends SimpleSubCommand {
                         
                         break;
                     case "wood":
-                        tellWarn("unimplemented");
+                        tellWarn("unimplemented, use /n admin set <resource> <nation> <amount>");
                         break;
                     case "stone":
-                        tellWarn("unimplemented");
+                        tellWarn("unimplemented, use /n admin set <resource> <nation> <amount>");
                         break;
                     case "brick":
-                        tellWarn("unimplemented");
+                        tellWarn("unimplemented, use /n admin set <resource> <nation> <amount>");
                         break;
                     case "darkstone":
-                        tellWarn("unimplemented");
+                        tellWarn("unimplemented, use /n admin set <resource> <nation> <amount>");
                         break;
                     case "block":
 
@@ -316,9 +321,16 @@ public class AdminNationManager extends SimpleSubCommand {
                         break;
                 }
                 break;
-
+            case "checkCaching":
+                HashMan hashMan = HashMan.getInstance();
+                if(args.length != 2) {
+                    Common.tellNoPrefix(sender, hashMan.getAllNationNames());
+                    return;
+                }
+                tellWarn("unimplemented");
+                return;
             default:
-                tellWarn("&fYou must specify a subcommand. &7/nation admin <delete/rename/removechunk/endwar/givetroop/give> <nation/mob/block>");
+                tellWarn("&fYou must specify a subcommand. &7/nation admin <delete/rename/removechunk/endwar/givetroop/give/set/checkCaching> <nation/mob/block>");
                 break;
         }
     }
@@ -332,9 +344,17 @@ public class AdminNationManager extends SimpleSubCommand {
 
         switch (args.length) {
             case 1:
-                return completeLastWord("delete", "rename", "list", "removechunk", "endwar", "givetroop", "give", "collecttax", "set");
+                return completeLastWord("delete", "rename", "list", "removechunk", "endwar", "givetroop", "give", "collecttax", "set", "checkCaching");
             case 2:
                 if (args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("rename") || args[0].equalsIgnoreCase("collectTax")) {
+                    // Get all nations
+                    Map<UUID, NationYML> nations = NationYML.getNations();
+                    // Extract nation names
+                    return completeLastWord(nations.values().stream()
+                            .map(nation -> nation.getString("nationName")).toArray(String[]::new));
+                }
+
+                if(args[0].equalsIgnoreCase("checkCaching")) {
                     // Get all nations
                     Map<UUID, NationYML> nations = NationYML.getNations();
                     // Extract nation names

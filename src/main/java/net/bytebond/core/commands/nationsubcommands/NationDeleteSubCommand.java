@@ -1,6 +1,7 @@
 package net.bytebond.core.commands.nationsubcommands;
 
 import net.bytebond.core.Core;
+import net.bytebond.core.data.HashMan;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.util.integrations.DynmapAPI;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -93,6 +94,8 @@ public class NationDeleteSubCommand extends SimpleSubCommand {
             }
         }
         nation.deleteFile();
+        HashMan.getInstance().removeNation(nation);
+        HashMan.getInstance().removeNationFromAllNationMap(nation);
 
     }
 

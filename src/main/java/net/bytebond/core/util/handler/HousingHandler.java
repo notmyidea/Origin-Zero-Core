@@ -81,6 +81,10 @@ public class HousingHandler {
         nation.set("villagers", villagersList);
         nation.save();
 
+        NBTBlock nbtblock = new NBTBlock(block);
+        nbtblock.getData().setString("villager_id", villager.getVillager().getUniqueId().toString());
+        nbtblock.getData().setString("villager_message", villagerLocationStringWithName);
+
     }
 
 

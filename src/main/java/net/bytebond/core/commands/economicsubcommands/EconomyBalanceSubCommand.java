@@ -44,7 +44,8 @@ public class EconomyBalanceSubCommand extends SimpleSubCommand {
         }
         NationYML nation = nationPlayer.getNation();
         messages.add("   &fNation: &7" + nationPlayer.getNation().getString("nationName") + " (" + nationPlayer.getNation().getString("TAG") + ")");
-        messages.add("   &fMoney: &a$&7" + Core.getEconomy().getBalance(player));
+        //messages.add("   &fMoney: &a$&7" + Core.getEconomy().getBalance(player));  // Shows x amount of .0 at the end
+        messages.add("   &fMoney: &a$&7" + String.format("%.1f", Core.getEconomy().getBalance(player)));
         messages.add("   &fWood: &7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.WOOD) + "   &fStone: &7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.STONE));
         messages.add("   &fBrick: &7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.BRICK) + "   &fDarkstone: &7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.DARKSTONE));
         messages.add("   &fObsidian: &7" + EconomyHandler.GetEconomy(nation, EconomyHandler.Currency.OBSIDIAN));

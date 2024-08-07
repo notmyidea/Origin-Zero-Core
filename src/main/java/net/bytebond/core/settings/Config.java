@@ -67,7 +67,6 @@ public class Config extends YamlStaticConfig {
             // Nations Creation Configuration
             // Nations.Creation.
             public static Boolean enabled;
-            public static String requiredPermission;
             public static Integer starting_resources;
 
             public static Integer cost;
@@ -75,7 +74,6 @@ public class Config extends YamlStaticConfig {
             private static void init() {
                 pathPrefix("Nations.Creation");
                 enabled = getBoolean("enabled");
-                requiredPermission = getString("required_permissions");
                 starting_resources = getInteger("starting_resources");
                 cost = getInteger("cost");
             }
@@ -233,17 +231,32 @@ public class Config extends YamlStaticConfig {
     } // Housing
 
     public static class Tax {
-        public static Boolean enabled;
+        public static Boolean start_on_server_start;
         public static Integer max_tax_rate;
+        public static Integer tax_interval;
         public static String tax_collection_system;
         public static Integer tax_collection_interval;
 
         private static void init() {
             pathPrefix("Tax");
-            enabled = getBoolean("enabled");
+            start_on_server_start = getBoolean("start_on_server_start");
             max_tax_rate = getInteger("max_tax_rate");
+            tax_interval = getInteger("tax_interval");
             tax_collection_system = getString("tax_collection_system");
             tax_collection_interval = getInteger("tax_collection_interval");
+        }
+    }
+
+    public static class Runnables {
+        public static Boolean start_on_server_start;
+        public static Integer happiness_calculator_interval;
+        public static Integer dynamic_sign_updater_interval;
+
+        private static void init() {
+            pathPrefix("Runnables");
+            start_on_server_start = getBoolean("start_on_server_start");
+            happiness_calculator_interval = getInteger("happiness_calculator_interval");
+            dynamic_sign_updater_interval = getInteger("dynamic_sign_updater_interval");
         }
     }
 

@@ -3,7 +3,6 @@ package net.bytebond.core.util;
 
 import de.tr7zw.nbtapi.NBTBlock;
 import de.tr7zw.nbtapi.NBTEntity;
-import de.tr7zw.nbtapi.NBTItem;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,6 @@ import net.bytebond.core.settings.Config;
 //import org.bukkit.*;
 //import org.bukkit.block.*;
 //import org.bukkit.entity.*;
-import net.bytebond.core.util.runnables.HousingObjectManager;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -29,11 +27,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.BoundingBox;
-import org.bukkit.util.RayTraceResult;
-import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
 import org.mineacademy.fo.remain.Remain;
@@ -141,9 +134,24 @@ public final class TerritoryInteractionEvent implements Listener {
                             yamlConfiguration.set("drills", chunkDrillList);
                         }
                     }
-                    // give the player the right drill
+
+
+
                     ItemManager.giveDrill(player, Drill.DrillType.valueOf(nbtBlock.getData().getString("drillType")), true);
                 } else {
+
+                    NationPlayer nationPlayer = new NationPlayer(player);
+                    NationYML nation = nationPlayer.getNation();
+
+                    // remove the "villager" from the nations list of villagers
+                    NBTBlock bedrock = new NBTBlock(event.getBlock().getRelative(BlockFace.DOWN));
+
+                    String villagerLocationStringWithName = bedrock.getData().getString("villager_message");
+                    List<String> villagersList = nationPlayer.getNation().getStringList("villagers");
+                    villagersList.remove(villagerLocationStringWithName);
+                    nation.set("villagers", villagersList);
+                    nation.save();
+
                     ItemManager.giveHousingObject(player, true);
                 }
 

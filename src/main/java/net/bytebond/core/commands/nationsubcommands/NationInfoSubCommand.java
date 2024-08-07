@@ -6,6 +6,7 @@ import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
 import net.bytebond.core.util.NationTaxCollection;
 import net.bytebond.core.util.TerritoryInteractionEvent;
+import net.bytebond.core.util.runnables.HappinessRunnable;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.command.SimpleCommandGroup;
@@ -36,10 +37,10 @@ public class NationInfoSubCommand extends SimpleSubCommand {
         List<String> messages = new ArrayList();
         NationYML nation = new NationYML(UUID);
         int amountOfDrills;
-        if(nation.getDrills().contains("None")) {
-            amountOfDrills = 0;
+        if(!nation.getStringList("drills").isEmpty()) {
+            amountOfDrills = nation.getStringList("drills").size();
         } else {
-            amountOfDrills = nation.getDrills().size();
+            amountOfDrills = 0;
         }
 
         // check if the player is in a Nation
@@ -68,14 +69,14 @@ public class NationInfoSubCommand extends SimpleSubCommand {
                     }
 
                     if(nation.isSet("territory") && (!(nation.getStringList("territory").isEmpty()))) {
-                        messages.add("   &fYou are the owner of &7" + nation.getString("nationName") + " &7(&f" + nation.getString("TAG") + "&7) (&c" + nation.getStringList("territory").size() + "&7)");
+                        messages.add("   &fYou are the owner of &7" + nation.getString("nationName") + " &7(&f" + nation.getString("TAG") + "&7)  SIZE: (&c" + nation.getStringList("territory").size() + "&7)");
                     } else {
                         messages.add("   &fYou are the owner of &7" + nation.getString("nationName") + " &7(&f" + nation.getString("TAG") + "&7)&f");
                     }
                     messages.add("   &fWarscore: &a★&f" + nation.getInteger("warscore") + "&f                 Dynmap Color: &7" + nation.getString("MainColor"));
-                    messages.add("   &fEconomic Information:       Tax: &c" + nation.getInteger("taxRate")+ "&f%, Happiness: " + "&aCalc.%");
+                    messages.add("   &fEconomic Information:       Tax: &c" + nation.getInteger("taxRate")+ "&f%, Happiness: &a" + nation.getInteger("happiness") + "%");
                     messages.add("");
-                    messages.add("   &fMoney: &7" + Core.getEconomy().getBalance(player));
+                    messages.add("   &fMoney: &7" + Core.getEconomy().getBalance(player));  //Core.getEconomy().getBalance(player));
                     messages.add("   &fWood: &7" + nation.getInteger("wood"));
                     messages.add("   &fStone: &7" + nation.getInteger("stone"));
                     messages.add("   &fBrick: &7" + nation.getInteger("brick"));
@@ -99,12 +100,28 @@ public class NationInfoSubCommand extends SimpleSubCommand {
             }
 
             switch (firstArg) {
+                case "population":
+                    int pop_happiness = Integer.parseInt(String.valueOf(nation.getInteger("happiness"))); //.getInteger("happiness");
+                    int pop_last_happiness = nation.getInteger("happiness_decline");
+                    List<String> populationMessage = new ArrayList<>();
+                    populationMessage.add("&f" + Common.chatLineSmooth());
+                    populationMessage.add("   &fPopulation Information &7(&f" + nation.getString("nationName") + "&7)");
+                    populationMessage.add("   &fHousing: &7" + nation.getStringList("housing").size() + "&f/" + Config.Territory.Claiming.max + " in &7" + nation.getStringList("territory").size() + "&f claims");
+                    populationMessage.add("   &fPopulation: &7" + nation.getStringList("villagers").size());
+                    populationMessage.add("   &f - Population-density: &7" + HappinessRunnable.getInstance().getPopulationDensity(nation) + "&f%");
+                    populationMessage.add("   &fHappiness: &a" + pop_happiness + "&f%");
+                    populationMessage.add("   &f - From last check: &a+&7/&c- &7" + pop_last_happiness + "&f%");
+
+                    //populationMessage.add("   &f - Resulting Tax Efficiency: &7" + HappinessRunnable.getInstance().getTaxEfficiency(nation) + "&f%");
+                    populationMessage.add("&f" + Common.chatLineSmooth());
+                    tellNoPrefix(populationMessage);
+                    break;
                 case "economy":
                     List<String> economyMessage = new ArrayList<>();
                     economyMessage.add("&f" + Common.chatLineSmooth());
                     economyMessage.add("   &fEconomic Information &7(&f" + nation.getString("nationName") + "&7)");
                     economyMessage.add("   &fTax Rate: &c" + nation.getInteger("taxRate") + "&f/" + Config.Tax.max_tax_rate + "&f%");
-                    economyMessage.add("   &fHappiness: &7" + nation.getInteger("happiness") + "&f%");
+                    economyMessage.add("   &fHappiness: &a" + nation.getInteger("happiness") + "&f%");
                     List<String> villagers = nation.getStringList("villagers");
                     List<String> villagerNames = new ArrayList<>();
 
@@ -116,13 +133,13 @@ public class NationInfoSubCommand extends SimpleSubCommand {
 
                     economyMessage.add("   &fPopulation: &7" + nation.getStringList("villagers").size());
                     economyMessage.add("   &fVillagers: &7" + String.join(", ", villagerNames) + "...");
-                    Double taxRate = nation.getInteger("taxRate") / 100.0;
-                    Double happiness = nation.getInteger("happiness") / 100.0;
-                    Integer ApproxTaxCollection = (int) (villagers.size() * 100 * taxRate * happiness);
-                    economyMessage.add("   &fCalculated tax revenue: &7$" + ApproxTaxCollection + " (approx.)");
-                    NationTaxCollection taxCollection = new NationTaxCollection();
-                    Integer recentpayments= taxCollection.getRecentTaxPayout(nation.getString("nationName"));
-                    economyMessage.add("   &fLast tax revenue: &a$" + recentpayments);
+                    //Double taxRate = nation.getInteger("taxRate") / 100.0;
+                    //Double happiness = nation.getInteger("happiness") / 100.0;
+                    //Integer ApproxTaxCollection = (int) (villagers.size() * 100 * taxRate * happiness);
+                    //economyMessage.add("   &fCalculated tax revenue: &7$" + ApproxTaxCollection + " (approx.)");
+                    //NationTaxCollection taxCollection = new NationTaxCollection();
+                    //Integer recentpayments= taxCollection.getRecentTaxPayout(nation.getString("nationName"));
+                    //economyMessage.add("   &fLast tax revenue: &a$" + recentpayments);
                     economyMessage.add("&f" + Common.chatLineSmooth());
                     tellNoPrefix(economyMessage);
                     break;
@@ -221,7 +238,7 @@ public class NationInfoSubCommand extends SimpleSubCommand {
 
             switch (args.length) {
                 case 1:
-                    return completeLastWord("chunk", "economy", "diplomacy"); // "trade" , "infrastructure"
+                    return completeLastWord("chunk", "economy", "diplomacy", "population"); // "trade" , "infrastructure"
                 case 2:
                     return completeLastWord("");
 

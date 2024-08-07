@@ -2,6 +2,7 @@ package net.bytebond.core.commands.nationsubcommands;
 
 import net.bytebond.core.Core;
 import net.bytebond.core.data.ClaimRegistry;
+import net.bytebond.core.data.HashMan;
 import net.bytebond.core.data.NationPlayer;
 import net.bytebond.core.data.NationYML;
 import net.bytebond.core.settings.Config;
@@ -71,7 +72,7 @@ public class NationsClaimManagerSubCommand extends SimpleSubCommand {
                         return;
                     }
                 }
-                Map<UUID, NationYML> nationsMap = NationYML.getNations();
+                /*Map<UUID, NationYML> nationsMap = NationYML.getNations();
                 for(NationYML nations : nationsMap.values()) {
                     if(nations.isSet("territory")) {
                         if(nations.getStringList("territory").contains(chunkStr)) {
@@ -79,7 +80,18 @@ public class NationsClaimManagerSubCommand extends SimpleSubCommand {
                             return;
                         }
                     }
+                }*/
+
+                Map<NationYML, String> nationsMap = HashMan.getInstance().getNationMap();
+                for(NationYML nations : nationsMap.keySet()) {
+                    if(nations.isSet("territory")) {
+                        if(nations.getStringList("territory").contains(chunkStr)) {
+                            tellWarn(Messages.Nation.Claim.already_claimed.replace("{nation}", nations.getString("nationName")));
+                            return;
+                        }
+                    }
                 }
+
                 if(Config.Territory.Claiming.cost != 0) {
                     Integer cost = Config.Territory.Claiming.cost;
                         if(Core.getEconomy().getBalance(player) >= cost) {
